@@ -13,6 +13,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { PageContainer, PageTitle } from "@/components/demo/primitives";
+import { DemoToast } from "@/components/demo/widgets";
 import {
   QUOTE_STEPS,
   EP_CAMPUSES,
@@ -24,6 +25,7 @@ import {
 } from "@/data/demo/nexus";
 
 const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
+const NEXUS_ACCENT = "bg-nexus-pink";
 
 export function EPQuoteView() {
   const [step, setStep] = useState(0);
@@ -34,6 +36,12 @@ export function EPQuoteView() {
   const [accId, setAccId] = useState("homestay");
   const [addOnIds, setAddOnIds] = useState<string[]>(["reg", "insurance"]);
   const [discountId, setDiscountId] = useState("early");
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2000);
+  };
 
   const campus = EP_CAMPUSES.find((c) => c.id === campusId) as EPCampus;
   const course = EP_COURSES.find((c) => c.name === courseName) ?? EP_COURSES[0];
@@ -317,11 +325,27 @@ export function EPQuoteView() {
                   <b className="text-nexus-pink">NT$ {fmt(computed.finalTWD)}</b>。
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <ActionBtn icon={Save} primary>
+                  <ActionBtn
+                    icon={Save}
+                    primary
+                    onClick={() =>
+                      showToast(`已建立 ${campus.city} ${weeks} 週報價並存入 CRM(Demo 示意)`)
+                    }
+                  >
                     存入 CRM
                   </ActionBtn>
-                  <ActionBtn icon={FileImage}>下載 PNG</ActionBtn>
-                  <ActionBtn icon={Copy}>複製開單內容</ActionBtn>
+                  <ActionBtn
+                    icon={FileImage}
+                    onClick={() => showToast("報價單 PNG 已產生並下載(Demo 示意)")}
+                  >
+                    下載 PNG
+                  </ActionBtn>
+                  <ActionBtn
+                    icon={Copy}
+                    onClick={() => showToast("開單內容已複製到剪貼簿(Demo 示意)")}
+                  >
+                    複製開單內容
+                  </ActionBtn>
                   <button
                     type="button"
                     onClick={reset}
@@ -416,6 +440,8 @@ export function EPQuoteView() {
           </div>
         </div>
       </div>
+
+      <DemoToast message={toast} accentClass={NEXUS_ACCENT} />
     </PageContainer>
   );
 }
@@ -463,14 +489,17 @@ function ActionBtn({
   icon: Icon,
   children,
   primary,
+  onClick,
 }: {
   icon: typeof Save;
   children: React.ReactNode;
   primary?: boolean;
+  onClick?: () => void;
 }) {
   return (
     <button
       type="button"
+      onClick={onClick}
       className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
         primary
           ? "bg-nexus-pink text-white hover:bg-nexus-purple"

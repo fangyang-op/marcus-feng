@@ -11,24 +11,53 @@ import {
   GraduationCap,
   DollarSign,
   Building,
+  ArrowUpDown,
+  ArrowDown,
+  ArrowUp,
 } from "lucide-react";
 import { PageContainer, PageTitle, Card, Pill } from "@/components/demo/primitives";
+import { DemoToast } from "@/components/demo/widgets";
 import {
   SCHOOLS,
   SCHOOL_COUNTRIES,
   SCHOOL_TYPES,
+  SCHOOL_SORTS,
+  type SchoolSortKey,
   type NexusSchool,
 } from "@/data/demo/nexus";
+
+const NEXUS_ACCENT = "bg-nexus-pink";
+
+/** 排序用:把 null(語言學校)排到最後 */
+const nullLast = (v: number | null) => (v == null ? Number.POSITIVE_INFINITY : v);
 
 export function SchoolDatabaseView() {
   const [search, setSearch] = useState("");
   const [country, setCountry] = useState<string>("全部");
   const [type, setType] = useState<string>("全部");
+  const [sortKey, setSortKey] = useState<SchoolSortKey>("qs");
+  const [sortAsc, setSortAsc] = useState(true);
   const [openSchool, setOpenSchool] = useState<NexusSchool | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2000);
+  };
+
+  const setSort = (key: SchoolSortKey) => {
+    if (key === sortKey) {
+      setSortAsc((v) => !v);
+    } else {
+      setSortKey(key);
+      // 名稱預設 A→Z(升冪)，其餘預設升冪(排名小=好、學費低在前)
+      setSortAsc(true);
+    }
+  };
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return SCHOOLS.filter((s) => {
+    const rows = SCHOOLS.filter((s) => {
       if (country !== "全部" && s.country !== country) return false;
       if (type !== "全部" && s.type !== type) return false;
       if (!q) return true;
@@ -39,7 +68,27 @@ export function SchoolDatabaseView() {
         s.tags.some((t) => t.toLowerCase().includes(q))
       );
     });
-  }, [search, country, type]);
+
+    const sorted = [...rows].sort((a, b) => {
+      let cmp = 0;
+      switch (sortKey) {
+        case "qs":
+          cmp = nullLast(a.qsRanking) - nullLast(b.qsRanking);
+          break;
+        case "usnews":
+          cmp = nullLast(a.usNewsRanking) - nullLast(b.usNewsRanking);
+          break;
+        case "tuition":
+          cmp = a.tuitionSortUsd - b.tuitionSortUsd;
+          break;
+        case "name":
+          cmp = a.chineseName.localeCompare(b.chineseName, "zh-Hant");
+          break;
+      }
+      return sortAsc ? cmp : -cmp;
+    });
+    return sorted;
+  }, [search, country, type, sortKey, sortAsc]);
 
   return (
     <PageContainer>
@@ -74,11 +123,50 @@ export function SchoolDatabaseView() {
             value={type}
             onChange={setType}
           />
+          {/* 排序列 — 點同一鍵切換升/降冪 */}
+          <div className="flex flex-wrap items-center gap-1.5 border-t border-slate-100 pt-2.5">
+            <span className="mr-1 flex w-8 items-center gap-1 text-xs font-bold text-ink-muted">
+              <ArrowUpDown className="h-3 w-3" />
+            </span>
+            {SCHOOL_SORTS.map((opt) => {
+              const active = sortKey === opt.key;
+              return (
+                <button
+                  key={opt.key}
+                  type="button"
+                  onClick={() => setSort(opt.key)}
+                  className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                    active
+                      ? "border-nexus-pink bg-nexus-pink/10 text-nexus-pink"
+                      : "border-slate-200 bg-white text-ink-soft hover:bg-slate-50"
+                  }`}
+                >
+                  {opt.label}
+                  {active &&
+                    (sortAsc ? (
+                      <ArrowUp className="h-3 w-3" />
+                    ) : (
+                      <ArrowDown className="h-3 w-3" />
+                    ))}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </Card>
 
-      <div className="mb-3 text-sm text-ink-muted">
-        篩選結果:<span className="font-bold text-ink">{filtered.length}</span> 所
+      <div className="mb-3 flex flex-wrap items-center gap-2 text-sm text-ink-muted">
+        <span>
+          篩選結果:<span className="font-bold text-ink">{filtered.length}</span> 所
+        </span>
+        <span className="text-slate-300">·</span>
+        <span>
+          排序依{" "}
+          <span className="font-bold text-nexus-pink">
+            {SCHOOL_SORTS.find((s) => s.key === sortKey)?.label}
+          </span>{" "}
+          ({sortAsc ? "升冪" : "降冪"})
+        </span>
       </div>
 
       {/* 學校卡 */}
@@ -167,8 +255,18 @@ export function SchoolDatabaseView() {
 
       {/* 詳細 / 編輯 modal */}
       {openSchool && (
-        <SchoolModal school={openSchool} onClose={() => setOpenSchool(null)} />
+        <SchoolModal
+          school={openSchool}
+          onClose={() => setOpenSchool(null)}
+          onSave={() => {
+            const name = openSchool.chineseName;
+            setOpenSchool(null);
+            showToast(`已儲存「${name}」資料(Demo 示意)`);
+          }}
+        />
       )}
+
+      <DemoToast message={toast} accentClass={NEXUS_ACCENT} />
     </PageContainer>
   );
 }
@@ -225,9 +323,11 @@ function ReqTag({ children }: { children: React.ReactNode }) {
 function SchoolModal({
   school,
   onClose,
+  onSave,
 }: {
   school: NexusSchool;
   onClose: () => void;
+  onSave: () => void;
 }) {
   return (
     <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4">
@@ -302,9 +402,10 @@ function SchoolModal({
           </button>
           <button
             type="button"
+            onClick={onSave}
             className="rounded-lg bg-nexus-pink px-4 py-2 text-sm font-semibold text-white hover:bg-nexus-purple"
           >
-            編輯資料 (展示用)
+            儲存資料 (展示用)
           </button>
         </div>
       </div>

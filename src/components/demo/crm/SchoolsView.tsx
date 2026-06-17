@@ -9,15 +9,18 @@ import {
   Card,
   Pill,
 } from "@/components/demo/primitives";
+import { DemoModal } from "@/components/demo/widgets";
 import {
   SCHOOLS,
   COUNTRY_LABELS,
   type SchoolCountry,
+  type SchoolRow,
 } from "@/data/demo/crm";
 
 export function SchoolsView() {
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState<"" | SchoolCountry>("");
+  const [openSchool, setOpenSchool] = useState<SchoolRow | null>(null);
 
   const filtered = useMemo(() => {
     return SCHOOLS.filter((s) => {
@@ -41,7 +44,7 @@ export function SchoolsView() {
         icon={GraduationCap}
         title="常用院校檢索"
         subtitle={`${filtered.length} 所學校${
-          query || country ? " · 已套用篩選" : ""
+          query || country ? " · 已套用篩選" : " · 點任一列查看門檻"
         }`}
       />
 
@@ -97,7 +100,8 @@ export function SchoolsView() {
                 filtered.map((s) => (
                   <tr
                     key={s.shortName}
-                    className="border-b border-slate-100 last:border-0 hover:bg-crm-soft/40"
+                    onClick={() => setOpenSchool(s)}
+                    className="cursor-pointer border-b border-slate-100 last:border-0 hover:bg-crm-soft/40"
                   >
                     <td className="px-4 py-3">
                       <span className="font-bold text-ink">{s.shortName}</span>
@@ -123,6 +127,48 @@ export function SchoolsView() {
           </table>
         </div>
       </Card>
+
+      <DemoModal
+        open={openSchool !== null}
+        onClose={() => setOpenSchool(null)}
+        title={openSchool ? `${openSchool.shortName} · 申請門檻` : ""}
+        accentClass="bg-crm"
+      >
+        {openSchool && <SchoolDetail s={openSchool} />}
+      </DemoModal>
     </PageContainer>
+  );
+}
+
+/** 由排名 deterministic 推導出示意門檻(無亂數) */
+function SchoolDetail({ s }: { s: SchoolRow }) {
+  const top = s.rankingQs <= 20;
+  const mid = s.rankingQs <= 60;
+  const gpa = top ? "3.7+" : mid ? "3.4+" : "3.2+";
+  const toefl = top ? "105+" : mid ? "100+" : "90+";
+  const ielts = top ? "7.0+" : mid ? "6.5+" : "6.0+";
+  const rows: { label: string; value: string }[] = [
+    { label: "全名", value: `${s.nameEn}（${s.nameZh}）` },
+    { label: "國家", value: COUNTRY_LABELS[s.country] },
+    { label: "QS 排名", value: `#${s.rankingQs}` },
+    { label: "US News", value: s.rankingUsNews ? `#${s.rankingUsNews}` : "未列入" },
+    { label: "建議 GPA", value: gpa },
+    { label: "TOEFL / IELTS", value: `${toefl} / ${ielts}` },
+    { label: "合作關係", value: s.isPartner ? "合作院校(可加速審件)" : "一般申請" },
+  ];
+  return (
+    <div>
+      <dl className="grid grid-cols-[96px_1fr] gap-y-2 text-sm">
+        {rows.map((r) => (
+          <div key={r.label} className="contents">
+            <dt className="text-ink-muted">{r.label}</dt>
+            <dd className="text-ink-soft">{r.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-4 text-xs text-ink-muted">
+        以上門檻為依排名推導之示意值,正式系統會串接各校官方申請資料。
+      </p>
+    </div>
   );
 }

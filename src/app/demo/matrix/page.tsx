@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { DemoShell, type DemoNavItem } from "@/components/demo/DemoShell";
 import { TopbarButton } from "@/components/demo/primitives";
+import { DemoToast } from "@/components/demo/widgets";
 import { MATRIX_DATA, MATRIX_YEARS, type MatrixYear } from "@/data/demo/matrix";
 import { OverviewView } from "@/components/demo/matrix/OverviewView";
 import { PerformanceView } from "@/components/demo/matrix/PerformanceView";
@@ -36,8 +37,22 @@ const TITLES: Record<string, string> = {
 export default function MatrixDemoPage() {
   const [view, setView] = useState("overview");
   const [year, setYear] = useState<MatrixYear>("2026");
+  const [toast, setToast] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
 
   const data = MATRIX_DATA[year];
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    window.setTimeout(() => setToast(null), 2200);
+  };
+
+  const handleSync = () => {
+    if (syncing) return;
+    setSyncing(true);
+    showToast(`資料同步完成 · ${year} 年度已更新(Demo 示意)`);
+    window.setTimeout(() => setSyncing(false), 900);
+  };
 
   const topbarRight = (
     <div className="flex items-center gap-2">
@@ -56,8 +71,13 @@ export default function MatrixDemoPage() {
           </button>
         ))}
       </div>
-      <TopbarButton icon={RefreshCw} primary primaryClass="bg-matrix-rose hover:bg-matrix-orange">
-        同步
+      <TopbarButton
+        icon={RefreshCw}
+        primary
+        primaryClass={`bg-matrix-rose hover:bg-matrix-orange ${syncing ? "opacity-70" : ""}`}
+        onClick={handleSync}
+      >
+        {syncing ? "同步中…" : "同步"}
       </TopbarButton>
     </div>
   );
@@ -74,7 +94,12 @@ export default function MatrixDemoPage() {
       onSelect={setView}
       title={TITLES[view]}
       topbarRight={topbarRight}
-      floating={<AIWidget />}
+      floating={
+        <>
+          <AIWidget />
+          <DemoToast message={toast} accentClass="bg-matrix-rose" />
+        </>
+      }
     >
       {view === "overview" && <OverviewView data={data} />}
       {view === "performance" && <PerformanceView data={data} year={year} />}

@@ -11,13 +11,14 @@ import {
   ProgressBar,
 } from "@/components/demo/primitives";
 import {
-  STUDENT_DETAIL,
+  getStudentDetail,
   STATUS_META,
   APP_STATUS_META,
   isOverdue,
   type StudentDetail,
   type ApplicationCard,
 } from "@/data/demo/crm";
+import { DemoToast } from "@/components/demo/widgets";
 
 const TAB_ITEMS = [
   { key: "overview", label: "概覽" },
@@ -37,8 +38,14 @@ export function StudentDetailView({
   onBack: () => void;
 }) {
   const [tab, setTab] = useState("overview");
-  const detail = STUDENT_DETAIL[studentId] ?? STUDENT_DETAIL.s01;
+  const [toast, setToast] = useState<string | null>(null);
+  const detail = getStudentDetail(studentId);
   const status = STATUS_META[detail.statusCode];
+
+  const fireToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2000);
+  };
 
   return (
     <PageContainer>
@@ -57,12 +64,18 @@ export function StudentDetailView({
           <span className="text-base font-normal text-ink-muted">
             {detail.englishName}
           </span>
-          <button type="button" className="transition-transform hover:scale-105">
+          <button
+            type="button"
+            onClick={() => fireToast("狀態切換為示意,正式系統可直接變更")}
+            className="transition-transform hover:scale-105"
+            title="點擊變更狀態(Demo 示意)"
+          >
             <Pill color={status?.color ?? "slate"}>{status?.label ?? "—"}</Pill>
           </button>
         </div>
         <button
           type="button"
+          onClick={() => fireToast("編輯模式為 Demo 示意,正式系統可寫入資料")}
           className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-semibold text-ink-soft transition-colors hover:bg-slate-50"
         >
           <Pencil className="h-4 w-4" /> 編輯
@@ -83,8 +96,10 @@ export function StudentDetailView({
       {tab === "scores" && <ScoresTab detail={detail} />}
       {tab === "deals" && <DealsTab detail={detail} />}
       {tab === "schools" && <SchoolsTab detail={detail} />}
-      {tab === "documents" && <DocumentsTab detail={detail} />}
+      {tab === "documents" && <DocumentsTab detail={detail} onToast={fireToast} />}
       {tab === "applications" && <ApplicationsTab detail={detail} />}
+
+      <DemoToast message={toast} accentClass="bg-crm" />
     </PageContainer>
   );
 }
@@ -222,6 +237,22 @@ function ScoresTab({ detail }: { detail: StudentDetail }) {
 /* ── 成交 ─────────────────────────────────────────────────── */
 function DealsTab({ detail }: { detail: StudentDetail }) {
   const { deals } = detail;
+  if (deals.splits.length === 0) {
+    return (
+      <Card>
+        <div className="flex flex-col items-center justify-center gap-2 py-10 text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-crm-soft text-crm">
+            <Coins className="h-6 w-6" />
+          </span>
+          <p className="text-sm font-semibold text-ink">尚未成交</p>
+          <p className="max-w-xs text-xs text-ink-muted">
+            此學生目前為招生階段({STATUS_META[detail.statusCode]?.label ?? "—"}),
+            成交後此處將顯示方案金額與顧問績效拆分。
+          </p>
+        </div>
+      </Card>
+    );
+  }
   return (
     <Card>
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-slate-100 pb-4">
@@ -308,21 +339,48 @@ function SchoolsTab({ detail }: { detail: StudentDetail }) {
   );
 }
 
-/* ── 文件(精簡)──────────────────────────────────────────── */
-function DocumentsTab({ detail }: { detail: StudentDetail }) {
+/* ── 文件 ─────────────────────────────────────────────────── */
+function DocumentsTab({
+  detail,
+  onToast,
+}: {
+  detail: StudentDetail;
+  onToast: (msg: string) => void;
+}) {
+  const doneCount = detail.checklist.filter((c) => c.done).length;
   return (
     <Card>
-      <h3 className="mb-3 text-base font-semibold text-ink">文件清單</h3>
+      <div className="mb-3 flex items-center justify-between">
+        <h3 className="text-base font-semibold text-ink">文件清單</h3>
+        <span className="text-xs text-ink-muted">
+          {doneCount} / {detail.checklist.length} 已上傳
+        </span>
+      </div>
       <ul className="divide-y divide-slate-100">
         {detail.checklist.map((c) => (
           <li
             key={c.label}
-            className="flex items-center justify-between py-2.5 text-sm"
+            className="flex items-center justify-between gap-3 py-2.5 text-sm"
           >
             <span className="text-ink-soft">{c.label}</span>
-            <Pill color={c.done ? "emerald" : "slate"}>
-              {c.done ? "已上傳" : "待補"}
-            </Pill>
+            <div className="flex items-center gap-2">
+              <Pill color={c.done ? "emerald" : "slate"}>
+                {c.done ? "已上傳" : "待補"}
+              </Pill>
+              <button
+                type="button"
+                onClick={() =>
+                  onToast(
+                    c.done
+                      ? `已開啟「${c.label}」預覽(Demo 示意)`
+                      : `已提醒學生補交「${c.label}」(Demo 示意)`
+                  )
+                }
+                className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-ink-soft transition-colors hover:bg-slate-50"
+              >
+                {c.done ? "預覽" : "催繳"}
+              </button>
+            </div>
           </li>
         ))}
       </ul>

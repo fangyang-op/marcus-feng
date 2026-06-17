@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   ArrowRight,
   Clock,
@@ -11,11 +12,14 @@ import {
   Sparkles,
 } from "lucide-react";
 import { PageContainer, StatCard, Pill } from "@/components/demo/primitives";
+import { DemoModal } from "@/components/demo/widgets";
 import {
   UPCOMING_ACTIVITIES,
   DASHBOARD_STATS,
   RECENT_FEED,
 } from "@/data/demo/nexus";
+
+const NEXUS_ACCENT = "bg-nexus-pink";
 
 const STAT_ICON = {
   announcements: Bell,
@@ -33,6 +37,7 @@ const STAT_ACCENT = {
 
 export function DashboardView() {
   const [primary, ...rest] = UPCOMING_ACTIVITIES;
+  const [modal, setModal] = useState<{ title: string; body: string } | null>(null);
 
   return (
     <PageContainer>
@@ -80,6 +85,12 @@ export function DashboardView() {
             </div>
             <button
               type="button"
+              onClick={() =>
+                setModal({
+                  title: primary.name,
+                  body: `${primary.date} · ${primary.time} · ${primary.location}。報名與議程連結將在正式系統中提供,本 Demo 為示意。`,
+                })
+              }
               className="relative z-10 inline-flex w-fit items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-nexus-pink shadow-sm transition-colors hover:bg-rose-50"
             >
               查看詳情 <ArrowRight className="h-4 w-4" />
@@ -92,6 +103,12 @@ export function DashboardView() {
               <button
                 type="button"
                 key={a.id}
+                onClick={() =>
+                  setModal({
+                    title: a.name,
+                    body: `${a.date} · ${a.time} · ${a.location}。詳細議程與報名於正式系統中提供,本 Demo 為示意。`,
+                  })
+                }
                 className="flex w-full items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition-shadow hover:shadow-md"
               >
                 <div className="min-w-0">
@@ -151,6 +168,7 @@ export function DashboardView() {
               <button
                 type="button"
                 key={item.id}
+                onClick={() => setModal({ title: item.title, body: item.preview })}
                 className="group flex w-full items-center justify-between gap-4 p-4 text-left transition-colors hover:bg-rose-50/40"
               >
                 <div className="flex min-w-0 flex-1 items-center gap-4">
@@ -193,6 +211,15 @@ export function DashboardView() {
         <Sparkles className="h-4 w-4 flex-none text-nexus-pink" />
         提示:右下角的 AI 助理可協助查歷屆榜單、推薦選校與查詢申請門檻。
       </div>
+
+      <DemoModal
+        open={modal != null}
+        onClose={() => setModal(null)}
+        title={modal?.title ?? ""}
+        accentClass={NEXUS_ACCENT}
+      >
+        <p>{modal?.body}</p>
+      </DemoModal>
     </PageContainer>
   );
 }

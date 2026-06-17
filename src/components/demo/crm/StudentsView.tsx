@@ -11,6 +11,7 @@ import {
   Tabs,
   TopbarButton,
 } from "@/components/demo/primitives";
+import { DemoToast } from "@/components/demo/widgets";
 import {
   STUDENTS,
   STATUS_META,
@@ -34,6 +35,12 @@ export function StudentsView({
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(1);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const fireToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2000);
+  };
 
   const counts = useMemo(
     () => ({
@@ -83,7 +90,12 @@ export function StudentsView({
           tab !== "all" || query || statusFilter ? " · 已套用篩選" : ""
         }`}
         right={
-          <TopbarButton icon={Plus} primary primaryClass="bg-crm hover:bg-crm-ink">
+          <TopbarButton
+            icon={Plus}
+            primary
+            primaryClass="bg-crm hover:bg-crm-ink"
+            onClick={() => fireToast("新增學生表單為 Demo 示意,正式系統可建立名單")}
+          >
             新增學生
           </TopbarButton>
         }
@@ -198,6 +210,8 @@ export function StudentsView({
           </div>
         </nav>
       )}
+
+      <DemoToast message={toast} accentClass="bg-crm" />
     </PageContainer>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Target,
   Sparkles,
@@ -12,6 +12,7 @@ import {
   Sliders,
   RotateCcw,
   BookOpen,
+  Loader2,
 } from "lucide-react";
 import { PageContainer, PageTitle, Card } from "@/components/demo/primitives";
 import {
@@ -47,34 +48,71 @@ function probColor(p: number) {
   return { bar: "bg-rose-500", text: "text-rose-700" };
 }
 
-export function PlacementView() {
-  const [gpa, setGpa] = useState(PLACEMENT_DEFAULT_INPUT.gpa);
-  const [toefl, setToefl] = useState(PLACEMENT_DEFAULT_INPUT.toefl);
-  const [major, setMajor] = useState(PLACEMENT_DEFAULT_INPUT.major);
-  const [country, setCountry] = useState(PLACEMENT_DEFAULT_INPUT.country);
+interface Profile {
+  gpa: number;
+  toefl: number;
+  major: string;
+  country: string;
+}
 
-  // What-if 基準鎖在預設輸入上
-  const baseGpa = PLACEMENT_DEFAULT_INPUT.gpa;
-  const baseToefl = PLACEMENT_DEFAULT_INPUT.toefl;
-  const gpaDelta = gpa - baseGpa;
-  const toeflDelta = toefl - baseToefl;
+export function PlacementView() {
+  // 表單草稿(尚未分析)
+  const [draft, setDraft] = useState<Profile>({ ...PLACEMENT_DEFAULT_INPUT });
+  // 已分析後鎖定的基準輪廓(分析動作的產物)
+  const [analyzed, setAnalyzed] = useState<Profile | null>({ ...PLACEMENT_DEFAULT_INPUT });
+  const [analyzing, setAnalyzing] = useState(false);
+  // What-if 模擬器在「已分析基準」之上即時調整 GPA / TOEFL
+  const [whatIfGpa, setWhatIfGpa] = useState(PLACEMENT_DEFAULT_INPUT.gpa);
+  const [whatIfToefl, setWhatIfToefl] = useState(PLACEMENT_DEFAULT_INPUT.toefl);
+
+  // 草稿是否與已分析輪廓不同 → 顯示「待分析」提示
+  const dirty = useMemo(() => {
+    if (!analyzed) return true;
+    return (
+      Math.abs(draft.gpa - analyzed.gpa) > 0.001 ||
+      draft.toefl !== analyzed.toefl ||
+      draft.major !== analyzed.major ||
+      draft.country !== analyzed.country
+    );
+  }, [draft, analyzed]);
+
+  /** 「分析」動作:鎖定草稿為基準、重置 What-if 滑桿到該基準 */
+  const runAnalysis = () => {
+    setAnalyzing(true);
+    const snapshot = { ...draft };
+    // 短暫 loading 讓「分析」動作有明確回饋(非亂數、非讀時鐘)
+    window.setTimeout(() => {
+      setAnalyzed(snapshot);
+      setWhatIfGpa(snapshot.gpa);
+      setWhatIfToefl(snapshot.toefl);
+      setAnalyzing(false);
+    }, 650);
+  };
+
+  // What-if 基準鎖在「已分析」的輪廓上
+  const baseGpa = analyzed?.gpa ?? PLACEMENT_DEFAULT_INPUT.gpa;
+  const baseToefl = analyzed?.toefl ?? PLACEMENT_DEFAULT_INPUT.toefl;
+  const gpaDelta = whatIfGpa - baseGpa;
+  const toeflDelta = whatIfToefl - baseToefl;
   const hasWhatIf = Math.abs(gpaDelta) > 0.001 || Math.abs(toeflDelta) > 0.5;
 
-  const reset = () => {
-    setGpa(baseGpa);
-    setToefl(baseToefl);
+  const resetWhatIf = () => {
+    setWhatIfGpa(baseGpa);
+    setWhatIfToefl(baseToefl);
   };
 
   const dream = PLACEMENT_SCHOOLS.filter((s) => s.tier === "dream");
   const match = PLACEMENT_SCHOOLS.filter((s) => s.tier === "match");
   const safety = PLACEMENT_SCHOOLS.filter((s) => s.tier === "safety");
 
+  const hasResult = analyzed != null;
+
   return (
     <PageContainer>
       <PageTitle
         icon={Target}
         title="AI 落點分析"
-        subtitle="參考歷屆 40 筆相似背景榜單 · 即時 What-if 模擬(示意)"
+        subtitle="參考歷屆 40 筆相似背景榜單 · 分析後可即時 What-if 模擬(示意)"
       />
 
       <div className="flex flex-col gap-6 lg:flex-row">
@@ -98,8 +136,10 @@ export function PlacementView() {
                   step="0.05"
                   min={2}
                   max={4}
-                  value={gpa}
-                  onChange={(e) => setGpa(parseFloat(e.target.value) || 0)}
+                  value={draft.gpa}
+                  onChange={(e) =>
+                    setDraft((d) => ({ ...d, gpa: parseFloat(e.target.value) || 0 }))
+                  }
                   className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-bold text-ink outline-none focus:border-nexus-pink focus:bg-white focus:ring-2 focus:ring-nexus-pink/20"
                 />
               </Field>
@@ -108,136 +148,196 @@ export function PlacementView() {
                   type="number"
                   min={60}
                   max={120}
-                  value={toefl}
-                  onChange={(e) => setToefl(parseInt(e.target.value, 10) || 0)}
+                  value={draft.toefl}
+                  onChange={(e) =>
+                    setDraft((d) => ({ ...d, toefl: parseInt(e.target.value, 10) || 0 }))
+                  }
                   className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-bold text-ink outline-none focus:border-nexus-pink focus:bg-white focus:ring-2 focus:ring-nexus-pink/20"
                 />
               </Field>
               <Field label="目標科系">
                 <input
-                  value={major}
-                  onChange={(e) => setMajor(e.target.value)}
+                  value={draft.major}
+                  onChange={(e) => setDraft((d) => ({ ...d, major: e.target.value }))}
                   className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-bold text-ink outline-none focus:border-nexus-pink focus:bg-white focus:ring-2 focus:ring-nexus-pink/20"
                 />
               </Field>
               <Field label="目標國家">
                 <input
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
+                  value={draft.country}
+                  onChange={(e) => setDraft((d) => ({ ...d, country: e.target.value }))}
                   className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-bold text-ink outline-none focus:border-nexus-pink focus:bg-white focus:ring-2 focus:ring-nexus-pink/20"
                 />
               </Field>
 
               <button
                 type="button"
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-nexus-pink to-nexus-purple py-3 text-sm font-bold text-white shadow-sm"
+                onClick={runAnalysis}
+                disabled={analyzing}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-nexus-pink to-nexus-purple py-3 text-sm font-bold text-white shadow-sm transition-opacity hover:opacity-95 disabled:opacity-70"
               >
-                <Sparkles className="h-4 w-4" /> 已即時分析(結果見右側)
+                {analyzing ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> AI 分析中…
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-4 w-4" />{" "}
+                    {hasResult ? "重新分析" : "開始 AI 分析"}
+                  </>
+                )}
               </button>
+
+              {dirty && hasResult && !analyzing && (
+                <p className="rounded-lg bg-amber-50 px-3 py-2 text-[11px] font-medium text-amber-700">
+                  條件已修改,點「重新分析」以更新右側落點結果。
+                </p>
+              )}
             </div>
           </Card>
         </div>
 
         {/* 右:結果 */}
         <div className="min-w-0 flex-1 space-y-6">
-          {/* AI 推理說明 */}
-          <div className="rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 p-6 text-white shadow-lg">
-            <h3 className="mb-3 flex items-center gap-2 text-base font-bold">
-              <BookOpen className="h-5 w-5" /> AI 推理說明
-            </h3>
-            <p className="text-sm leading-relaxed text-slate-200">
-              {PLACEMENT_REASONING}
-            </p>
-          </div>
-
-          {/* What-if 滑桿 */}
-          <div className="rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50 p-5 shadow-sm">
-            <div className="mb-3 flex items-center justify-between">
-              <h3 className="flex items-center gap-2 text-sm font-bold text-ink">
-                <Sliders className="h-4 w-4 text-indigo-600" /> What-if 模擬器
-                {hasWhatIf && (
-                  <span className="rounded-md bg-indigo-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
-                    已模擬
-                  </span>
-                )}
-              </h3>
-              {hasWhatIf && (
-                <button
-                  type="button"
-                  onClick={reset}
-                  className="flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-bold text-indigo-600 hover:bg-indigo-100"
-                >
-                  <RotateCcw className="h-3 w-3" /> 重設
-                </button>
-              )}
+          {analyzing && (
+            <div className="flex items-center gap-3 rounded-xl border border-nexus-pink/20 bg-nexus-pink/5 px-5 py-4 text-sm font-medium text-nexus-pink">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              正在比對歷屆榜單與院校門檻,計算各校落點機率…
             </div>
-            <p className="mb-4 text-xs leading-relaxed text-ink-soft">
-              拖動滑桿即時模擬:若學生 GPA 或 TOEFL 改變,各校錄取機率如何變動?(線性推估,不重新呼叫 AI)
-            </p>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <Slider
-                label="GPA (4.0 制)"
-                value={gpa}
-                min={2}
-                max={4}
-                step={0.05}
-                onChange={setGpa}
-                display={gpa.toFixed(2)}
-                delta={Math.abs(gpaDelta) > 0.005 ? `${gpaDelta > 0 ? "+" : ""}${gpaDelta.toFixed(2)}` : null}
-                deltaPositive={gpaDelta > 0}
-                marks={["2.0", "3.0", "4.0"]}
-              />
-              <Slider
-                label="TOEFL"
-                value={toefl}
-                min={60}
-                max={120}
-                step={1}
-                onChange={(v) => setToefl(Math.round(v))}
-                display={`${toefl}`}
-                delta={Math.abs(toeflDelta) > 0.5 ? `${toeflDelta > 0 ? "+" : ""}${toeflDelta.toFixed(0)}` : null}
-                deltaPositive={toeflDelta > 0}
-                marks={["60", "90", "120"]}
-              />
-            </div>
-          </div>
+          )}
 
-          {/* 三欄結果 */}
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-            <Column
-              title="夢幻 (Dream)"
-              note="衝刺嘗試"
-              color="text-rose-600 border-rose-200"
-              icon={<Trophy className="h-5 w-5" />}
-              schools={dream}
-              gpaDelta={gpaDelta}
-              toeflDelta={toeflDelta}
-              hasWhatIf={hasWhatIf}
-            />
-            <Column
-              title="合適 (Match)"
-              note="主力申請"
-              color="text-emerald-600 border-emerald-200"
-              icon={<CheckCircle className="h-5 w-5" />}
-              schools={match}
-              gpaDelta={gpaDelta}
-              toeflDelta={toeflDelta}
-              hasWhatIf={hasWhatIf}
-            />
-            <Column
-              title="保底 (Safety)"
-              note="低風險"
-              color="text-blue-600 border-blue-200"
-              icon={<AlertCircle className="h-5 w-5" />}
-              schools={safety}
-              gpaDelta={gpaDelta}
-              toeflDelta={toeflDelta}
-              hasWhatIf={hasWhatIf}
-            />
-          </div>
+          {hasResult && !analyzing && (
+            <>
+              {/* 已分析輪廓摘要 */}
+              <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs shadow-sm">
+                <span className="font-bold text-ink-muted">本次分析輪廓</span>
+                <ProfileChip label="GPA" value={analyzed.gpa.toFixed(2)} />
+                <ProfileChip label="TOEFL" value={`${analyzed.toefl}`} />
+                <ProfileChip label="科系" value={analyzed.major} />
+                <ProfileChip label="國家" value={analyzed.country} />
+              </div>
+
+              {/* AI 推理說明 */}
+              <div className="rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 p-6 text-white shadow-lg">
+                <h3 className="mb-3 flex items-center gap-2 text-base font-bold">
+                  <BookOpen className="h-5 w-5" /> AI 推理說明
+                </h3>
+                <p className="text-sm leading-relaxed text-slate-200">
+                  {PLACEMENT_REASONING}
+                </p>
+              </div>
+
+              {/* What-if 滑桿 */}
+              <div className="rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50 p-5 shadow-sm">
+                <div className="mb-3 flex items-center justify-between">
+                  <h3 className="flex items-center gap-2 text-sm font-bold text-ink">
+                    <Sliders className="h-4 w-4 text-indigo-600" /> What-if 模擬器
+                    {hasWhatIf && (
+                      <span className="rounded-md bg-indigo-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                        已模擬
+                      </span>
+                    )}
+                  </h3>
+                  {hasWhatIf && (
+                    <button
+                      type="button"
+                      onClick={resetWhatIf}
+                      className="flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-bold text-indigo-600 hover:bg-indigo-100"
+                    >
+                      <RotateCcw className="h-3 w-3" /> 重設
+                    </button>
+                  )}
+                </div>
+                <p className="mb-4 text-xs leading-relaxed text-ink-soft">
+                  拖動滑桿即時模擬:若學生 GPA 或 TOEFL 改變,各校錄取機率如何變動?(以本次分析輪廓為基準線性推估,不重新呼叫 AI)
+                </p>
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                  <Slider
+                    label="GPA (4.0 制)"
+                    value={whatIfGpa}
+                    min={2}
+                    max={4}
+                    step={0.05}
+                    onChange={setWhatIfGpa}
+                    display={whatIfGpa.toFixed(2)}
+                    delta={Math.abs(gpaDelta) > 0.005 ? `${gpaDelta > 0 ? "+" : ""}${gpaDelta.toFixed(2)}` : null}
+                    deltaPositive={gpaDelta > 0}
+                    marks={["2.0", "3.0", "4.0"]}
+                  />
+                  <Slider
+                    label="TOEFL"
+                    value={whatIfToefl}
+                    min={60}
+                    max={120}
+                    step={1}
+                    onChange={(v) => setWhatIfToefl(Math.round(v))}
+                    display={`${whatIfToefl}`}
+                    delta={Math.abs(toeflDelta) > 0.5 ? `${toeflDelta > 0 ? "+" : ""}${toeflDelta.toFixed(0)}` : null}
+                    deltaPositive={toeflDelta > 0}
+                    marks={["60", "90", "120"]}
+                  />
+                </div>
+              </div>
+
+              {/* 三欄結果 */}
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                <Column
+                  title="夢幻 (Dream)"
+                  note="衝刺嘗試"
+                  color="text-rose-600 border-rose-200"
+                  icon={<Trophy className="h-5 w-5" />}
+                  schools={dream}
+                  gpaDelta={gpaDelta}
+                  toeflDelta={toeflDelta}
+                  hasWhatIf={hasWhatIf}
+                />
+                <Column
+                  title="合適 (Match)"
+                  note="主力申請"
+                  color="text-emerald-600 border-emerald-200"
+                  icon={<CheckCircle className="h-5 w-5" />}
+                  schools={match}
+                  gpaDelta={gpaDelta}
+                  toeflDelta={toeflDelta}
+                  hasWhatIf={hasWhatIf}
+                />
+                <Column
+                  title="保底 (Safety)"
+                  note="低風險"
+                  color="text-blue-600 border-blue-200"
+                  icon={<AlertCircle className="h-5 w-5" />}
+                  schools={safety}
+                  gpaDelta={gpaDelta}
+                  toeflDelta={toeflDelta}
+                  hasWhatIf={hasWhatIf}
+                />
+              </div>
+            </>
+          )}
+
+          {!hasResult && !analyzing && (
+            <Card className="flex flex-col items-center justify-center py-16 text-center">
+              <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-nexus-pink/10 text-nexus-pink">
+                <Sparkles className="h-7 w-7" />
+              </span>
+              <h3 className="text-base font-bold text-ink">輸入學生條件後開始分析</h3>
+              <p className="mt-2 max-w-sm text-sm text-ink-muted">
+                填寫左側 GPA / TOEFL / 目標科系與國家,點「開始 AI 分析」即可取得 Dream / Match / Safety 三檔落點與錄取機率。
+              </p>
+            </Card>
+          )}
         </div>
       </div>
     </PageContainer>
+  );
+}
+
+function ProfileChip({ label, value }: { label: string; value: string }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-semibold text-ink-soft">
+      <span className="text-ink-muted">{label}</span>
+      <span className="font-mono text-ink">{value}</span>
+    </span>
   );
 }
 

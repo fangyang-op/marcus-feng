@@ -7,10 +7,12 @@ import {
   PolarAngleAxis, PolarRadiusAxis, Radar, BarChart,
 } from "recharts";
 import {
-  Users, TrendingUp, DollarSign, ShieldCheck, Sparkles, ArrowUpRight,
-  ArrowDownRight, PieChart as PieIcon, Activity, BarChart3, LineChart as LineIcon,
+  Users, TrendingUp, DollarSign, ShieldCheck, Sparkles,
+  PieChart as PieIcon, Activity, BarChart3, LineChart as LineIcon, RotateCw,
+  type LucideIcon,
 } from "lucide-react";
-import { PageContainer, Card, StatCard, ProgressBar } from "@/components/demo/primitives";
+import { PageContainer, Card, ProgressBar } from "@/components/demo/primitives";
+import { FlipCard } from "@/components/demo/widgets";
 import { type YearData, MATRIX_PALETTE } from "@/data/demo/matrix";
 
 const wan = (n: number) => `$ ${(n / 10000).toFixed(1)} 萬`;
@@ -27,6 +29,71 @@ function Inline({ value, pp = false }: { value: number; pp?: boolean }) {
   );
 }
 
+/** KPI 翻轉卡:正面為數字卡(沿用 StatCard 視覺),背面為口徑/拆分補充。 */
+function KpiFlip({
+  icon: Icon,
+  label,
+  value,
+  delta,
+  hint,
+  accentClass = "text-ink",
+  backTitle,
+  backRows,
+  backNote,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  delta?: { value: string; positive: boolean };
+  hint: string;
+  accentClass?: string;
+  backTitle: string;
+  backRows: { k: string; v: string }[];
+  backNote: string;
+}) {
+  const front = (
+    <div className="relative flex h-full flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="flex items-start justify-between">
+        <span className="text-sm font-medium text-ink-muted">{label}</span>
+        <Icon className="h-4 w-4 text-slate-400" />
+      </div>
+      <div className={`mt-2 text-2xl font-bold tabular ${accentClass}`}>{value}</div>
+      <div className="mt-1 flex items-center gap-2">
+        {delta && (
+          <span
+            className={`rounded px-1.5 py-0.5 text-xs font-semibold ${
+              delta.positive ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
+            }`}
+          >
+            {delta.value}
+          </span>
+        )}
+        <span className="text-xs text-ink-muted">{hint}</span>
+      </div>
+      <span className="absolute bottom-3 right-3 flex items-center gap-1 text-[10px] font-medium text-slate-300">
+        <RotateCw className="h-3 w-3" /> 點擊翻轉
+      </span>
+    </div>
+  );
+  const back = (
+    <div className="flex h-full flex-col rounded-xl border border-matrix-rose/30 bg-gradient-to-br from-rose-50 to-orange-50 p-5 shadow-sm">
+      <p className="text-xs font-bold uppercase tracking-wide text-matrix-rose">{backTitle}</p>
+      <div className="mt-2 flex-1 space-y-1.5">
+        {backRows.map((r) => (
+          <div key={r.k} className="flex items-baseline justify-between gap-2 text-[13px]">
+            <span className="shrink-0 text-ink-muted">{r.k}</span>
+            <span className="text-right font-semibold text-ink-soft">{r.v}</span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-2 border-t border-rose-200/60 pt-2 text-[10.5px] leading-snug text-ink-muted">
+        {backNote}
+      </p>
+    </div>
+  );
+  return <FlipCard front={front} back={back} minHeight={150} />;
+}
+
 export function OverviewView({ data }: { data: YearData }) {
   const [conversionMode, setConversionMode] = useState<"conversion" | "revenue">("conversion");
   const [demoMode, setDemoMode] = useState<"pie" | "radar">("pie");
@@ -34,6 +101,15 @@ export function OverviewView({ data }: { data: YearData }) {
 
   const maxPkg = packages[0]?.count || 1;
   const sortedDemo = [...demographics].sort((a, b) => b.count - a.count);
+
+  // 年度 B2C / B2B 拆分(由月度序列彙總,寫死資料、可重現)
+  const b2cTotal = monthlyStats.reduce((a, m) => a + m.b2cStudentRevenue, 0);
+  const b2bTotal = monthlyStats.reduce((a, m) => a + m.b2bCommissionRevenue, 0);
+  const b2bShare = kpi.totalRevenue > 0 ? (b2bTotal / kpi.totalRevenue) * 100 : 0;
+  const avgDeal = kpi.totalSales > 0 ? kpi.totalRevenue / kpi.totalSales : 0;
+  const peakMonth = [...monthlyStats].sort((a, b) => b.revenue - a.revenue)[0];
+  const peakConvMonth = [...monthlyStats].sort((a, b) => b.conversionRate - a.conversionRate)[0];
+  const avgConsultPerMonth = Math.round(kpi.totalConsultations / 12);
 
   return (
     <PageContainer className="space-y-6">
@@ -81,37 +157,75 @@ export function OverviewView({ data }: { data: YearData }) {
         </div>
       </div>
 
-      {/* ── 4 張 KPI ── */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          label="本年度總諮詢"
-          value={kpi.totalConsultations.toLocaleString()}
-          icon={Users}
-          delta={kpi.consultationsYoY ? { value: `▲ ${kpi.consultationsYoY}%`, positive: true } : undefined}
-          hint="vs 去年同期"
-        />
-        <StatCard
-          label="簽約轉換率"
-          value={`${kpi.conversionRate.toFixed(1)}%`}
-          icon={TrendingUp}
-          accentClass="text-matrix-rose"
-          delta={kpi.conversionYoY ? { value: `▲ ${kpi.conversionYoY} pp`, positive: true } : undefined}
-          hint={`成交 ${kpi.totalSales} 筆`}
-        />
-        <StatCard
-          label="總營收 (含回傭)"
-          value={wanInt(kpi.totalRevenue)}
-          icon={DollarSign}
-          delta={kpi.revenueYoY ? { value: `▲ ${kpi.revenueYoY}%`, positive: true } : undefined}
-          hint={`B2B 回傭 ${kpi.commissionCount} 筆`}
-        />
-        <StatCard
-          label="有效單維護率"
-          value={`${kpi.maintenanceRate.toFixed(1)}%`}
-          icon={ShieldCheck}
-          delta={kpi.maintenanceYoY ? { value: `▲ ${kpi.maintenanceYoY} pp`, positive: true } : undefined}
-          hint="表單填寫完整度"
-        />
+      {/* ── 4 張 KPI(FlipCard:點擊翻轉看口徑與拆分)── */}
+      <div>
+        <div className="mb-2 flex items-center gap-1.5 text-[11px] text-ink-muted">
+          <RotateCw className="h-3 w-3 text-matrix-rose" />
+          四張 KPI 皆可點擊翻轉,背面為 B2C/B2B 拆分、YoY/MoM 與口徑說明
+        </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <KpiFlip
+            icon={Users}
+            label="本年度總諮詢"
+            value={kpi.totalConsultations.toLocaleString()}
+            delta={kpi.consultationsYoY ? { value: `▲ ${kpi.consultationsYoY}%`, positive: true } : undefined}
+            hint="vs 去年同期"
+            backTitle="諮詢量口徑"
+            backRows={[
+              { k: "月均諮詢", v: `${avgConsultPerMonth.toLocaleString()} 件` },
+              { k: "全年成交", v: `${kpi.totalSales.toLocaleString()} 筆` },
+              { k: "旺季高峰", v: `${peakMonth.month}・${peakMonth.consults} 件` },
+              { k: "較去年同期", v: `▲ ${kpi.consultationsYoY}%` },
+            ]}
+            backNote="口徑:含四來源(洋碩/通路/網單/自招)所有進線諮詢,不去重。"
+          />
+          <KpiFlip
+            icon={TrendingUp}
+            label="簽約轉換率"
+            value={`${kpi.conversionRate.toFixed(1)}%`}
+            accentClass="text-matrix-rose"
+            delta={kpi.conversionYoY ? { value: `▲ ${kpi.conversionYoY} pp`, positive: true } : undefined}
+            hint={`成交 ${kpi.totalSales} 筆`}
+            backTitle="轉換率拆分"
+            backRows={[
+              { k: "最高轉換月", v: `${peakConvMonth.month}・${peakConvMonth.conversionRate.toFixed(1)}%` },
+              { k: "平均客單", v: wan(avgDeal) },
+              { k: "YoY", v: `▲ ${kpi.conversionYoY} 個百分點` },
+              { k: "標桿值", v: "25.0%" },
+            ]}
+            backNote="口徑:成交筆數 ÷ 實際諮詢數;標桿為內部年度目標線。"
+          />
+          <KpiFlip
+            icon={DollarSign}
+            label="總營收 (含回傭)"
+            value={wanInt(kpi.totalRevenue)}
+            delta={kpi.revenueYoY ? { value: `▲ ${kpi.revenueYoY}%`, positive: true } : undefined}
+            hint={`B2B 回傭 ${kpi.commissionCount} 筆`}
+            backTitle="B2C / B2B 拆分"
+            backRows={[
+              { k: "B2C 學費收入", v: `${wan(b2cTotal)}・${(100 - b2bShare).toFixed(0)}%` },
+              { k: "B2B 通路回傭", v: `${wan(b2bTotal)}・${b2bShare.toFixed(0)}%` },
+              { k: "最強月份", v: `${peakMonth.month}・${wan(peakMonth.revenue)}` },
+              { k: "較去年同期", v: `▲ ${kpi.revenueYoY}%` },
+            ]}
+            backNote="口徑:B2C 為學生端簽約學費;B2B 為合作通路完成媒合後之回傭。"
+          />
+          <KpiFlip
+            icon={ShieldCheck}
+            label="有效單維護率"
+            value={`${kpi.maintenanceRate.toFixed(1)}%`}
+            delta={kpi.maintenanceYoY ? { value: `▲ ${kpi.maintenanceYoY} pp`, positive: true } : undefined}
+            hint="表單填寫完整度"
+            backTitle="維護品質口徑"
+            backRows={[
+              { k: "在庫有效單", v: `${kpi.internalStudentCount.toLocaleString()} 件` },
+              { k: "B2B 回傭筆數", v: `${kpi.commissionCount} 筆` },
+              { k: "YoY", v: `▲ ${kpi.maintenanceYoY} 個百分點` },
+              { k: "判定門檻", v: "必填欄位 ≥ 90%" },
+            ]}
+            backNote="口徑:必填欄位(學歷/目標國/預算/時程)完整度達門檻者計為有效維護。"
+          />
+        </div>
       </div>
 
       {/* ── 月度轉換/營收 + 年級分佈 ── */}

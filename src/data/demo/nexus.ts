@@ -126,6 +126,8 @@ export interface NexusSchool {
   usNewsRanking: number | null;
   theRanking: number | null;
   tuitionRange: string; // 每年學費區間(假值)
+  /** 每年學費中位數(統一換算為美元等值，僅供排序用，寫死假值) */
+  tuitionSortUsd: number;
   requirements: { gpa: string; toefl: string; ielts: string };
   programs: string[];
   tags: string[];
@@ -146,6 +148,7 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 15,
     theRanking: 18,
     tuitionRange: "US$ 33,000 – 41,000 / 年",
+    tuitionSortUsd: 37000,
     requirements: { gpa: "3.5", toefl: "100", ielts: "7.0" },
     programs: ["Computer Science", "Data Science", "Electrical Engineering"],
     tags: ["理工強校", "公立名校", "申請競爭高"],
@@ -164,12 +167,70 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 21,
     theRanking: 24,
     tuitionRange: "US$ 47,000 – 58,000 / 年",
+    tuitionSortUsd: 52500,
     requirements: { gpa: "3.6", toefl: "102", ielts: "7.5" },
     programs: ["Computer Science", "Machine Learning", "Robotics"],
     tags: ["CS 頂尖", "申請競爭高"],
     isPartner: false,
     isVerified: true,
     description: "電腦科學與人工智慧領域全球頂尖，研究資源豐沛，業界連結強。",
+  },
+  {
+    id: "sch-mit",
+    name: "Massachusetts Institute of Technology",
+    chineseName: "麻省理工學院",
+    country: "美國",
+    location: "Cambridge, MA",
+    type: "研究所",
+    qsRanking: 1,
+    usNewsRanking: 2,
+    theRanking: 3,
+    tuitionRange: "US$ 56,000 – 62,000 / 年",
+    tuitionSortUsd: 59000,
+    requirements: { gpa: "3.8", toefl: "108", ielts: "7.5" },
+    programs: ["EECS", "Operations Research", "AI & Decision Making"],
+    tags: ["世界頂尖", "理工強校", "申請競爭高"],
+    isPartner: false,
+    isVerified: true,
+    description: "全球理工指標學府，研究能量與創業生態極強，申請難度最高一檔。",
+  },
+  {
+    id: "sch-gatech",
+    name: "Georgia Institute of Technology",
+    chineseName: "喬治亞理工學院",
+    country: "美國",
+    location: "Atlanta, GA",
+    type: "研究所",
+    qsRanking: 88,
+    usNewsRanking: 33,
+    theRanking: 38,
+    tuitionRange: "US$ 28,000 – 35,000 / 年",
+    tuitionSortUsd: 31500,
+    requirements: { gpa: "3.4", toefl: "100", ielts: "7.0" },
+    programs: ["Computer Science", "Analytics", "Electrical Engineering"],
+    tags: ["理工強校", "CP 值高", "合作院校"],
+    isPartner: true,
+    isVerified: true,
+    description: "公立理工名校，CS 與分析學程實務導向，線上碩士也具國際聲譽。",
+  },
+  {
+    id: "sch-uiuc",
+    name: "University of Illinois Urbana-Champaign",
+    chineseName: "伊利諾大學香檳分校",
+    country: "美國",
+    location: "Urbana, IL",
+    type: "研究所",
+    qsRanking: 64,
+    usNewsRanking: 35,
+    theRanking: 40,
+    tuitionRange: "US$ 32,000 – 39,000 / 年",
+    tuitionSortUsd: 35500,
+    requirements: { gpa: "3.4", toefl: "100", ielts: "6.5" },
+    programs: ["Computer Science", "Information Management", "Statistics"],
+    tags: ["理工強校", "公立名校"],
+    isPartner: false,
+    isVerified: true,
+    description: "工程與資訊領域長年名列前段，研究型學程選擇多，校友網絡綿密。",
   },
   {
     id: "sch-imperial",
@@ -182,6 +243,7 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 11,
     theRanking: 9,
     tuitionRange: "£ 38,000 – 43,000 / 年",
+    tuitionSortUsd: 51000,
     requirements: { gpa: "3.5", toefl: "100", ielts: "7.0" },
     programs: ["Computing", "Data Science", "Mechanical Engineering"],
     tags: ["理工強校", "一年制碩士", "合作院校"],
@@ -200,12 +262,51 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 12,
     theRanking: 22,
     tuitionRange: "£ 31,000 – 38,000 / 年",
+    tuitionSortUsd: 43000,
     requirements: { gpa: "3.3", toefl: "96", ielts: "6.5" },
     programs: ["Computer Science", "Business Analytics", "Urban Design"],
     tags: ["綜合名校", "一年制碩士", "合作院校"],
     isPartner: true,
     isVerified: true,
     description: "倫敦市區綜合型名校，科系選擇多元，商管與工程學程國際生熱門。",
+  },
+  {
+    id: "sch-edinburgh",
+    name: "University of Edinburgh",
+    chineseName: "愛丁堡大學",
+    country: "英國",
+    location: "Edinburgh",
+    type: "研究所",
+    qsRanking: 27,
+    usNewsRanking: 32,
+    theRanking: 29,
+    tuitionRange: "£ 28,000 – 35,000 / 年",
+    tuitionSortUsd: 39500,
+    requirements: { gpa: "3.2", toefl: "92", ielts: "6.5" },
+    programs: ["Informatics", "Data Science", "AI"],
+    tags: ["綜合名校", "一年制碩士", "合作院校"],
+    isPartner: true,
+    isVerified: false,
+    description: "蘇格蘭歷史名校，資訊學院規模大，一年制碩士為國際生熱門選項。",
+  },
+  {
+    id: "sch-manchester",
+    name: "University of Manchester",
+    chineseName: "曼徹斯特大學",
+    country: "英國",
+    location: "Manchester",
+    type: "研究所",
+    qsRanking: 34,
+    usNewsRanking: 51,
+    theRanking: 56,
+    tuitionRange: "£ 26,000 – 32,000 / 年",
+    tuitionSortUsd: 36000,
+    requirements: { gpa: "3.0", toefl: "90", ielts: "6.5" },
+    programs: ["Computer Science", "Data Science", "Management"],
+    tags: ["綜合名校", "一年制碩士", "CP 值高"],
+    isPartner: false,
+    isVerified: true,
+    description: "羅素集團綜合大學，學費相對親民，商管與工程學程招生規模大。",
   },
   {
     id: "sch-toronto",
@@ -218,6 +319,7 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 18,
     theRanking: 21,
     tuitionRange: "C$ 45,000 – 58,000 / 年",
+    tuitionSortUsd: 38000,
     requirements: { gpa: "3.4", toefl: "100", ielts: "7.0" },
     programs: ["Computer Science", "Applied Computing", "Statistics"],
     tags: ["移民友善", "公立名校"],
@@ -236,12 +338,32 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 35,
     theRanking: 41,
     tuitionRange: "C$ 38,000 – 50,000 / 年",
+    tuitionSortUsd: 32000,
     requirements: { gpa: "3.3", toefl: "97", ielts: "6.5" },
     programs: ["Computer Science", "Data Science", "Forestry"],
     tags: ["移民友善", "風景宜人"],
     isPartner: true,
     isVerified: false,
     description: "溫哥華濱海校區，國際生友善，資料科學與環境相關學程具特色。",
+  },
+  {
+    id: "sch-mcgill",
+    name: "McGill University",
+    chineseName: "麥基爾大學",
+    country: "加拿大",
+    location: "Montreal, QC",
+    type: "研究所",
+    qsRanking: 29,
+    usNewsRanking: 41,
+    theRanking: 49,
+    tuitionRange: "C$ 30,000 – 42,000 / 年",
+    tuitionSortUsd: 27000,
+    requirements: { gpa: "3.2", toefl: "94", ielts: "6.5" },
+    programs: ["Computer Science", "Statistics", "Bioinformatics"],
+    tags: ["移民友善", "CP 值高", "合作院校"],
+    isPartner: true,
+    isVerified: true,
+    description: "蒙特婁英語名校，學費相對親民，理工與生醫資訊學程國際生比例高。",
   },
   {
     id: "sch-melbourne",
@@ -254,12 +376,32 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 27,
     theRanking: 39,
     tuitionRange: "A$ 45,000 – 52,000 / 年",
+    tuitionSortUsd: 31000,
     requirements: { gpa: "3.2", toefl: "94", ielts: "6.5" },
     programs: ["Information Technology", "Data Science", "Engineering"],
     tags: ["澳洲八大", "移民友善"],
     isPartner: false,
     isVerified: true,
     description: "澳洲八大之一，IT 與資料科學碩士兩年制，畢業後工作簽路徑明確。",
+  },
+  {
+    id: "sch-sydney",
+    name: "University of Sydney",
+    chineseName: "雪梨大學",
+    country: "澳洲",
+    location: "Sydney, NSW",
+    type: "研究所",
+    qsRanking: 18,
+    usNewsRanking: 28,
+    theRanking: 60,
+    tuitionRange: "A$ 46,000 – 54,000 / 年",
+    tuitionSortUsd: 32500,
+    requirements: { gpa: "3.2", toefl: "96", ielts: "6.5" },
+    programs: ["Information Technology", "Data Science", "Project Management"],
+    tags: ["澳洲八大", "移民友善", "合作院校"],
+    isPartner: true,
+    isVerified: true,
+    description: "澳洲八大老牌名校，IT 與資料科學碩士招生規模大，城市生活機能佳。",
   },
   {
     id: "sch-tum",
@@ -272,12 +414,32 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 47,
     theRanking: 30,
     tuitionRange: "€ 0 – 6,000 / 年 (公立)",
+    tuitionSortUsd: 3000,
     requirements: { gpa: "3.0", toefl: "88", ielts: "6.5" },
     programs: ["Informatics", "Data Engineering", "Mechanical Engineering"],
     tags: ["低學費", "理工強校", "合作院校"],
     isPartner: true,
     isVerified: true,
     description: "德國理工頂尖，公立大學學費極低，英授碩士學程逐年增加。",
+  },
+  {
+    id: "sch-rwth",
+    name: "RWTH Aachen University",
+    chineseName: "亞琛工業大學",
+    country: "德國",
+    location: "Aachen",
+    type: "研究所",
+    qsRanking: 99,
+    usNewsRanking: 96,
+    theRanking: 90,
+    tuitionRange: "€ 0 – 5,000 / 年 (公立)",
+    tuitionSortUsd: 2500,
+    requirements: { gpa: "2.9", toefl: "88", ielts: "6.0" },
+    programs: ["Computer Science", "Data Science", "Automotive Engineering"],
+    tags: ["低學費", "理工強校"],
+    isPartner: false,
+    isVerified: false,
+    description: "德國理工聯盟成員，工程與資訊學程扎實，與產業合作緊密、學費極低。",
   },
   {
     id: "sch-nus",
@@ -290,6 +452,7 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: 26,
     theRanking: 19,
     tuitionRange: "S$ 38,000 – 48,000 / 年",
+    tuitionSortUsd: 32000,
     requirements: { gpa: "3.5", toefl: "100", ielts: "6.5" },
     programs: ["Computing", "Business Analytics", "Statistics"],
     tags: ["亞洲頂尖", "申請競爭高"],
@@ -308,6 +471,7 @@ export const SCHOOLS: NexusSchool[] = [
     usNewsRanking: null,
     theRanking: null,
     tuitionRange: "C$ 1,400 – 1,800 / 月",
+    tuitionSortUsd: 14000,
     requirements: { gpa: "—", toefl: "—", ielts: "—" },
     programs: ["General English", "IELTS 衝刺班", "升學銜接"],
     tags: ["遊學", "升學銜接", "合作院校"],
@@ -315,10 +479,38 @@ export const SCHOOLS: NexusSchool[] = [
     isVerified: true,
     description: "市中心語言學校，提供升學銜接與考試衝刺課程，可搭配寄宿家庭。",
   },
+  {
+    id: "sch-ep-london",
+    name: "EP Language School — London",
+    chineseName: "EP 語言學校 倫敦校",
+    country: "英國",
+    location: "London",
+    type: "語言學校",
+    qsRanking: null,
+    usNewsRanking: null,
+    theRanking: null,
+    tuitionRange: "£ 1,200 – 1,600 / 月",
+    tuitionSortUsd: 18000,
+    requirements: { gpa: "—", toefl: "—", ielts: "—" },
+    programs: ["General English", "IELTS 衝刺班", "商務英語"],
+    tags: ["遊學", "升學銜接", "合作院校"],
+    isPartner: true,
+    isVerified: true,
+    description: "倫敦市中心語言學校，提供商務英語與考試衝刺，可銜接合作大學學位。",
+  },
 ];
 
 export const SCHOOL_COUNTRIES = ["全部", "美國", "英國", "加拿大", "澳洲", "德國", "新加坡"] as const;
 export const SCHOOL_TYPES = ["全部", "研究所", "大學", "語言學校"] as const;
+
+/** 院校資料庫排序選項(招牌頁互動用) */
+export type SchoolSortKey = "qs" | "usnews" | "tuition" | "name";
+export const SCHOOL_SORTS: { key: SchoolSortKey; label: string }[] = [
+  { key: "qs", label: "QS 排名" },
+  { key: "usnews", label: "US News 排名" },
+  { key: "tuition", label: "學費(低→高)" },
+  { key: "name", label: "名稱 A→Z" },
+];
 
 // ============================================================================
 // 3) AI 落點分析 — 候選校(含 AI 給的基準機率與因子)
@@ -555,7 +747,7 @@ export interface ChatThread {
 }
 
 export const AI_QUICK_PROMPTS = [
-  { id: "qp-1", icon: "🎓", label: "查歷屆", text: "有多少測試學生錄取美國 UCLA CS？背景如何？" },
+  { id: "qp-1", icon: "🎓", label: "查歷屆", text: "歷屆有多少相似背景學生錄取美國 UCLA CS？背景如何？" },
   { id: "qp-2", icon: "🎯", label: "推薦選校", text: "GPA 3.6、TOEFL 102、想申請美國 CS，給我 5 間推薦學校" },
   { id: "qp-3", icon: "📋", label: "查門檻", text: "倫敦帝國學院 Computing 碩士的申請門檻是什麼？" },
 ] as const;
@@ -567,7 +759,7 @@ export const AI_THREADS: ChatThread[] = [
     updatedAt: "2025-06-16",
     messages: [
       { id: "m1", role: "ai", text: "您好！我是 Nexus AI 助手 ✨\n您可以直接輸入問題，或點選下方的快速模板。", time: "09:12" },
-      { id: "m2", role: "user", text: "有多少測試學生錄取美國 UCLA CS？背景如何？", time: "09:13" },
+      { id: "m2", role: "user", text: "歷屆有多少相似背景學生錄取美國 UCLA CS？背景如何？", time: "09:13" },
       {
         id: "m3",
         role: "ai",
@@ -621,28 +813,53 @@ export const AI_CANNED_REPLIES: string[] = [
 
 export interface RankingRow {
   id: string;
-  student: string;
+  student: string; // 脫敏假名
+  major: string; // 大學原科系(公開系所)
   year: string;
   country: string;
   school: string;
   program: string;
   gpa: string;
   toefl: string;
+  /** 獎學金(無則為「—」) */
+  scholarship: string;
   result: "錄取" | "備取" | "婉拒";
 }
 
 export const RANKING_YEARS = ["全部", "2025", "2024", "2023"] as const;
+export const RANKING_COUNTRIES = ["全部", "美國", "英國", "加拿大", "澳洲", "德國", "新加坡"] as const;
+export const RANKING_RESULTS = ["全部", "錄取", "備取", "婉拒"] as const;
+
+export type RankingSortKey = "year" | "gpa" | "toefl";
+export const RANKING_SORTS: { key: RankingSortKey; label: string }[] = [
+  { key: "year", label: "年度(新→舊)" },
+  { key: "gpa", label: "GPA(高→低)" },
+  { key: "toefl", label: "TOEFL(高→低)" },
+];
 
 export const RANKING_ROWS: RankingRow[] = [
-  { id: "r-1", student: "測試學生 A", year: "2025", country: "美國", school: "UCLA", program: "Computer Science", gpa: "3.7", toefl: "106", result: "錄取" },
-  { id: "r-2", student: "測試學生 B", year: "2025", country: "英國", school: "UCL", program: "Business Analytics", gpa: "3.5", toefl: "98", result: "錄取" },
-  { id: "r-3", student: "測試學生 C", year: "2025", country: "加拿大", school: "University of Toronto", program: "Applied Computing", gpa: "3.6", toefl: "101", result: "錄取" },
-  { id: "r-4", student: "測試學生 D", year: "2024", country: "美國", school: "Carnegie Mellon", program: "Machine Learning", gpa: "3.8", toefl: "110", result: "備取" },
-  { id: "r-5", student: "測試學生 E", year: "2024", country: "澳洲", school: "University of Melbourne", program: "Information Technology", gpa: "3.3", toefl: "92", result: "錄取" },
-  { id: "r-6", student: "測試學生 F", year: "2024", country: "德國", school: "TU Munich", program: "Informatics", gpa: "3.2", toefl: "90", result: "錄取" },
-  { id: "r-7", student: "測試學生 G", year: "2023", country: "英國", school: "Imperial College", program: "Computing", gpa: "3.6", toefl: "104", result: "婉拒" },
-  { id: "r-8", student: "測試學生 H", year: "2023", country: "新加坡", school: "NUS", program: "Business Analytics", gpa: "3.7", toefl: "103", result: "錄取" },
-  { id: "r-9", student: "測試學生 I", year: "2023", country: "美國", school: "UCLA", program: "Data Science", gpa: "3.5", toefl: "99", result: "備取" },
+  { id: "r-1", student: "王＊明", major: "成功大學 資工系", year: "2025", country: "美國", school: "UCLA", program: "Computer Science", gpa: "3.7", toefl: "106", scholarship: "—", result: "錄取" },
+  { id: "r-2", student: "陳＊君", major: "政治大學 企管系", year: "2025", country: "英國", school: "UCL", program: "Business Analytics", gpa: "3.5", toefl: "98", scholarship: "£ 5,000 減免", result: "錄取" },
+  { id: "r-3", student: "林＊豪", major: "臺灣大學 電機系", year: "2025", country: "加拿大", school: "University of Toronto", program: "Applied Computing", gpa: "3.6", toefl: "101", scholarship: "—", result: "錄取" },
+  { id: "r-4", student: "張＊瑋", major: "清華大學 資工系", year: "2025", country: "美國", school: "Georgia Tech", program: "Analytics", gpa: "3.5", toefl: "100", scholarship: "—", result: "錄取" },
+  { id: "r-5", student: "黃＊涵", major: "交通大學 資科系", year: "2025", country: "新加坡", school: "NUS", program: "Computing", gpa: "3.7", toefl: "105", scholarship: "—", result: "錄取" },
+  { id: "r-6", student: "吳＊安", major: "中央大學 資工系", year: "2025", country: "英國", school: "Edinburgh", program: "Data Science", gpa: "3.4", toefl: "95", scholarship: "—", result: "備取" },
+  { id: "r-7", student: "李＊庭", major: "成功大學 外文系", year: "2025", country: "澳洲", school: "University of Sydney", program: "Information Technology", gpa: "3.3", toefl: "93", scholarship: "A$ 8,000 減免", result: "錄取" },
+  { id: "r-8", student: "周＊翰", major: "臺灣科大 電子系", year: "2024", country: "美國", school: "Carnegie Mellon", program: "Machine Learning", gpa: "3.8", toefl: "110", scholarship: "—", result: "備取" },
+  { id: "r-9", student: "鄭＊樺", major: "中山大學 資管系", year: "2024", country: "澳洲", school: "University of Melbourne", program: "Information Technology", gpa: "3.3", toefl: "92", scholarship: "—", result: "錄取" },
+  { id: "r-10", student: "許＊宇", major: "臺北科大 資工系", year: "2024", country: "德國", school: "TU Munich", program: "Informatics", gpa: "3.2", toefl: "90", scholarship: "全額免學費(公立)", result: "錄取" },
+  { id: "r-11", student: "蔡＊妏", major: "政治大學 資科系", year: "2024", country: "英國", school: "Manchester", program: "Computer Science", gpa: "3.1", toefl: "89", scholarship: "—", result: "錄取" },
+  { id: "r-12", student: "潘＊辰", major: "臺灣大學 資工系", year: "2024", country: "加拿大", school: "UBC", program: "Data Science", gpa: "3.6", toefl: "102", scholarship: "—", result: "錄取" },
+  { id: "r-13", student: "曾＊蓉", major: "清華大學 統計所", year: "2024", country: "美國", school: "UIUC", program: "Statistics", gpa: "3.7", toefl: "104", scholarship: "TA 助教獎助", result: "錄取" },
+  { id: "r-14", student: "賴＊宏", major: "成功大學 機械系", year: "2024", country: "德國", school: "RWTH Aachen", program: "Automotive Engineering", gpa: "3.0", toefl: "88", scholarship: "全額免學費(公立)", result: "備取" },
+  { id: "r-15", student: "謝＊綺", major: "東吳大學 企管系", year: "2024", country: "英國", school: "UCL", program: "Business Analytics", gpa: "3.4", toefl: "96", scholarship: "—", result: "婉拒" },
+  { id: "r-16", student: "高＊維", major: "交通大學 電機系", year: "2023", country: "英國", school: "Imperial College", program: "Computing", gpa: "3.6", toefl: "104", scholarship: "—", result: "婉拒" },
+  { id: "r-17", student: "邱＊婷", major: "中央大學 資管系", year: "2023", country: "新加坡", school: "NUS", program: "Business Analytics", gpa: "3.7", toefl: "103", scholarship: "—", result: "錄取" },
+  { id: "r-18", student: "羅＊誠", major: "臺灣大學 資工系", year: "2023", country: "美國", school: "UCLA", program: "Data Science", gpa: "3.5", toefl: "99", scholarship: "—", result: "備取" },
+  { id: "r-19", student: "簡＊妤", major: "輔仁大學 資工系", year: "2023", country: "加拿大", school: "McGill", program: "Computer Science", gpa: "3.3", toefl: "94", scholarship: "C$ 6,000 入學獎", result: "錄取" },
+  { id: "r-20", student: "宋＊翔", major: "中興大學 資工系", year: "2023", country: "澳洲", school: "University of Sydney", program: "Data Science", gpa: "3.2", toefl: "91", scholarship: "—", result: "錄取" },
+  { id: "r-21", student: "馮＊柔", major: "成功大學 資工系", year: "2023", country: "美國", school: "Georgia Tech", program: "Computer Science", gpa: "3.6", toefl: "101", scholarship: "—", result: "錄取" },
+  { id: "r-22", student: "葉＊軒", major: "臺灣科大 資工系", year: "2023", country: "英國", school: "Edinburgh", program: "AI", gpa: "3.4", toefl: "97", scholarship: "—", result: "備取" },
 ];
 
 // ============================================================================
@@ -663,13 +880,21 @@ export interface CrmStudent {
 export const CRM_STAGES = ["諮詢中", "報價中", "已報名", "出發前", "已出發"] as const;
 
 export const CRM_STUDENTS: CrmStudent[] = [
-  { id: "c-1", name: "測試學員 甲", consultant: "顧問 A", destination: "加拿大 · 溫哥華", program: "General English 24 週", stage: "諮詢中", amount: "—", updatedAt: "2025-06-16" },
-  { id: "c-2", name: "測試學員 乙", consultant: "顧問 B", destination: "英國 · 倫敦", program: "IELTS 衝刺 12 週", stage: "諮詢中", amount: "—", updatedAt: "2025-06-15" },
-  { id: "c-3", name: "測試學員 丙", consultant: "顧問 A", destination: "馬爾他", program: "General English 16 週", stage: "報價中", amount: "NT$ 198,000", updatedAt: "2025-06-15" },
-  { id: "c-4", name: "測試學員 丁", consultant: "顧問 C", destination: "澳洲 · 布里斯本", program: "升學銜接 30 週", stage: "報價中", amount: "NT$ 412,000", updatedAt: "2025-06-14" },
-  { id: "c-5", name: "測試學員 戊", consultant: "顧問 B", destination: "加拿大 · 多倫多", program: "Intensive 20 週", stage: "已報名", amount: "NT$ 286,000", updatedAt: "2025-06-12" },
-  { id: "c-6", name: "測試學員 己", consultant: "顧問 D", destination: "愛爾蘭 · 都柏林", program: "General English 12 週", stage: "出發前", amount: "NT$ 156,000", updatedAt: "2025-06-10" },
-  { id: "c-7", name: "測試學員 庚", consultant: "顧問 C", destination: "英國 · 倫敦", program: "Pathway 36 週", stage: "已出發", amount: "NT$ 520,000", updatedAt: "2025-06-02" },
+  { id: "c-1", name: "王＊婷", consultant: "顧問 A", destination: "加拿大 · 溫哥華", program: "General English 24 週", stage: "諮詢中", amount: "—", updatedAt: "2025-06-16" },
+  { id: "c-2", name: "陳＊豪", consultant: "顧問 B", destination: "英國 · 倫敦", program: "IELTS 衝刺 12 週", stage: "諮詢中", amount: "—", updatedAt: "2025-06-15" },
+  { id: "c-3", name: "林＊瑜", consultant: "顧問 D", destination: "馬爾他 · 斯利馬", program: "General English 8 週", stage: "諮詢中", amount: "—", updatedAt: "2025-06-15" },
+  { id: "c-4", name: "張＊宇", consultant: "顧問 A", destination: "馬爾他 · 瓦萊塔", program: "General English 16 週", stage: "報價中", amount: "NT$ 198,000", updatedAt: "2025-06-15" },
+  { id: "c-5", name: "黃＊安", consultant: "顧問 C", destination: "澳洲 · 布里斯本", program: "升學銜接 30 週", stage: "報價中", amount: "NT$ 412,000", updatedAt: "2025-06-14" },
+  { id: "c-6", name: "吳＊潔", consultant: "顧問 B", destination: "加拿大 · 溫哥華", program: "Intensive 24 週", stage: "報價中", amount: "NT$ 356,000", updatedAt: "2025-06-14" },
+  { id: "c-7", name: "李＊軒", consultant: "顧問 A", destination: "愛爾蘭 · 都柏林", program: "General English 20 週", stage: "已報名", amount: "NT$ 264,000", updatedAt: "2025-06-13" },
+  { id: "c-8", name: "周＊妤", consultant: "顧問 B", destination: "加拿大 · 多倫多", program: "Intensive 20 週", stage: "已報名", amount: "NT$ 286,000", updatedAt: "2025-06-12" },
+  { id: "c-9", name: "鄭＊翔", consultant: "顧問 D", destination: "英國 · 倫敦", program: "IELTS 衝刺 16 週", stage: "已報名", amount: "NT$ 318,000", updatedAt: "2025-06-12" },
+  { id: "c-10", name: "許＊蓉", consultant: "顧問 C", destination: "澳洲 · 布里斯本", program: "General English 12 週", stage: "出發前", amount: "NT$ 172,000", updatedAt: "2025-06-11" },
+  { id: "c-11", name: "蔡＊辰", consultant: "顧問 D", destination: "愛爾蘭 · 都柏林", program: "General English 12 週", stage: "出發前", amount: "NT$ 156,000", updatedAt: "2025-06-10" },
+  { id: "c-12", name: "潘＊維", consultant: "顧問 A", destination: "加拿大 · 溫哥華", program: "升學銜接 24 週", stage: "出發前", amount: "NT$ 388,000", updatedAt: "2025-06-09" },
+  { id: "c-13", name: "曾＊綺", consultant: "顧問 C", destination: "英國 · 倫敦", program: "Pathway 36 週", stage: "已出發", amount: "NT$ 520,000", updatedAt: "2025-06-02" },
+  { id: "c-14", name: "賴＊宏", consultant: "顧問 B", destination: "馬爾他 · 瓦萊塔", program: "General English 24 週", stage: "已出發", amount: "NT$ 298,000", updatedAt: "2025-05-29" },
+  { id: "c-15", name: "謝＊妏", consultant: "顧問 D", destination: "加拿大 · 多倫多", program: "Intensive 16 週", stage: "已出發", amount: "NT$ 242,000", updatedAt: "2025-05-26" },
 ];
 
 // ============================================================================
