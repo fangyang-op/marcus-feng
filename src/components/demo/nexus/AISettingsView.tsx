@@ -25,7 +25,7 @@ import {
 
 const NEXUS_ACCENT = "bg-nexus-pink";
 
-// 寫死的遮罩字串(非真實金鑰，純示意)
+// 寫死的遮罩字串（非真實金鑰，純示意）
 const MASKED_GEMINI = "AIza••••••••••••••••••••••••••3xQ7";
 const MASKED_CLAUDE = "sk-ant-••••••••••••••••••••••••9fD2";
 
@@ -49,7 +49,7 @@ export function AISettingsView() {
       <PageTitle
         icon={Sparkles}
         title="AI 設定"
-        subtitle="模型金鑰、對話模型與向量化維護(全為示意，互動為純前端)"
+        subtitle="模型金鑰、對話模型與向量化維護（全為示意，互動為純前端）"
       />
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -75,7 +75,7 @@ export function AISettingsView() {
           </div>
           <button
             type="button"
-            onClick={() => showToast("金鑰設定已儲存(Demo 示意)")}
+            onClick={() => showToast("金鑰設定已儲存（Demo 示意）")}
             className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-nexus-pink px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-nexus-purple"
           >
             <Save className="h-4 w-4" />
@@ -110,7 +110,7 @@ export function AISettingsView() {
               <button
                 key={tool.id}
                 type="button"
-                onClick={() => showToast(`已觸發「${tool.label}」(Demo 示意)`)}
+                onClick={() => showToast(`已觸發「${tool.label}」（Demo 示意）`)}
                 className="flex w-full items-start gap-3 rounded-lg border border-slate-200 bg-white p-3 text-left transition-colors hover:border-nexus-pink/40 hover:bg-nexus-pink/5"
               >
                 <span className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-lg bg-nexus-pink/10 text-nexus-pink">
@@ -198,7 +198,7 @@ function KeyField({
   shown: boolean;
   onToggle: () => void;
 }) {
-  // 遮罩時統一顯示圓點;顯示時露出寫死的示意字串
+  // 遮罩時統一顯示圓點；顯示時露出寫死的示意字串
   const masked = "•".repeat(28);
   return (
     <div>

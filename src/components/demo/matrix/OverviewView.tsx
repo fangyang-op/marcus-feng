@@ -29,7 +29,7 @@ function Inline({ value, pp = false }: { value: number; pp?: boolean }) {
   );
 }
 
-/** KPI 翻轉卡:正面為數字卡(沿用 StatCard 視覺)，背面為口徑/拆分補充。 */
+/** KPI 翻轉卡:正面為數字卡（沿用 StatCard 視覺），背面為口徑/拆分補充。 */
 function KpiFlip({
   icon: Icon,
   label,
@@ -102,7 +102,7 @@ export function OverviewView({ data }: { data: YearData }) {
   const maxPkg = packages[0]?.count || 1;
   const sortedDemo = [...demographics].sort((a, b) => b.count - a.count);
 
-  // 年度 B2C / B2B 拆分(由月度序列彙總，寫死資料、可重現)
+  // 年度 B2C / B2B 拆分（由月度序列彙總，寫死資料、可重現）
   const b2cTotal = monthlyStats.reduce((a, m) => a + m.b2cStudentRevenue, 0);
   const b2bTotal = monthlyStats.reduce((a, m) => a + m.b2bCommissionRevenue, 0);
   const b2bShare = kpi.totalRevenue > 0 ? (b2bTotal / kpi.totalRevenue) * 100 : 0;
@@ -177,7 +177,7 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "旺季高峰", v: `${peakMonth.month}・${peakMonth.consults} 件` },
               { k: "較去年同期", v: `▲ ${kpi.consultationsYoY}%` },
             ]}
-            backNote="口徑:含四來源(洋碩/通路/網單/自招)所有進線諮詢，不去重。"
+            backNote="口徑:含四來源（洋碩/通路/網單/自招）所有進線諮詢，不去重。"
           />
           <KpiFlip
             icon={TrendingUp}
@@ -193,7 +193,7 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "YoY", v: `▲ ${kpi.conversionYoY} 個百分點` },
               { k: "標桿值", v: "25.0%" },
             ]}
-            backNote="口徑:成交筆數 ÷ 實際諮詢數;標桿為內部年度目標線。"
+            backNote="口徑:成交筆數 ÷ 實際諮詢數；標桿為內部年度目標線。"
           />
           <KpiFlip
             icon={DollarSign}
@@ -208,7 +208,7 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "最強月份", v: `${peakMonth.month}・${wan(peakMonth.revenue)}` },
               { k: "較去年同期", v: `▲ ${kpi.revenueYoY}%` },
             ]}
-            backNote="口徑:B2C 為學生端簽約學費;B2B 為合作通路完成媒合後之回傭。"
+            backNote="口徑:B2C 為學生端簽約學費；B2B 為合作通路完成媒合後之回傭。"
           />
           <KpiFlip
             icon={ShieldCheck}
@@ -223,7 +223,7 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "YoY", v: `▲ ${kpi.maintenanceYoY} 個百分點` },
               { k: "判定門檻", v: "必填欄位 ≥ 90%" },
             ]}
-            backNote="口徑:必填欄位(學歷/目標國/預算/時程)完整度達門檻者計為有效維護。"
+            backNote="口徑:必填欄位（學歷/目標國/預算/時程）完整度達門檻者計為有效維護。"
           />
         </div>
       </div>
@@ -243,7 +243,7 @@ export function OverviewView({ data }: { data: YearData }) {
               </h3>
               <p className="mt-0.5 text-xs text-ink-muted">
                 {conversionMode === "conversion"
-                  ? "諮詢/成交雙長條 + 轉換率折線(雙 Y 軸)"
+                  ? "諮詢/成交雙長條 + 轉換率折線（雙 Y 軸）"
                   : "B2C 學收 / B2B 回傭 / 總營收"}
               </p>
             </div>

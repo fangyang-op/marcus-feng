@@ -22,9 +22,9 @@ import { DASHBOARD_STATS, STUDENTS, isUnassignedBackend } from "@/data/demo/crm"
 
 const STAT_ICONS = [Users, Sparkles, FileCheck, TrendingUp];
 
-/** KPI 卡背面補充說明(翻轉卡用),deterministic 寫死 */
+/** KPI 卡背面補充說明（翻轉卡用）,deterministic 寫死 */
 const STAT_BACK: { title: string; lines: string[] }[] = [
-  { title: "依分類", lines: ["招生中 5 · 申請中 13", "已成交(本月)3 · 暫停 0"] },
+  { title: "依分類", lines: ["招生中 5 · 申請中 13", "已成交（本月）3 · 暫停 0"] },
   { title: "招生漏斗", lines: ["新名單 → 諮詢 → 確認需求", "本週新進線 4 筆"] },
   { title: "申請進度", lines: ["送件中 4 · 等待結果 2", "已入學 1 · 行前準備 1"] },
   { title: "成交來源", lines: ["同事轉介 2 · 教育展 1", "客單均價 NT$ 142,000"] },
@@ -80,7 +80,7 @@ export function DashboardView({ onGoUnassigned }: { onGoUnassigned: () => void }
         </button>
       </div>
 
-      {/* KPI 卡(可翻轉) */}
+      {/* KPI 卡（可翻轉） */}
       <p className="mb-2 text-xs text-ink-muted">點擊卡片可翻面看細項分布</p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {DASHBOARD_STATS.map((stat, i) => (

@@ -98,7 +98,7 @@ export function EPQuoteView() {
       <PageTitle
         icon={Calculator}
         title="EP 報價系統"
-        subtitle="7 步驟報價精靈 · 右側即時費用試算(示意)"
+        subtitle="7 步驟報價精靈 · 右側即時費用試算（示意）"
       />
 
       {/* Stepper */}
@@ -336,13 +336,13 @@ export function EPQuoteView() {
                   </ActionBtn>
                   <ActionBtn
                     icon={FileImage}
-                    onClick={() => showToast("報價單 PNG 已產生並下載(Demo 示意)")}
+                    onClick={() => showToast("報價單 PNG 已產生並下載（Demo 示意）")}
                   >
                     下載 PNG
                   </ActionBtn>
                   <ActionBtn
                     icon={Copy}
-                    onClick={() => showToast("開單內容已複製到剪貼簿(Demo 示意)")}
+                    onClick={() => showToast("開單內容已複製到剪貼簿（Demo 示意）")}
                   >
                     複製開單內容
                   </ActionBtn>

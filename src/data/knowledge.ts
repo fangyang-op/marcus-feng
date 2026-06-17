@@ -4,7 +4,7 @@ import type { KnowledgeDoc } from "./types";
  * ── 知識傳承區 ────────────────────────────────────────────
  * 「把個人工作變成團隊可繼承的資產」。每份文件 = 一個成果摘要 + 可下載 PDF。
  *
- * PDF 之後放進 /public/docs/，把 pdfHref 改成對應檔名即可(先用 placeholder)。
+ * PDF 之後放進 /public/docs/，把 pdfHref 改成對應檔名即可（先用 placeholder）。
  */
 export const knowledgeDocs: KnowledgeDoc[] = [
   {
@@ -24,7 +24,7 @@ export const knowledgeDocs: KnowledgeDoc[] = [
     id: "ai-collab-log",
     title: "AI 協作開發實錄",
     summary:
-      "非工程背景如何與 AI(Claude Code)協作，從零把三套內部系統做到上線的方法論:如何拆任務、如何驗收、如何讓 AI 產出可維護的程式碼。",
+      "非工程背景如何與 AI（Claude Code）協作，從零把三套內部系統做到上線的方法論:如何拆任務、如何驗收、如何讓 AI 產出可維護的程式碼。",
     points: [
       "任務拆解與驗收標準:怎麼讓 AI 不亂寫",
       "從 Prompt 到可上線:測試、資安、部署的實務",

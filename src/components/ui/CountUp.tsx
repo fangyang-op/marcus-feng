@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * 數字滾動動畫(count-up)。進入視窗時從 0 數到目標值。
+ * 數字滾動動畫（count-up）。進入視窗時從 0 數到目標值。
  * 會保留原字串的前後綴與千分位格式，例如:
  *   "+140%" → 動畫 0→140，前綴 "+" 後綴 "%"
- *   "3,300 萬+" → 0→3,300(含逗號)，後綴 " 萬+"
- * 解析不到數字時，直接原樣顯示(不動畫)。
+ *   "3,300 萬+" → 0→3,300（含逗號），後綴 " 萬+"
+ * 解析不到數字時，直接原樣顯示（不動畫）。
  */
 export function CountUp({
   value,
@@ -68,7 +68,7 @@ export function CountUp({
   );
 }
 
-/** 以目前數值重組整個字串(保留前後綴與格式) */
+/** 以目前數值重組整個字串（保留前後綴與格式） */
 function buildAt(
   original: string,
   match: RegExpMatchArray,

@@ -48,7 +48,7 @@ export function SchoolDatabaseView() {
   const [country, setCountry] = useState<string>("全部");
   const [type, setType] = useState<string>("全部");
   const [sortKey, setSortKey] = useState<SchoolSortKey>("admits");
-  // 成功錄取數預設由高到低(降冪);排名 / 門檻預設由低到高(升冪)
+  // 成功錄取數預設由高到低（降冪）；排名 / 門檻預設由低到高（升冪）
   const [sortAsc, setSortAsc] = useState(false);
   const [filterOpen, setFilterOpen] = useState(true);
   const [gpaMin, setGpaMin] = useState("");
@@ -68,7 +68,7 @@ export function SchoolDatabaseView() {
       setSortAsc((v) => !v);
     } else {
       setSortKey(key);
-      // 成功錄取數預設降冪(多→少);其餘預設升冪
+      // 成功錄取數預設降冪（多→少）；其餘預設升冪
       setSortAsc(key !== "admits");
     }
   };
@@ -168,7 +168,7 @@ export function SchoolDatabaseView() {
             </button>
             <button
               type="button"
-              onClick={() => showToast("已開始匯出院校資料(Demo 示意)")}
+              onClick={() => showToast("已開始匯出院校資料（Demo 示意）")}
               className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-ink-soft hover:bg-slate-50"
             >
               <Download className="h-3.5 w-3.5" />
@@ -390,7 +390,7 @@ export function SchoolDatabaseView() {
           onSave={() => {
             const name = openSchool.chineseName;
             setOpenSchool(null);
-            showToast(`已儲存「${name}」資料(Demo 示意)`);
+            showToast(`已儲存「${name}」資料（Demo 示意）`);
           }}
         />
       )}
@@ -530,7 +530,7 @@ function SchoolModal({
             <Field label="US News 排名" value={school.usNewsRanking != null ? `#${school.usNewsRanking}` : "—"} />
             <Field label="THE 排名" value={school.theRanking != null ? `#${school.theRanking}` : "—"} />
             <Field label="成功錄取數" value={`${school.successfulAdmits} 人`} />
-            <Field label="學費(假值)" value={school.tuitionRange} />
+            <Field label="學費（假值）" value={school.tuitionRange} />
             <Field label="GPA 要求" value={school.requirements.gpa} />
             <Field label="TOEFL / IELTS" value={`${school.requirements.toefl} / ${school.requirements.ielts}`} />
           </div>

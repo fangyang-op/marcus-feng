@@ -53,7 +53,7 @@ import {
 const NEXUS_TAB = "border-nexus-pink text-nexus-pink";
 const NEXUS_ACCENT = "bg-nexus-pink";
 
-// ── 歷屆榜單查詢(對齊真實產品 UI)─────────────────────────────────
+// ── 歷屆榜單查詢（對齊真實產品 UI）─────────────────────────────────
 const RESULT_COLOR: Record<string, PillColor> = {
   錄取: "emerald",
   備取: "amber",
@@ -109,7 +109,7 @@ export function RankingsView() {
     });
   }, [year, search, onlyDaShuo, onlyYangShuo, onlyScholarship, allCountries, countries]);
 
-  // 篩選後的累積獎學金(由資料加總);無篩選時顯示寫死的總額對齊真實畫面
+  // 篩選後的累積獎學金（由資料加總）；無篩選時顯示寫死的總額對齊真實畫面
   const noFilter =
     year === "總覽" &&
     !search.trim() &&
@@ -156,7 +156,7 @@ export function RankingsView() {
             </button>
             <button
               type="button"
-              onClick={() => showToast("已開始匯出榜單(Demo 示意)")}
+              onClick={() => showToast("已開始匯出榜單（Demo 示意）")}
               className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-ink-soft hover:bg-slate-50"
             >
               <Download className="h-3.5 w-3.5" />
@@ -165,7 +165,7 @@ export function RankingsView() {
             </button>
             <button
               type="button"
-              onClick={() => showToast("請先選擇要同步的年份(Demo 示意)")}
+              onClick={() => showToast("請先選擇要同步的年份（Demo 示意）")}
               className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-ink-soft hover:bg-slate-50"
             >
               <RefreshCw className="h-3.5 w-3.5" />
@@ -378,7 +378,7 @@ export function RankingsView() {
   );
 }
 
-/** 頂部 icon 按鈕(no-op) */
+/** 頂部 icon 按鈕（no-op） */
 function IconBtn({
   icon: Icon,
   label,
@@ -444,7 +444,7 @@ const STAGE_COLOR: Record<string, PillColor> = {
   已出發: "emerald",
 };
 
-/** 由「NT$ 286,000」字串解析出數字，無金額(—)回傳 0 */
+/** 由「NT$ 286,000」字串解析出數字，無金額（—）回傳 0 */
 const parseAmount = (s: string) => {
   const n = parseInt(s.replace(/[^0-9]/g, ""), 10);
   return Number.isFinite(n) ? n : 0;
@@ -463,7 +463,7 @@ export function CrmView() {
       <PageTitle
         icon={Users}
         title="遊學學員 CRM"
-        subtitle="依階段檢視學員(全為示意假資料)"
+        subtitle="依階段檢視學員（全為示意假資料）"
       />
 
       {/* KPI 摘要 */}
@@ -529,14 +529,14 @@ export function CrmView() {
   );
 }
 
-// ── 使用量監測(StatCard + 折線圖 + 表)───────────────────────────────
+// ── 使用量監測（StatCard + 折線圖 + 表）───────────────────────────────
 export function UsageView() {
   return (
     <PageContainer>
       <PageTitle
         icon={Activity}
         title="使用量監測"
-        subtitle="平台功能使用概況(全為示意假資料)"
+        subtitle="平台功能使用概況（全為示意假資料）"
       />
 
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">

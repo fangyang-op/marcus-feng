@@ -1,5 +1,5 @@
 /**
- * 共用型別定義。各資料檔(site / metrics / projects ...)都引用這裡的型別，
+ * 共用型別定義。各資料檔（site / metrics / projects ...）都引用這裡的型別，
  * 你編輯資料時 TypeScript 會即時提示欄位，降低改錯的機會。
  */
 
@@ -9,7 +9,7 @@ export type AccentKey = "crm" | "nexus" | "matrix" | "brand" | "slate";
 export interface LinkItem {
   label: string;
   href: string;
-  /** 是否為外部連結(開新分頁) */
+  /** 是否為外部連結（開新分頁） */
   external?: boolean;
 }
 
@@ -35,7 +35,7 @@ export interface Project {
   highlights: string[];
   /** 技術標籤 */
   tags: string[];
-  /** Demo 子頁連結(僅 CRM / Nexus / Matrix 有，其餘為 undefined) */
+  /** Demo 子頁連結（僅 CRM / Nexus / Matrix 有，其餘為 undefined） */
   demoHref?: string;
   /** 卡片強調色 */
   accent: AccentKey;
@@ -49,9 +49,9 @@ export interface KnowledgeDoc {
   summary: string;
   /** 文件涵蓋重點 */
   points: string[];
-  /** 可下載 PDF 路徑(放在 /public/docs/ 下);requestOnly 時可省略 */
+  /** 可下載 PDF 路徑（放在 /public/docs/ 下）;requestOnly 時可省略 */
   pdfHref?: string;
-  /** 不公開下載、改為「來信索取」(例如涉及系統防護細節的資安文件) */
+  /** 不公開下載、改為「來信索取」（例如涉及系統防護細節的資安文件） */
   requestOnly?: boolean;
   /** requestOnly 時顯示的小字說明 */
   requestNote?: string;
@@ -70,6 +70,6 @@ export interface TimelineItem {
   role: string;
   period: string;
   points: string[];
-  /** 是否為現職(視覺上強調) */
+  /** 是否為現職（視覺上強調） */
   current?: boolean;
 }

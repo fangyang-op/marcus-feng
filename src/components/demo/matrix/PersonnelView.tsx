@@ -24,7 +24,7 @@ const REGION_META: Record<string, { sub: string }> = {
 const REGIONS = ["北一區", "桃竹區", "中一區", "南一區"];
 
 export function PersonnelView({ data }: { data: YearData }) {
-  // 本地可切換狀態(示意，不持久化)
+  // 本地可切換狀態（示意，不持久化）
   const [overrides, setOverrides] = useState<Record<string, Status>>({});
   const [toast, setToast] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,10 +38,10 @@ export function PersonnelView({ data }: { data: YearData }) {
   const cycle = (name: string, current: Status) => {
     const next: Status = current === "active" ? "on_leave" : current === "on_leave" ? "inactive" : "active";
     setOverrides((prev) => ({ ...prev, [name]: next }));
-    showToast(`${name} 已更新為「${STATUS_LABEL[next]}」(Demo 示意)`);
+    showToast(`${name} 已更新為「${STATUS_LABEL[next]}」（Demo 示意）`);
   };
 
-  // 各區人數 / 在職率(含本地 override)
+  // 各區人數 / 在職率（含本地 override）
   const regionSummary = useMemo(() => {
     return REGIONS.map((region) => {
       const members = data.consultants.filter((c) => c.region === region);
@@ -62,7 +62,7 @@ export function PersonnelView({ data }: { data: YearData }) {
       <PageTitle
         icon={Settings}
         title="人員編制設定"
-        subtitle={`四區共 ${totalHead} 位顧問編制與在職狀態管理(點擊 chip 切換在職/留停/離職，即時提示)`}
+        subtitle={`四區共 ${totalHead} 位顧問編制與在職狀態管理（點擊 chip 切換在職/留停/離職，即時提示）`}
       />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -97,7 +97,7 @@ export function PersonnelView({ data }: { data: YearData }) {
                       type="button"
                       onClick={() => cycle(m.name, s)}
                       className="flex w-full items-center justify-between gap-2 rounded-lg border border-slate-100 bg-slate-50/60 px-3 py-2 text-left transition-colors hover:border-matrix-rose/40 hover:bg-rose-50/40"
-                      title="點擊切換狀態(在職 → 留停 → 離職)"
+                      title="點擊切換狀態（在職 → 留停 → 離職）"
                     >
                       <span className="flex items-center gap-2">
                         <span className="text-sm font-semibold text-ink">{m.name}</span>
@@ -184,7 +184,7 @@ export function PersonnelView({ data }: { data: YearData }) {
             新增顧問 / 調整區域編制
           </p>
           <p className="text-xs text-ink-muted">
-            點擊查看編制寫入流程(新增、轉調、年度編制)— Demo 示意
+            點擊查看編制寫入流程（新增、轉調、年度編制）— Demo 示意
           </p>
         </div>
       </button>
@@ -211,7 +211,7 @@ export function PersonnelView({ data }: { data: YearData }) {
             </li>
           </ul>
           <p className="text-xs text-ink-muted">
-            為作品集展示，此 Demo 不寫入後端;上方狀態 chip 可實際點擊切換以體驗互動。
+            為作品集展示，此 Demo 不寫入後端；上方狀態 chip 可實際點擊切換以體驗互動。
           </p>
         </div>
       </DemoModal>

@@ -151,7 +151,7 @@ export function SourceView({ data, year }: { data: YearData; year: string }) {
                 <Tooltip
                   contentStyle={{ borderRadius: 8, border: "none" }}
                   formatter={(v: number, n, p: { payload?: { conv?: number } }) => [
-                    `${v} 筆(轉化率 ${(p.payload?.conv ?? 0).toFixed(1)}%)`,
+                    `${v} 筆（轉化率 ${(p.payload?.conv ?? 0).toFixed(1)}%）`,
                     n,
                   ]}
                 />

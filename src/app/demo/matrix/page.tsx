@@ -53,7 +53,7 @@ export default function MatrixDemoPage() {
   const handleSync = () => {
     if (syncing) return;
     setSyncing(true);
-    showToast(`資料同步完成 · ${year} 年度已更新(Demo 示意)`);
+    showToast(`資料同步完成 · ${year} 年度已更新（Demo 示意）`);
     window.setTimeout(() => setSyncing(false), 900);
   };
 

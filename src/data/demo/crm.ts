@@ -1,12 +1,12 @@
 /**
  * ── CRM 全端營運平台 — Demo 假資料 + 型別 ─────────────────────
- * 留學代辦內部 CRM 的 UI 骨架還原。所有資料皆為固定常數(無亂數、無 Date.now),
- * 以避免 SSR/hydration 不一致。姓名/顧問/區域一律假名;校名為公開大學，數字為合理假值。
+ * 留學代辦內部 CRM 的 UI 骨架還原。所有資料皆為固定常數（無亂數、無 Date.now）,
+ * 以避免 SSR/hydration 不一致。姓名/顧問/區域一律假名；校名為公開大學，數字為合理假值。
  */
 
 import type { PillColor } from "@/components/demo/primitives";
 
-/* ── 學生狀態(對應原系統 student_statuses)──────────────── */
+/* ── 學生狀態（對應原系統 student_statuses）──────────────── */
 export type StudentCategory = "recruitment" | "closed" | "application" | "special";
 
 export interface StatusMeta {
@@ -46,13 +46,13 @@ export interface StudentRow {
   degree: string;
   intake: string;
   createdAt: string;
-  /** 當前學校 / 科系(用於詳情頁，固定常數) */
+  /** 當前學校 / 科系（用於詳情頁，固定常數） */
   schoolZh: string;
   majorZh: string;
-  /** 目標主修(英文，用於詳情頁) */
+  /** 目標主修（英文，用於詳情頁） */
   targetMajor: string;
   gpa: string;
-  /** 語言成績(顯示用字串，如 "TOEFL 105" 或 "IELTS 7.0") */
+  /** 語言成績（顯示用字串，如 "TOEFL 105" 或 "IELTS 7.0"） */
   langTest: string;
   langScore: string;
 }
@@ -95,10 +95,10 @@ export function isUnassignedBackend(s: StudentRow): boolean {
 
 /**
  * 學生詳情進階分頁是否「已解鎖」。
- * CRM 流程:成交後才會啟動後端服務(選校 / 文件 / 申請),
+ * CRM 流程:成交後才會啟動後端服務（選校 / 文件 / 申請）,
  * 因此「成交 / 選校表 / 文件 / 申請」四個 tab 需在成交後才解鎖。
- * - recruitment(招生中)或 special(暫停且未成交)→ 上鎖
- * - closed(已成交)或 application(申請中)→ 解鎖
+ * - recruitment（招生中）或 special(暫停且未成交)→ 上鎖
+ * - closed（已成交）或 application(申請中)→ 解鎖
  * 概覽 / 時間軸 / 成績永遠可用，故不在此判斷範圍。
  */
 export function isStudentUnlocked(statusCode: string): boolean {
@@ -151,9 +151,9 @@ export interface StudentDetail {
   applications: ApplicationCard[];
 }
 
-/* ── 詳情建構用的固定資料池(deterministic，無亂數)──────── */
+/* ── 詳情建構用的固定資料池（deterministic，無亂數）──────── */
 
-/** 國家 → 選校表候選(衝刺/主攻/保底，依目標主修無關，純展示) */
+/** 國家 → 選校表候選（衝刺/主攻/保底，依目標主修無關，純展示） */
 const SCHOOL_POOL_BY_COUNTRY: Record<
   string,
   { dream: string[]; match: string[]; safety: string[] }
@@ -180,7 +180,7 @@ const SCHOOL_POOL_BY_COUNTRY: Record<
   },
 };
 
-/** 主修 → program 字尾(英文，展示用) */
+/** 主修 → program 字尾（英文，展示用） */
 function programFor(targetMajor: string, country: string): string {
   const uk = country === "英國";
   const au = country === "澳洲";
@@ -207,13 +207,13 @@ const CONSULT_NOTES = [
   "目標清楚，時間較趕",
 ];
 
-/** 把 id "s07" → 7;非數字回退 0 */
+/** 把 id "s07" → 7；非數字回退 0 */
 function idIndex(id: string): number {
   const n = parseInt(id.replace(/\D/g, ""), 10);
   return Number.isFinite(n) ? n : 0;
 }
 
-/** 申請狀態(展示用，依序對應 timeline 階段) */
+/** 申請狀態（展示用，依序對應 timeline 階段） */
 const DETAIL_APP_STATUSES: ApplicationStatusCode[] = [
   "submitted", "pending_send", "admitted", "docs_required", "interview", "waitlisted",
 ];
@@ -229,7 +229,7 @@ function buildDetail(s: StudentRow): StudentDetail {
   const primaryCountry = s.country[0] ?? "美國";
   const pool = SCHOOL_POOL_BY_COUNTRY[primaryCountry] ?? SCHOOL_POOL_BY_COUNTRY["美國"];
 
-  // 字數方案:旗艦 30000 / 標準 18000;已用依 id 變化但寫死推導
+  // 字數方案:旗艦 30000 / 標準 18000；已用依 id 變化但寫死推導
   const isFlagship = idx % 2 === 0;
   const total = isFlagship ? 30000 : 18000;
   const used = isFlagship ? 8000 + (idx % 6) * 1400 : 4200 + (idx % 6) * 1100;
@@ -242,12 +242,12 @@ function buildDetail(s: StudentRow): StudentDetail {
     { label: "履歷 CV", done: stage >= 1 },
     { label: "自傳 SOP", done: stage >= 2 },
     { label: "推薦信 LOR ×3", done: stage >= 2 && idx % 3 !== 0 },
-    { label: "成績單(英文版)", done: stage >= 1 },
+    { label: "成績單（英文版）", done: stage >= 1 },
     { label: "財力證明", done: stage >= 2 && idx % 2 === 0 },
     { label: `${s.langTest} 成績單`, done: stage >= 1 },
   ];
 
-  // 文件清單(用 checklist 同源)
+  // 文件清單（用 checklist 同源）
   const basic = [
     { label: "中文姓名", value: s.fullName },
     { label: "英文姓名", value: s.englishName },
@@ -279,12 +279,12 @@ function buildDetail(s: StudentRow): StudentDetail {
     { label: "後端顧問", value: s.backend ?? "待分配" },
   ];
 
-  // 時間軸:依狀態階段顯示已發生的事件(較新在上)
+  // 時間軸:依狀態階段顯示已發生的事件（較新在上）
   const allEvents: { date: string; title: string; desc: string; color: PillColor; minStage: number }[] = [
     { date: dateAfter(s.createdAt, 0), title: "建立名單", desc: `經由${SOURCE_TYPES[idx % SOURCE_TYPES.length]}進線，由 ${s.frontend ?? "前端顧問"} 接洽`, color: "slate", minStage: 0 },
     { date: dateAfter(s.createdAt, 14), title: "完成需求諮詢", desc: `鎖定 ${primaryCountry} ${s.degree}・${s.targetMajor}`, color: "cyan", minStage: 0 },
     { date: dateAfter(s.createdAt, 40), title: "完成成交", desc: `簽署${isFlagship ? "旗艦全套" : "標準"}方案，啟動後端服務`, color: "emerald", minStage: 1 },
-    { date: dateAfter(s.createdAt, 75), title: "選校表定稿", desc: `共 ${pool.dream.length + pool.match.length + pool.safety.length} 所(衝刺/主攻/保底)`, color: "violet", minStage: 2 },
+    { date: dateAfter(s.createdAt, 75), title: "選校表定稿", desc: `共 ${pool.dream.length + pool.match.length + pool.safety.length} 所（衝刺/主攻/保底）`, color: "violet", minStage: 2 },
     { date: dateAfter(s.createdAt, 120), title: "送出第一所申請", desc: `${pool.match[0]} 已於系統送件`, color: "blue", minStage: 2 },
   ];
   const timeline = allEvents
@@ -315,7 +315,7 @@ function buildDetail(s: StudentRow): StudentDetail {
     });
   }
 
-  // 成交:已成交/申請中才有金額;招生中顯示待成交
+  // 成交:已成交/申請中才有金額；招生中顯示待成交
   const closed = cat === "closed" || cat === "application";
   const amount = isFlagship ? "NT$ 168,000" : "NT$ 98,000";
   const deals: StudentDetail["deals"] = {
@@ -372,7 +372,7 @@ function buildDetail(s: StudentRow): StudentDetail {
   };
 }
 
-/** 在 base 日期(YYYY-MM-DD)上加 days 天，回傳 YYYY-MM-DD。純字串運算，不讀系統時間。 */
+/** 在 base 日期（YYYY-MM-DD）上加 days 天，回傳 YYYY-MM-DD。純字串運算，不讀系統時間。 */
 function dateAfter(base: string, days: number): string {
   // 用 UTC 固定運算，避免時區造成的非決定性
   const [y, m, d] = base.split("-").map((n) => parseInt(n, 10));
@@ -384,12 +384,12 @@ function dateAfter(base: string, days: number): string {
   return `${yy}-${mm}-${dd}`;
 }
 
-/** 預先建好所有學生的詳情(module scope 常數，無亂數無時間依賴) */
+/** 預先建好所有學生的詳情（module scope 常數，無亂數無時間依賴） */
 export const STUDENT_DETAIL: Record<string, StudentDetail> = Object.fromEntries(
   STUDENTS.map((s) => [s.id, buildDetail(s)])
 );
 
-/** 取得學生詳情;找不到時用 s01 當保底(理論上不會發生) */
+/** 取得學生詳情；找不到時用 s01 當保底（理論上不會發生） */
 export function getStudentDetail(id: string): StudentDetail {
   return STUDENT_DETAIL[id] ?? STUDENT_DETAIL.s01;
 }
@@ -437,13 +437,13 @@ export interface ApplicationCard {
   school: string;
   program: string;
   country: string;
-  /** 寫死字串;逾期判斷用固定「今天」常數比較，不讀系統時間 */
+  /** 寫死字串；逾期判斷用固定「今天」常數比較，不讀系統時間 */
   deadline: string;
   round: string;
   statusCode: ApplicationStatusCode;
 }
 
-/** 看板逾期判斷基準日(寫死，避免 hydration 不一致) */
+/** 看板逾期判斷基準日（寫死，避免 hydration 不一致） */
 export const TODAY = "2025-06-17";
 
 export const APPLICATIONS: ApplicationCard[] = [
@@ -542,7 +542,7 @@ export const LEAD_SOURCES: LeadSource[] = [
   { id: "ls08", name: "YouTube 影音", category: "內容行銷", monthlyLeads: 7, active: true },
 ];
 
-/* ── 內部封測(UAT)─────────────────────────────────────────── */
+/* ── 內部封測（UAT）─────────────────────────────────────────── */
 export type UatStatus = "pass" | "fail" | "untested";
 
 export const UAT_STATUS_META: Record<
@@ -568,7 +568,7 @@ export interface UatSection {
   cases: UatCase[];
 }
 
-/** UAT 章節 + 測試項(全寫死，合計 24 項) */
+/** UAT 章節 + 測試項（全寫死，合計 24 項） */
 export const UAT_SECTIONS: UatSection[] = [
   {
     key: "auth",

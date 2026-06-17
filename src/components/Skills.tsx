@@ -60,7 +60,7 @@ export function Skills() {
       <SectionHeading
         eyebrow="Capabilities"
         title="工具鏈 × 營運能力"
-        description="左邊是我用來把想法變成系統的技術;右邊是我作為營運人的核心職能。兩者結合，才能既看得到問題、也做得出解法。"
+        description="左邊是我用來把想法變成系統的技術；右邊是我作為營運人的核心職能。兩者結合，才能既看得到問題、也做得出解法。"
       />
       <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-2">
         <SkillColumn

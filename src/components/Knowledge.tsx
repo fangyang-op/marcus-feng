@@ -41,7 +41,7 @@ export function Knowledge() {
                 ))}
               </ul>
 
-              {/* CTA:三張卡都用「全寬按鈕 + 一行說明」結構，讓按鈕水平對齊;
+              {/* CTA:三張卡都用「全寬按鈕 + 一行說明」結構，讓按鈕水平對齊；
                   下載卡的說明行留隱形佔位，三張卡會一起被說明文字往下撐。 */}
               <div className="mt-6">
                 {doc.requestOnly ? (

@@ -11,7 +11,7 @@ interface ChatMsg {
 
 /**
  * Matrix 浮動 AI 助理 — 右下角可開合聊天面板。
- * 純前端罐頭回覆(Markdown 風格，自繪渲染)，不接任何 API。
+ * 純前端罐頭回覆（Markdown 風格，自繪渲染），不接任何 API。
  */
 export function AIWidget() {
   const [open, setOpen] = useState(false);

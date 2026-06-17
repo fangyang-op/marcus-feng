@@ -25,7 +25,7 @@ import {
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
 
 /**
- * 客戶端 What-if 線性推估(對齊原產品邏輯):
+ * 客戶端 What-if 線性推估（對齊原產品邏輯）:
  * 以 AI 給的基準機率為錨點，依 GPA / TOEFL 相對基準的變動量推估學術因子位移，
  * 再換算為機率位移。delta 為 0 時即回到 AI 原始機率。
  */
@@ -56,9 +56,9 @@ interface Profile {
 }
 
 export function PlacementView() {
-  // 表單草稿(尚未分析)
+  // 表單草稿（尚未分析）
   const [draft, setDraft] = useState<Profile>({ ...PLACEMENT_DEFAULT_INPUT });
-  // 已分析後鎖定的基準輪廓(分析動作的產物)
+  // 已分析後鎖定的基準輪廓（分析動作的產物）
   const [analyzed, setAnalyzed] = useState<Profile | null>({ ...PLACEMENT_DEFAULT_INPUT });
   const [analyzing, setAnalyzing] = useState(false);
   // What-if 模擬器在「已分析基準」之上即時調整 GPA / TOEFL
@@ -80,7 +80,7 @@ export function PlacementView() {
   const runAnalysis = () => {
     setAnalyzing(true);
     const snapshot = { ...draft };
-    // 短暫 loading 讓「分析」動作有明確回饋(非亂數、非讀時鐘)
+    // 短暫 loading 讓「分析」動作有明確回饋（非亂數、非讀時鐘）
     window.setTimeout(() => {
       setAnalyzed(snapshot);
       setWhatIfGpa(snapshot.gpa);
@@ -112,7 +112,7 @@ export function PlacementView() {
       <PageTitle
         icon={Target}
         title="AI 落點分析"
-        subtitle="參考歷屆 40 筆相似背景榜單 · 分析後可即時 What-if 模擬(示意)"
+        subtitle="參考歷屆 40 筆相似背景榜單 · 分析後可即時 What-if 模擬（示意）"
       />
 
       <div className="flex flex-col gap-6 lg:flex-row">

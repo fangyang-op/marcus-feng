@@ -2,7 +2,7 @@
  * ── Nexus 顧問資訊整合中心 — Demo 假資料 ─────────────────────────────
  *
  * 重建自內部產品「Nexus（顧問一站式中控台）」的 UI 骨架。
- * 全部為示意假資料(寫死成固定常數，無亂數、無 Date.now)，
+ * 全部為示意假資料（寫死成固定常數，無亂數、無 Date.now），
  * 已移除任何真實客戶 / 員工 / 公司字樣。學校名為公開大學校名，
  * 但排名 / 學費 / 要求等數字皆為合理假值。
  */
@@ -21,7 +21,7 @@ export interface NexusActivity {
   location: string;
 }
 
-/** 即將到來的活動(漸層大卡 + 次要卡) */
+/** 即將到來的活動（漸層大卡 + 次要卡） */
 export const UPCOMING_ACTIVITIES: NexusActivity[] = [
   {
     id: "act-1",
@@ -70,7 +70,7 @@ export interface FeedItem {
   isVerified?: boolean;
 }
 
-/** 最新公告與動態(已依日期降冪寫死) */
+/** 最新公告與動態（已依日期降冪寫死） */
 export const RECENT_FEED: FeedItem[] = [
   {
     id: "feed-1",
@@ -127,11 +127,11 @@ export interface NexusSchool {
   qsRanking: number | null;
   usNewsRanking: number | null;
   theRanking: number | null;
-  tuitionRange: string; // 每年學費區間(假值)
-  /** 每年學費中位數(統一換算為美元等值，僅供排序用，寫死假值) */
+  tuitionRange: string; // 每年學費區間（假值）
+  /** 每年學費中位數（統一換算為美元等值，僅供排序用，寫死假值） */
   tuitionSortUsd: number;
   requirements: { gpa: string; toefl: string; ielts: string };
-  /** 成功錄取數(歷屆累計，排序用假值) */
+  /** 成功錄取數（歷屆累計，排序用假值） */
   successfulAdmits: number;
   programs: string[];
   tags: string[];
@@ -636,7 +636,7 @@ export const SCHOOL_COUNTRIES = [
 ] as const;
 export const SCHOOL_TYPES = ["全部", "研究所", "大學", "語言學校"] as const;
 
-/** 院校資料庫排序選項(對齊真實畫面的「排序方式」chips) */
+/** 院校資料庫排序選項（對齊真實畫面的「排序方式」chips） */
 export type SchoolSortKey =
   | "admits"
   | "usnews"
@@ -653,13 +653,13 @@ export const SCHOOL_SORTS: { key: SchoolSortKey; label: string }[] = [
   { key: "ielts", label: "IELTS 要求" },
 ];
 
-/** 尚未維護的學校筆數(對齊真實畫面琥珀色提示，寫死) */
+/** 尚未維護的學校筆數（對齊真實畫面琥珀色提示，寫死） */
 export const SCHOOL_UNMAINTAINED_COUNT = 5;
-/** 院校向量化進度(已/總，對齊真實畫面徽章) */
+/** 院校向量化進度（已/總，對齊真實畫面徽章） */
 export const SCHOOL_VECTORIZED = { done: 294, total: 302 };
 
 // ============================================================================
-// 3) AI 落點分析 — 候選校(含 AI 給的基準機率與因子)
+// 3) AI 落點分析 — 候選校（含 AI 給的基準機率與因子）
 // ============================================================================
 
 export interface PlacementSchool {
@@ -670,10 +670,10 @@ export interface PlacementSchool {
   location: string;
   rank: number | null;
   tier: "dream" | "match" | "safety";
-  baseProbability: number; // AI 給的基準錄取機率(0-100)
+  baseProbability: number; // AI 給的基準錄取機率（0-100）
   reqGpa: string;
   reqToefl: string;
-  /** 學術因子(0-10)，What-if 以此為基準做線性推估 */
+  /** 學術因子（0-10），What-if 以此為基準做線性推估 */
   academicFactor: number;
   reasoningShort: string;
   similarOffers: number;
@@ -775,7 +775,7 @@ export const PLACEMENT_SCHOOLS: PlacementSchool[] = [
   },
 ];
 
-/** AI 落點分析的預設輸入(寫死) */
+/** AI 落點分析的預設輸入（寫死） */
 export const PLACEMENT_DEFAULT_INPUT = {
   gpa: 3.6,
   toefl: 102,
@@ -946,7 +946,7 @@ export const AI_THREADS: ChatThread[] = [
   },
 ];
 
-/** 送出訊息後 append 的罐頭回覆(輪流取用，避免亂數) */
+/** 送出訊息後 append 的罐頭回覆（輪流取用，避免亂數） */
 export const AI_CANNED_REPLIES: string[] = [
   "收到！這是 Demo 環境的示意回覆。實際版本會即時查詢院校庫與歷屆榜單後回答。",
   "已為您整理重點：可至「AI 落點分析」輸入學生條件，取得 Dream / Match / Safety 三檔建議。",
@@ -954,18 +954,18 @@ export const AI_CANNED_REPLIES: string[] = [
 ];
 
 // ============================================================================
-// 6) 歷屆榜單(精簡表格)
+// 6) 歷屆榜單（精簡表格）
 // ============================================================================
 
-/** 榜單國家代碼(對齊真實產品的國家快篩 chips) */
+/** 榜單國家代碼（對齊真實產品的國家快篩 chips） */
 export type RankingCountryCode = "AUS" | "CAD" | "Ireland" | "SCT" | "UK" | "USA";
 
 export interface RankingRow {
   id: string;
   student: string; // 脫敏假名
-  major: string; // 在台原科系(公開系所)
+  major: string; // 在台原科系（公開系所）
   year: string;
-  /** 國家代碼(對應快篩 chips) */
+  /** 國家代碼（對應快篩 chips） */
   countryCode: RankingCountryCode;
   school: string;
   program: string; // 錄取科系
@@ -977,16 +977,16 @@ export interface RankingRow {
   isYangShuo: boolean;
   /** 是否取得獎學金 */
   hasScholarship: boolean;
-  /** 獎學金金額(NTD，無則 0;用於上方累積加總) */
+  /** 獎學金金額（NTD，無則 0；用於上方累積加總） */
   scholarshipNtd: number;
-  /** 獎學金顯示字串(無則「—」) */
+  /** 獎學金顯示字串（無則「—」） */
   scholarship: string;
   result: "錄取" | "備取" | "婉拒";
 }
 
 export const RANKING_YEARS = ["總覽", "2026", "2025", "2024"] as const;
 
-/** 國家快篩 chips(對齊真實畫面;「全部」為預設藍底) */
+/** 國家快篩 chips(對齊真實畫面；「全部」為預設藍底) */
 export const RANKING_COUNTRY_CODES: RankingCountryCode[] = [
   "AUS",
   "CAD",
@@ -996,7 +996,7 @@ export const RANKING_COUNTRY_CODES: RankingCountryCode[] = [
   "USA",
 ];
 
-/** 國家代碼 → 中文(顯示用) */
+/** 國家代碼 → 中文（顯示用） */
 export const RANKING_COUNTRY_LABEL: Record<RankingCountryCode, string> = {
   AUS: "澳洲",
   CAD: "加拿大",
@@ -1043,7 +1043,7 @@ export const RANKING_ROWS: RankingRow[] = [
   { id: "r-34", student: "童＊安", major: "中興大學 應數系", year: "2024", countryCode: "CAD", school: "UBC", program: "Computer Science", gpa: "3.4", toefl: "95", isDaShuo: true, isYangShuo: false, hasScholarship: true, scholarshipNtd: 92000, scholarship: "C$ 4,000 入學獎", result: "錄取" },
 ];
 
-/** 榜單累積獲取獎學金(NTD，由上方資料加總;留尾數對齊真實畫面樣式) */
+/** 榜單累積獲取獎學金（NTD，由上方資料加總；留尾數對齊真實畫面樣式） */
 export const RANKING_SCHOLARSHIP_TOTAL_NTD = 32427333.74;
 
 // ============================================================================
@@ -1082,7 +1082,7 @@ export const CRM_STUDENTS: CrmStudent[] = [
 ];
 
 // ============================================================================
-// 8) 使用量監測(StatCard + 簡表)
+// 8) 使用量監測（StatCard + 簡表）
 // ============================================================================
 
 export interface UsageStat {
@@ -1116,7 +1116,7 @@ export const USAGE_ROWS: UsageRow[] = [
   { id: "u-5", feature: "AI 助理對話", count: 2860, trend: "↑ 31%" },
 ];
 
-/** 近 7 日活躍量(給 recharts 折線圖，寫死) */
+/** 近 7 日活躍量（給 recharts 折線圖，寫死） */
 export interface UsageDaily {
   day: string;
   active: number;
@@ -1599,7 +1599,7 @@ export const AI_MAINTENANCE_TOOLS: AiMaintenanceTool[] = [
   { id: "clear-cache", label: "清除問答快取", description: "清除 AI 問答的暫存結果。" },
 ];
 
-/** 目前向量化進度(寫死) */
+/** 目前向量化進度（寫死） */
 export const AI_VECTORIZE_PROGRESS = { done: 887, total: 905 };
 
 // ============================================================================

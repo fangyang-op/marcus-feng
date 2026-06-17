@@ -47,7 +47,7 @@ export function KnowledgeBaseView() {
       <PageTitle
         icon={BookOpen}
         title="顧問知識庫"
-        subtitle={`${WIKI_ARTICLES.length} 篇 SOP / FAQ / 話術 / 合約指南(全為示意假資料)`}
+        subtitle={`${WIKI_ARTICLES.length} 篇 SOP / FAQ / 話術 / 合約指南（全為示意假資料）`}
       />
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[200px_1fr]">

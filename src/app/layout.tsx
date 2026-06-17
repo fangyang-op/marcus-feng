@@ -28,7 +28,7 @@ const ogImage = {
 };
 
 export const metadata: Metadata = {
-  // 讓相對路徑(/og-image.png)被解析成絕對網址，分享到 104/LinkedIn/FB 才抓得到圖
+  // 讓相對路徑（/og-image.png）被解析成絕對網址，分享到 104/LinkedIn/FB 才抓得到圖
   metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} — ${siteConfig.role}`,

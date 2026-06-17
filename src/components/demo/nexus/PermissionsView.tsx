@@ -19,7 +19,7 @@ import {
 const NEXUS_ACCENT = "bg-nexus-pink";
 
 export function PermissionsView() {
-  // 以 id → active 的覆寫表保存切換結果(純前端，不接 API)
+  // 以 id → active 的覆寫表保存切換結果（純前端，不接 API）
   const [overrides, setOverrides] = useState<Record<string, boolean>>({});
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState<string | null>(null);
@@ -58,11 +58,11 @@ export function PermissionsView() {
       <PageTitle
         icon={ShieldCheck}
         title="權限管理系統"
-        subtitle="使用者角色與啟用狀態管理(全為示意假資料)"
+        subtitle="使用者角色與啟用狀態管理（全為示意假資料）"
         right={
           <button
             type="button"
-            onClick={() => showToast("已開始同步使用者名單(Demo 示意)")}
+            onClick={() => showToast("已開始同步使用者名單（Demo 示意）")}
             className="inline-flex items-center gap-1.5 rounded-lg bg-nexus-pink px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-nexus-purple"
           >
             <RefreshCw className="h-4 w-4" />

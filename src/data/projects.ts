@@ -17,13 +17,13 @@ export const projects: Project[] = [
       "為留學代辦團隊打造的內部 CRM。以「每位學生就是一個專案」為核心，串起招生、諮詢、成交、選校、文件、申請到入學的完整生命週期，讓前後端顧問在同一平台協作，並把字數帳本、選校表版控、申請進度與績效拆分制度化。系統由我主導開發、資安整改獨立完成，目前正逐步移交資訊部維運。",
     highlights: [
       "學生 360 詳情頁:概覽 / 時間軸 / 成績 / 成交 / 選校表 / 文件 / 申請 七大分頁",
-      "申請看板(9 種狀態)與表格雙視圖，跨校追蹤截止與結果",
-      "服務方案、成交與績效拆分制度化，支援多角色權限(顧問 / 主管 / Admin)",
-      "字數帳本(只進不改的流水帳)與文件三層版控，杜絕版本混亂",
-      "資安整改 E→A(獨立完成):公司資訊部提供一份初步資安檢查報告作為標準(初始 Security Review 為 E 級)，我獨立完成所有整改",
+      "申請看板（9 種狀態）與表格雙視圖，跨校追蹤截止與結果",
+      "服務方案、成交與績效拆分制度化，支援多角色權限（顧問 / 主管 / Admin）",
+      "字數帳本（只進不改的流水帳）與文件三層版控，杜絕版本混亂",
+      "資安整改 E→A(獨立完成):公司資訊部提供一份初步資安檢查報告作為標準（初始 Security Review 為 E 級），我獨立完成所有整改",
       "導入 SonarQube、Semgrep 靜態掃描並自行修補所有問題 → Security B→A、資安複審 Security Review E→A、可靠性 C→A",
-      "建立 91 項自動化測試(單元 + 跨角色權限實測 + 端到端)，漏洞與重大 Bug 歸零",
-      "production 級存取控制:Supabase RLS 列級權限(預設 deny)+ 欄位級權限(防越權改派學生 / 改收款人)+ 敏感帳密加密",
+      "建立 91 項自動化測試（單元 + 跨角色權限實測 + 端到端），漏洞與重大 Bug 歸零",
+      "production 級存取控制:Supabase RLS 列級權限（預設 deny）+ 欄位級權限（防越權改派學生 / 改收款人）+ 敏感帳密加密",
       "將整套整改寫成可複用資安稽核 Playbook，並沿用至後續其他平台",
     ],
     tags: ["Next.js", "TypeScript", "Supabase", "Tailwind", "shadcn/ui", "Vercel"],
@@ -41,7 +41,7 @@ export const projects: Project[] = [
       "AI 落點分析:輸入學生背景產出 Dream / Match / Safety 與錄取機率，附 What-if 滑桿即時模擬",
       "EP 遊學報價系統:7 步驟精靈 + 右側即時費用試算",
       "全域浮動 AI 助理:多對話 thread、模型切換、可綁定歷屆案例",
-      "知識庫 Wiki(TipTap 富文本)、公告、歷屆榜單、遊學 CRM",
+      "知識庫 Wiki（TipTap 富文本）、公告、歷屆榜單、遊學 CRM",
     ],
     tags: ["React", "TypeScript", "Tailwind", "Supabase", "Gemini API", "TipTap"],
     demoHref: "/demo/nexus",
@@ -54,7 +54,7 @@ export const projects: Project[] = [
     description:
       "營運會議以前靠手動拉 Excel。Matrix 直接把名單資料轉成多年度的營運 BI 儀表板:營收、轉換率、顧問績效、招生來源、產品組成一次看清，再用 AI 助理產出決策洞察，讓「看數字」變成「做決策」。",
     highlights: [
-      "總覽儀表板:可翻轉 KPI 卡 + 月度轉換/營收複合圖(ComposedChart)",
+      "總覽儀表板:可翻轉 KPI 卡 + 月度轉換/營收複合圖（ComposedChart）",
       "即時績效監控:年度/月度達成率進度條與 SVG 環形圖、各區與顧問對標",
       "個別顧問分析:國別轉化漏斗 + 學生年級雙層雷達圖",
       "來源績效:佔比圓餅 / 諮詢對成交長條 / 月度面積趨勢",
@@ -83,11 +83,11 @@ export const projects: Project[] = [
     name: "落點分析資料庫",
     tagline: "把歷屆錄取結果結構化，讓「這個背景能上哪」有資料可依。",
     description:
-      "整理歷屆學生的背景(GPA、語言成績、在台科系)與錄取結果(學校、科系、排名、獎學金)，建立可查詢、可比對的結構化資料庫，成為 AI 落點分析與顧問選校建議的事實基礎。",
+      "整理歷屆學生的背景（GPA、語言成績、在台科系）與錄取結果（學校、科系、排名、獎學金），建立可查詢、可比對的結構化資料庫，成為 AI 落點分析與顧問選校建議的事實基礎。",
     highlights: [
       "歷屆榜單結構化:背景條件 × 錄取結果可交叉查詢",
       "支撐 AI 落點分析的相似案例比對",
-      "資料脫敏輸出(姓名遮罩)，兼顧分析與隱私",
+      "資料脫敏輸出（姓名遮罩），兼顧分析與隱私",
     ],
     tags: ["資料建模", "SQL", "資料清洗", "Google Sheets"],
     accent: "slate",
@@ -115,8 +115,8 @@ export const projects: Project[] = [
     description:
       "在自建系統上線前後，主動導入資安檢測與稽核流程:從靜態掃描、相依套件、權限與機敏資料外洩風險逐項檢查，並把過程寫成可重複執行的 Playbook，讓資安從「靠運氣」變成「有制度」。",
     highlights: [
-      "SonarQube / Semgrep 資安整改:Security Review E→A、Security B→A、91 項自動化測試(獨立完成)",
-      "靜態程式碼掃描(Semgrep / SonarQube)與相依套件稽核",
+      "SonarQube / Semgrep 資安整改:Security Review E→A、Security B→A、91 項自動化測試（獨立完成）",
+      "靜態程式碼掃描（Semgrep / SonarQube）與相依套件稽核",
       "RLS 權限、機敏資料加密、金鑰外洩風險檢查",
       "資安檢測報告書 + 可重複執行的稽核 Playbook",
     ],

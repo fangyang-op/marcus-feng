@@ -259,7 +259,7 @@ export function ConsultantView({ data }: { data: YearData }) {
                         contentStyle={{ borderRadius: 8, border: "none" }}
                         formatter={(v: number, n, p: { payload?: { conversion?: number } }) =>
                           n === "成交"
-                            ? [`${v} 筆(轉化率 ${(p.payload?.conversion ?? 0).toFixed(1)}%)`, "成交"]
+                            ? [`${v} 筆（轉化率 ${(p.payload?.conversion ?? 0).toFixed(1)}%）`, "成交"]
                             : [`${v} 筆`, n]
                         }
                       />

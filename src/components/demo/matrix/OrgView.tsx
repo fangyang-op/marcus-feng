@@ -31,7 +31,7 @@ const wan1 = (n: number) => `$ ${(n / 10000).toFixed(1)} 萬`;
 
 type Mode = "share" | "trend";
 
-/** 取某區在某年度的在職顧問(營收 > 0 即納入計算) */
+/** 取某區在某年度的在職顧問（營收 > 0 即納入計算） */
 function consultantsOf(data: YearData, region: RegionName): ConsultantRow[] {
   return data.consultants.filter((c) => c.region === region);
 }
@@ -48,7 +48,7 @@ export function OrgView({ data, year }: { data: YearData; year: MatrixYear }) {
   const headcount = data.consultants.length;
   const perCapita = headcount > 0 ? totalRevenue / headcount : 0;
 
-  // 各區營收 → 找最高效區(人均產值最高)
+  // 各區營收 → 找最高效區（人均產值最高）
   const regionStats = useMemo(() => {
     return REGIONS.map((r) => {
       const members = consultantsOf(data, r);
@@ -69,7 +69,7 @@ export function OrgView({ data, year }: { data: YearData; year: MatrixYear }) {
       <PageTitle
         icon={Network}
         title="組織人效統計"
-        subtitle={`四大區 × ${headcount} 位顧問的營收結構與人效分析(${year} 年度)`}
+        subtitle={`四大區 × ${headcount} 位顧問的營收結構與人效分析（${year} 年度）`}
         right={
           <div className="flex items-center gap-2">
             {/* 全域 toggle:營收佔比 ↔ 月度趨勢 */}
@@ -146,7 +146,7 @@ export function OrgView({ data, year }: { data: YearData; year: MatrixYear }) {
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         {regionStats.map((rs) => {
           const members = consultantsOf(data, rs.region);
-          // 該區各顧問營收佔比(以本區總額為母數)
+          // 該區各顧問營收佔比（以本區總額為母數）
           const ranked = [...members].sort((a, b) => b.totalRevenue - a.totalRevenue);
           const pieData = ranked.map((c, i) => ({
             name: c.name,
@@ -270,7 +270,7 @@ function TrendBlock({
   year: MatrixYear;
   compareYoY: boolean;
 }) {
-  // 各顧問彩線(取本區前 5 名，避免線太多)
+  // 各顧問彩線（取本區前 5 名，避免線太多）
   const topMembers = useMemo(
     () => [...members].sort((a, b) => b.totalRevenue - a.totalRevenue).slice(0, 5),
     [members],
@@ -279,7 +279,7 @@ function TrendBlock({
   const chartData = useMemo(() => {
     return MONTHS.map((month, i) => {
       const row: Record<string, number | string> = { month };
-      // 該區總營收(本年度)
+      // 該區總營收（本年度）
       row["區總營收"] = members.reduce((s, c) => s + (c.monthlyTrends[i]?.revenue ?? 0), 0);
       if (compareYoY) {
         // 疊三年度該區總營收
@@ -297,11 +297,11 @@ function TrendBlock({
     });
   }, [members, topMembers, compareYoY, region]);
 
-  // 同期比較的三年度色(當前年度突顯)
+  // 同期比較的三年度色（當前年度突顯）
   const yoyColors = ["#FFB761", "#FF5C8D", "#FF2D6C"];
 
   // 重要:recharts 的 <Line> 必須是 <LineChart> 的「直接子節點」，
-  // 不可包在 React Fragment 裡(否則 recharts 偵測不到、整條線不會畫)。
+  // 不可包在 React Fragment 裡（否則 recharts 偵測不到、整條線不會畫）。
   // 因此這裡先攤平成一個 <Line> 陣列再交給 LineChart。
   const lineElements = compareYoY
     ? MATRIX_YEARS.map((y, i) => (

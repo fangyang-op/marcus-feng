@@ -1,7 +1,7 @@
 import type { Metric } from "./types";
 
 /**
- * ── 核心成果條(4 個數字卡片)──────────────────────────────
+ * ── 核心成果條（4 個數字卡片）──────────────────────────────
  * 要改數字就改這裡。value 是大字、label 是標題、detail 是補充說明。
  */
 export const metrics: Metric[] = [

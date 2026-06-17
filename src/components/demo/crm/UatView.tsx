@@ -26,7 +26,7 @@ import {
 
 export function UatView() {
   const [toast, setToast] = useState<string | null>(null);
-  /** 開啟回報視窗的測試項;null = 關閉 */
+  /** 開啟回報視窗的測試項；null = 關閉 */
   const [reporting, setReporting] = useState<UatCase | null>(null);
 
   const fireToast = (msg: string) => {
@@ -128,7 +128,7 @@ export function UatView() {
                                   setReporting(c);
                                 } else {
                                   fireToast(
-                                    `已記錄「${c.title}」回報(Demo 示意)`
+                                    `已記錄「${c.title}」回報（Demo 示意）`
                                   );
                                 }
                               }}
@@ -165,7 +165,7 @@ export function UatView() {
             </div>
             <div>
               <p className="text-xs font-semibold text-ink-muted">
-                實際情況(範例)
+                實際情況（範例）
               </p>
               <div className="mt-1 rounded-lg border border-rose-200 bg-rose-50/60 p-3 text-sm text-rose-700">
                 與預期不符，需開立修復工單交由開發確認。
@@ -194,7 +194,7 @@ export function UatView() {
                 onClick={() => {
                   const title = reporting.title;
                   setReporting(null);
-                  fireToast(`已送出「${title}」修復工單(Demo 示意)`);
+                  fireToast(`已送出「${title}」修復工單（Demo 示意）`);
                 }}
                 className="rounded-lg bg-crm px-3.5 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
               >

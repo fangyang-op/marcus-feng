@@ -140,7 +140,7 @@ export function SchoolsView() {
   );
 }
 
-/** 由排名 deterministic 推導出示意門檻(無亂數) */
+/** 由排名 deterministic 推導出示意門檻（無亂數） */
 function SchoolDetail({ s }: { s: SchoolRow }) {
   const top = s.rankingQs <= 20;
   const mid = s.rankingQs <= 60;
@@ -154,7 +154,7 @@ function SchoolDetail({ s }: { s: SchoolRow }) {
     { label: "US News", value: s.rankingUsNews ? `#${s.rankingUsNews}` : "未列入" },
     { label: "建議 GPA", value: gpa },
     { label: "TOEFL / IELTS", value: `${toefl} / ${ielts}` },
-    { label: "合作關係", value: s.isPartner ? "合作院校(可加速審件)" : "一般申請" },
+    { label: "合作關係", value: s.isPartner ? "合作院校（可加速審件）" : "一般申請" },
   ];
   return (
     <div>

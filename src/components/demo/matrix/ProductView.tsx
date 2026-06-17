@@ -17,7 +17,7 @@ export function ProductView({ data }: { data: YearData }) {
     ...products.flatMap((p) => p.monthly.map((m) => (metric === "revenue" ? m.revenue : m.count))),
   );
 
-  // 玫紅色階熱力(inline rgba，數值越大越深)
+  // 玫紅色階熱力（inline rgba，數值越大越深）
   const cellStyle = (value: number) => {
     if (value === 0) return { background: "#f8fafc", color: "#cbd5e1" };
     const intensity = Math.min(value / maxVal, 1);
@@ -134,7 +134,7 @@ export function ProductView({ data }: { data: YearData }) {
       </Card>
 
       <p className="px-1 text-xs text-ink-muted">
-        ※ {metric === "revenue" ? "數值單位為萬元" : "數值單位為件數"};色塊越深代表該月銷售越強。第一欄固定不隨橫向捲動。
+        ※ {metric === "revenue" ? "數值單位為萬元" : "數值單位為件數"}；色塊越深代表該月銷售越強。第一欄固定不隨橫向捲動。
       </p>
     </PageContainer>
   );

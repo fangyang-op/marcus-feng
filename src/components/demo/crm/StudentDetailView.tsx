@@ -60,7 +60,7 @@ export function StudentDetailView({
   // 依「該學生」的狀態判斷四個進階 tab 是否解鎖
   const unlocked = isStudentUnlocked(detail.statusCode);
 
-  // 防呆:若目前選中的是被鎖的 tab(理論上點不到)，一律退回「概覽」，
+  // 防呆:若目前選中的是被鎖的 tab（理論上點不到），一律退回「概覽」，
   // 絕不渲染被鎖頁面的內容。
   const isTabLocked = (key: TabKey) => !unlocked && LOCKABLE.includes(key);
   const activeTab: TabKey = isTabLocked(tab) ? "overview" : tab;
@@ -96,7 +96,7 @@ export function StudentDetailView({
             type="button"
             onClick={() => fireToast("狀態切換為示意，正式系統可直接變更")}
             className="transition-transform hover:scale-105"
-            title="點擊變更狀態(Demo 示意)"
+            title="點擊變更狀態（Demo 示意）"
           >
             <Pill color={status?.color ?? "slate"}>{status?.label ?? "—"}</Pill>
           </button>
@@ -168,7 +168,7 @@ function LockNotice({ statusLabel }: { statusLabel: string }) {
       </span>
       <div className="min-w-0">
         <p className="text-sm font-semibold text-crm-ink">
-          此學生尚未成交(目前狀態:{statusLabel})
+          此學生尚未成交（目前狀態:{statusLabel}）
         </p>
         <p className="mt-0.5 text-sm text-ink-soft">
           「成交 / 選校表 / 文件 / 申請」四個分頁會在成交後自動解鎖。
@@ -321,7 +321,7 @@ function DealsTab({ detail }: { detail: StudentDetail }) {
           </span>
           <p className="text-sm font-semibold text-ink">尚未成交</p>
           <p className="max-w-xs text-xs text-ink-muted">
-            此學生目前為招生階段({STATUS_META[detail.statusCode]?.label ?? "—"}),
+            此學生目前為招生階段（{STATUS_META[detail.statusCode]?.label ?? "—"}）,
             成交後此處將顯示方案金額與顧問績效拆分。
           </p>
         </div>
@@ -447,8 +447,8 @@ function DocumentsTab({
                 onClick={() =>
                   onToast(
                     c.done
-                      ? `已開啟「${c.label}」預覽(Demo 示意)`
-                      : `已提醒學生補交「${c.label}」(Demo 示意)`
+                      ? `已開啟「${c.label}」預覽（Demo 示意）`
+                      : `已提醒學生補交「${c.label}」（Demo 示意）`
                   )
                 }
                 className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-ink-soft transition-colors hover:bg-slate-50"
@@ -463,7 +463,7 @@ function DocumentsTab({
   );
 }
 
-/* ── 申請(精簡卡片清單)─────────────────────────────────── */
+/* ── 申請（精簡卡片清單）─────────────────────────────────── */
 function ApplicationsTab({ detail }: { detail: StudentDetail }) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

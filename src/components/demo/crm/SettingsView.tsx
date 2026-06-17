@@ -41,7 +41,7 @@ interface SettingCard {
   desc: string;
   /** 角落小統計，讓設定看起來真的在運作 */
   stat: string;
-  /** 點擊行為:開 Modal(條列)或進入子頁 */
+  /** 點擊行為:開 Modal（條列）或進入子頁 */
   detail?: string[];
   subpage?: SubpageKey;
 }
@@ -55,7 +55,7 @@ const SETTING_CARDS: SettingCard[] = [
     detail: [
       "前端 / 後端顧問角色與權限矩陣",
       "部門分組與主管指派",
-      "登入裝置與單一登入(SSO)設定",
+      "登入裝置與單一登入（SSO）設定",
       "離職帳號停用與資料移交",
     ],
   },
@@ -80,7 +80,7 @@ const SETTING_CARDS: SettingCard[] = [
     stat: "14 個狀態 · 4 大分類",
     detail: [
       "新增、停用與排序自訂狀態",
-      "狀態自動轉換規則(如成交後啟動服務)",
+      "狀態自動轉換規則（如成交後啟動服務）",
       "各階段對應的待辦與提醒模板",
       "看板欄位與狀態的對應設定",
     ],
@@ -127,7 +127,7 @@ const SETTING_CARDS: SettingCard[] = [
     desc: "活動紀錄與資料保留政策",
     stat: "留存 365 天",
     detail: [
-      "完整操作活動紀錄(Audit Log)",
+      "完整操作活動紀錄（Audit Log）",
       "個資存取權限與遮罩規則",
       "資料匯出與備份排程",
       "資料保留與刪除政策",
@@ -137,7 +137,7 @@ const SETTING_CARDS: SettingCard[] = [
 
 export function SettingsView() {
   const [openCard, setOpenCard] = useState<SettingCard | null>(null);
-  /** 目前進入的子頁;null = 設定總覽 */
+  /** 目前進入的子頁；null = 設定總覽 */
   const [subpage, setSubpage] = useState<SubpageKey | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
@@ -348,7 +348,7 @@ function ReferrersSubpage({
         title="轉介人管理"
         subtitle={`${REFERRERS.length} 位轉介人 · 個人 / 機構 / 學校 / 夥伴`}
         onBack={onBack}
-        onAdd={() => onToast("已開啟新增轉介人(Demo 示意)")}
+        onAdd={() => onToast("已開啟新增轉介人（Demo 示意）")}
       />
       <SearchBox
         value={query}
@@ -385,7 +385,7 @@ function ReferrersSubpage({
                   <td className="px-4 py-2.5 text-right">
                     <EditButton
                       onClick={() =>
-                        onToast(`已開啟「${r.name}」編輯(Demo 示意)`)
+                        onToast(`已開啟「${r.name}」編輯（Demo 示意）`)
                       }
                     />
                   </td>
@@ -434,7 +434,7 @@ function LeadSourcesSubpage({
         title="名單來源管理"
         subtitle={`${LEAD_SOURCES.length} 個來源 · 本月共進線 ${monthlyTotal} 筆名單`}
         onBack={onBack}
-        onAdd={() => onToast("已開啟新增名單來源(Demo 示意)")}
+        onAdd={() => onToast("已開啟新增名單來源（Demo 示意）")}
       />
       <SearchBox
         value={query}
@@ -467,7 +467,7 @@ function LeadSourcesSubpage({
                   <td className="px-4 py-2.5 text-right">
                     <EditButton
                       onClick={() =>
-                        onToast(`已開啟「${s.name}」編輯(Demo 示意)`)
+                        onToast(`已開啟「${s.name}」編輯（Demo 示意）`)
                       }
                     />
                   </td>

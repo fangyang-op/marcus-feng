@@ -17,9 +17,9 @@ import {
 } from "@/data/demo/nexus";
 
 /**
- * 浮動 AI 助理 widget(右下角可開合)。
+ * 浮動 AI 助理 widget（右下角可開合）。
  * 展開後:標題列 + 多對話 thread 側欄 + Quick prompt chips + 對話泡泡 + 輸入框。
- * 送出後 append 一則罐頭回覆(輪流取用，不接 API、不用亂數)。
+ * 送出後 append 一則罐頭回覆（輪流取用，不接 API、不用亂數）。
  */
 export function AIWidget() {
   const [open, setOpen] = useState(false);
@@ -28,7 +28,7 @@ export function AIWidget() {
   );
   const [activeId, setActiveId] = useState(AI_THREADS[0].id);
   const [input, setInput] = useState("");
-  // 罐頭回覆輪流取用的指標(非亂數，hydration 安全)
+  // 罐頭回覆輪流取用的指標（非亂數，hydration 安全）
   const [replyIdx, setReplyIdx] = useState(0);
 
   const active = threads.find((t) => t.id === activeId) ?? threads[0];

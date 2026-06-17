@@ -35,7 +35,7 @@ export function AnnouncementsView() {
       cat === "全部"
         ? ANNOUNCEMENTS
         : ANNOUNCEMENTS.filter((a) => a.category === cat);
-    // 置頂優先，其餘維持原本(已寫死)日期降冪
+    // 置頂優先，其餘維持原本（已寫死）日期降冪
     return [...filtered].sort((a, b) => Number(b.pinned) - Number(a.pinned));
   }, [cat]);
 
@@ -47,7 +47,7 @@ export function AnnouncementsView() {
       <PageTitle
         icon={Megaphone}
         title="最新公告"
-        subtitle="合作廠商 / 內部 / 規則 / 活動公告整合(全為示意假資料)"
+        subtitle="合作廠商 / 內部 / 規則 / 活動公告整合（全為示意假資料）"
       />
 
       <div className="mb-5 grid grid-cols-3 gap-4">
