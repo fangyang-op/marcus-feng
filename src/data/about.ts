@@ -1,13 +1,13 @@
 /**
  * ── 關於我 / About ────────────────────────────────────────
  * 一段更有故事性的短文(非履歷自傳)。改文字、換照片都在這裡。
- * 照片放 /public/images/profile.jpg(先用 placeholder,替換同名檔即可)。
+ * 照片放 /public/images/(目前用你提供的 profile.jpeg;要換照片替換同名檔即可)。
  */
 export const about = {
   eyebrow: "About",
   title: "關於我",
   /** 照片(放在 /public/images/ 下) */
-  photo: "/images/profile.jpg",
+  photo: "/images/profile.jpeg",
   photoAlt: "馮若陽 Marcus Feng",
   /** 2–3 段短文,段落之間會自動留白 */
   paragraphs: [
