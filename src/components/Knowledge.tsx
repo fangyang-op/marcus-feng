@@ -1,6 +1,7 @@
-import { FileText, Download, Check } from "lucide-react";
+import { FileText, Download, Check, Mail } from "lucide-react";
 import { SectionHeading } from "./ui/Section";
 import { knowledgeDocs } from "@/data/knowledge";
+import { siteConfig } from "@/data/site";
 
 /**
  * 知識傳承區 — 差異化重點。
@@ -40,15 +41,34 @@ export function Knowledge() {
                 ))}
               </ul>
 
-              <a
-                href={doc.pdfHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 transition-colors hover:bg-brand-50"
-              >
-                <Download className="h-4 w-4" />
-                下載 PDF
-              </a>
+              {doc.requestOnly ? (
+                <div className="mt-6">
+                  <a
+                    href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(
+                      `索取文件:${doc.title}`
+                    )}`}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/[0.12]"
+                  >
+                    <Mail className="h-4 w-4" />
+                    面試中提供 / 來信索取
+                  </a>
+                  {doc.requestNote && (
+                    <p className="mt-2 text-xs leading-relaxed text-slate-400">
+                      {doc.requestNote}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <a
+                  href={doc.pdfHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 transition-colors hover:bg-brand-50"
+                >
+                  <Download className="h-4 w-4" />
+                  下載 PDF
+                </a>
+              )}
             </article>
           ))}
         </div>

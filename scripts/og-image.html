@@ -1,0 +1,74 @@
+<!doctype html>
+<!--
+  Open Graph 預覽圖來源(1200×630)。改文字後用 headless Chrome 重新渲染成 /public/og-image.png:
+  CHROME=~/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell
+  "$CHROME" --headless --hide-scrollbars --force-device-scale-factor=1 \
+    --window-size=1200,630 --default-background-color=00000000 \
+    --screenshot=public/og-image.png "file://$(pwd)/scripts/og-image.html"
+-->
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    font-family: "Noto Sans TC", "PingFang TC", "Heiti TC", -apple-system, "Helvetica Neue", sans-serif;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #161e54 0%, #1d2c8a 55%, #1e2eaf 100%);
+  }
+  /* 柔和光暈 */
+  .glow {
+    position: absolute; border-radius: 9999px; filter: blur(80px); opacity: .55;
+  }
+  .glow-a { width: 520px; height: 520px; top: -180px; right: -120px; background: #2547eb; }
+  .glow-b { width: 420px; height: 420px; bottom: -200px; left: -120px; background: #1d36d8; opacity: .4; }
+  .wrap { position: relative; height: 100%; padding: 72px 80px; display: flex; flex-direction: column; }
+  /* 頂列:logo + 名字 */
+  .top { display: flex; align-items: center; gap: 18px; }
+  .mark {
+    width: 64px; height: 64px; border-radius: 16px; background: #fff; color: #1d2c8a;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 26px;
+    letter-spacing: 1px;
+  }
+  .who { font-size: 26px; font-weight: 600; }
+  .who .role { color: #93b4fd; font-weight: 500; }
+  /* 主標 */
+  .title {
+    margin-top: auto; font-size: 86px; font-weight: 800; line-height: 1.12; letter-spacing: -1px;
+  }
+  .subtitle { margin-top: 14px; font-size: 38px; font-weight: 500; color: #93b4fd; }
+  /* 數字標籤 */
+  .tags { margin-top: 40px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.18);
+    border-radius: 9999px; padding: 14px 24px; font-size: 28px; font-weight: 600;
+    backdrop-filter: blur(4px);
+  }
+  .tag b { color: #bcd3fe; }
+  .dot { width: 10px; height: 10px; border-radius: 9999px; background: #608cfa; }
+</style>
+</head>
+<body>
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="wrap">
+    <div class="top">
+      <div class="mark">MF</div>
+      <div class="who">馮若陽 Marcus Feng <span class="role">· 資深營運經理</span></div>
+    </div>
+
+    <h1 class="title">能自己動手建系統的營運人</h1>
+    <div class="subtitle">Operations leader who builds systems</div>
+
+    <div class="tags">
+      <span class="tag"><span class="dot"></span>營收 <b>+140%</b></span>
+      <span class="tag"><span class="dot"></span>CRM · Matrix · Nexus</span>
+      <span class="tag"><span class="dot"></span>SonarQube 資安 <b>A 級</b></span>
+    </div>
+  </div>
+</body>
+</html>

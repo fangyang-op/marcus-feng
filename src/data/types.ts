@@ -49,8 +49,12 @@ export interface KnowledgeDoc {
   summary: string;
   /** 文件涵蓋重點 */
   points: string[];
-  /** 可下載 PDF 路徑(放在 /public/docs/ 下) */
-  pdfHref: string;
+  /** 可下載 PDF 路徑(放在 /public/docs/ 下);requestOnly 時可省略 */
+  pdfHref?: string;
+  /** 不公開下載、改為「來信索取」(例如涉及系統防護細節的資安文件) */
+  requestOnly?: boolean;
+  /** requestOnly 時顯示的小字說明 */
+  requestNote?: string;
   accent: AccentKey;
 }
 

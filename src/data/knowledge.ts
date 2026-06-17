@@ -43,7 +43,8 @@ export const knowledgeDocs: KnowledgeDoc[] = [
       "風險分級與修補建議的撰寫範例",
       "可重複執行:換系統也能照表操課",
     ],
-    pdfHref: "/docs/security-playbook.pdf",
+    requestOnly: true,
+    requestNote: "此份涉及系統防護細節,歡迎於面試中索取。",
     accent: "matrix",
   },
 ];
