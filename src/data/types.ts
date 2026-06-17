@@ -16,8 +16,8 @@ export interface LinkItem {
 
 /** 核心成果數字卡 */
 export interface Metric {
-  /** 主數字，例如 "+140%"（中英相同，不切換） */
-  value: string;
+  /** 主數字（含單位,中英可不同,例如 "450 萬" / "NT$4.5M"） */
+  value: L;
   /** 數字下方標題 */
   label: L;
   /** 補充說明 */

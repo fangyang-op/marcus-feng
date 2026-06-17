@@ -19,11 +19,11 @@ export function MetricsBar() {
       <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {metrics.map((m) => (
           <div
-            key={m.value}
+            key={m.label.zh}
             className="rounded-2xl border border-slate-200 bg-white p-6 shadow-card transition-shadow hover:shadow-card-hover"
           >
             <CountUp
-              value={m.value}
+              value={t(m.value)}
               className="tabular block text-3xl font-extrabold tracking-tight text-brand-700 sm:text-4xl"
             />
             <div className="mt-2 text-sm font-semibold text-ink">{t(m.label)}</div>

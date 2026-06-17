@@ -95,35 +95,40 @@ export function ProjectCard({ project }: { project: Project }) {
           </div>
         </div>
 
-        {/* 按鈕列 */}
-        <div className="mt-6 flex flex-wrap items-center gap-2.5 pt-1">
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-semibold text-ink-soft transition-colors hover:border-slate-400"
-          >
-            {t(ui.projects.viewDetails)}
-            <ChevronDown
-              className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
-            />
-          </button>
-
-          {project.demoHref && (
-            <a
-              href={project.demoHref}
-              className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold text-white transition-colors ${a.btn}`}
+        {/* CTA:mt-auto 下沉到卡片底部,讓各卡按鈕在同一列對齊。
+            EN 模式保留一行說明（有 Demo 顯示「Demo UI is in Chinese」,無 Demo 留空佔位）,
+            使有/無 Demo 的卡片按鈕也對齊。 */}
+        <div className="mt-auto pt-6">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-semibold text-ink-soft transition-colors hover:border-slate-400"
             >
-              {t(ui.projects.openDemo)}
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
+              {t(ui.projects.viewDetails)}
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            {project.demoHref && (
+              <a
+                href={project.demoHref}
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold text-white transition-colors ${a.btn}`}
+              >
+                {t(ui.projects.openDemo)}
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            )}
+          </div>
+
+          {locale === "en" && (
+            <p className="mt-2 min-h-[1.25rem] text-xs text-ink-muted">
+              {project.demoHref ? ui.projects.demoInChinese.en : ""}
+            </p>
           )}
         </div>
-
-        {/* En 模式下提示 Demo 內容為中文 */}
-        {project.demoHref && locale === "en" && (
-          <p className="mt-2 text-xs text-ink-muted">{ui.projects.demoInChinese.en}</p>
-        )}
       </div>
     </article>
   );
