@@ -24,6 +24,7 @@ const ogImage = {
   width: 1200,
   height: 630,
   alt: ogTitle,
+  type: "image/png",
 };
 
 export const metadata: Metadata = {

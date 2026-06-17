@@ -41,34 +41,39 @@ export function Knowledge() {
                 ))}
               </ul>
 
-              {doc.requestOnly ? (
-                <div className="mt-6">
+              {/* CTA:三張卡都用「全寬按鈕 + 一行說明」結構,讓按鈕水平對齊;
+                  下載卡的說明行留隱形佔位,三張卡會一起被說明文字往下撐。 */}
+              <div className="mt-6">
+                {doc.requestOnly ? (
                   <a
                     href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(
                       `索取文件:${doc.title}`
                     )}`}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/[0.12]"
+                    className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/[0.12]"
                   >
                     <Mail className="h-4 w-4" />
                     面試中提供 / 來信索取
                   </a>
-                  {doc.requestNote && (
-                    <p className="mt-2 text-xs leading-relaxed text-slate-400">
-                      {doc.requestNote}
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <a
-                  href={doc.pdfHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 transition-colors hover:bg-brand-50"
+                ) : (
+                  <a
+                    href={doc.pdfHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 transition-colors hover:bg-brand-50"
+                  >
+                    <Download className="h-4 w-4" />
+                    下載 PDF
+                  </a>
+                )}
+                <p
+                  className={`mt-2 text-xs leading-relaxed text-slate-400 ${
+                    doc.requestOnly ? "" : "invisible select-none"
+                  }`}
+                  aria-hidden={doc.requestOnly ? undefined : true}
                 >
-                  <Download className="h-4 w-4" />
-                  下載 PDF
-                </a>
-              )}
+                  {doc.requestOnly ? doc.requestNote : "佔位"}
+                </p>
+              </div>
             </article>
           ))}
         </div>
