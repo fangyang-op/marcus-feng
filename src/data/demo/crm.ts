@@ -95,7 +95,7 @@ export function isUnassignedBackend(s: StudentRow): boolean {
 
 /**
  * 學生詳情進階分頁是否「已解鎖」。
- * CRM 流程:成交後才會啟動後端服務（選校 / 文件 / 申請）,
+ * CRM 流程：成交後才會啟動後端服務（選校 / 文件 / 申請）,
  * 因此「成交 / 選校表 / 文件 / 申請」四個 tab 需在成交後才解鎖。
  * - recruitment（招生中）或 special(暫停且未成交)→ 上鎖
  * - closed（已成交）或 application(申請中)→ 解鎖
@@ -229,7 +229,7 @@ function buildDetail(s: StudentRow): StudentDetail {
   const primaryCountry = s.country[0] ?? "美國";
   const pool = SCHOOL_POOL_BY_COUNTRY[primaryCountry] ?? SCHOOL_POOL_BY_COUNTRY["美國"];
 
-  // 字數方案:旗艦 30000 / 標準 18000；已用依 id 變化但寫死推導
+  // 字數方案：旗艦 30000 / 標準 18000；已用依 id 變化但寫死推導
   const isFlagship = idx % 2 === 0;
   const total = isFlagship ? 30000 : 18000;
   const used = isFlagship ? 8000 + (idx % 6) * 1400 : 4200 + (idx % 6) * 1100;
@@ -279,7 +279,7 @@ function buildDetail(s: StudentRow): StudentDetail {
     { label: "後端顧問", value: s.backend ?? "待分配" },
   ];
 
-  // 時間軸:依狀態階段顯示已發生的事件（較新在上）
+  // 時間軸：依狀態階段顯示已發生的事件（較新在上）
   const allEvents: { date: string; title: string; desc: string; color: PillColor; minStage: number }[] = [
     { date: dateAfter(s.createdAt, 0), title: "建立名單", desc: `經由${SOURCE_TYPES[idx % SOURCE_TYPES.length]}進線，由 ${s.frontend ?? "前端顧問"} 接洽`, color: "slate", minStage: 0 },
     { date: dateAfter(s.createdAt, 14), title: "完成需求諮詢", desc: `鎖定 ${primaryCountry} ${s.degree}・${s.targetMajor}`, color: "cyan", minStage: 0 },
@@ -292,7 +292,7 @@ function buildDetail(s: StudentRow): StudentDetail {
     .reverse()
     .map(({ minStage, ...rest }) => { void minStage; return rest; });
 
-  // 成績卡:語言 + GPA + (理工才有 GRE)
+  // 成績卡：語言 + GPA + (理工才有 GRE)
   const isQuant = /Engineering|Science|Computer|Data|Robotics|Finance|Economics/.test(
     s.targetMajor
   );
@@ -315,7 +315,7 @@ function buildDetail(s: StudentRow): StudentDetail {
     });
   }
 
-  // 成交:已成交/申請中才有金額；招生中顯示待成交
+  // 成交：已成交/申請中才有金額；招生中顯示待成交
   const closed = cat === "closed" || cat === "application";
   const amount = isFlagship ? "NT$ 168,000" : "NT$ 98,000";
   const deals: StudentDetail["deals"] = {
@@ -333,14 +333,14 @@ function buildDetail(s: StudentRow): StudentDetail {
       : [],
   };
 
-  // 選校表:由國家池組合
+  // 選校表：由國家池組合
   const schoolList: StudentDetail["schoolList"] = [
     ...pool.dream.map((school) => ({ tier: "dream" as const, school, program: programFor(s.targetMajor, primaryCountry), country: primaryCountry })),
     ...pool.match.map((school) => ({ tier: "match" as const, school, program: programFor(s.targetMajor, primaryCountry), country: primaryCountry })),
     ...pool.safety.map((school) => ({ tier: "safety" as const, school, program: programFor(s.targetMajor, primaryCountry), country: primaryCountry })),
   ];
 
-  // 申請卡:取選校表前幾所，依狀態給不同申請狀態
+  // 申請卡：取選校表前幾所，依狀態給不同申請狀態
   const appsSource = [...pool.match, ...pool.dream, ...pool.safety].slice(0, stage >= 2 ? 4 : stage === 1 ? 2 : 1);
   const applications: ApplicationCard[] = appsSource.map((school, i) => ({
     id: `${s.id}-app${i + 1}`,
@@ -482,13 +482,13 @@ export const APPLICATIONS: ApplicationCard[] = [
   { id: "k24", studentName: "謝佩珊", school: "Northeastern University", program: "MS in Media Studies", country: "美國", deadline: "2024-12-15", round: "R1", statusCode: "enrolled" },
 ];
 
-/** 逾期判斷:截止日 < TODAY 且尚在 active 狀態 */
+/** 逾期判斷：截止日 < TODAY 且尚在 active 狀態 */
 export function isOverdue(app: ApplicationCard): boolean {
   const active: ApplicationStatusCode[] = ["pending_send", "submitted", "docs_required", "interview", "waitlisted"];
   return app.deadline < TODAY && active.includes(app.statusCode);
 }
 
-/* ── 設定:轉介人 ─────────────────────────────────────────── */
+/* ── 設定：轉介人 ─────────────────────────────────────────── */
 export type ReferrerType = "個人" | "機構" | "學校" | "夥伴";
 
 export const REFERRER_TYPE_PILL: Record<ReferrerType, PillColor> = {
@@ -521,7 +521,7 @@ export const REFERRERS: Referrer[] = [
   { id: "r10", name: "青年留學交流協會", type: "機構", contact: "info@example.com", active: true, referred: 21 },
 ];
 
-/* ── 設定:名單來源 ───────────────────────────────────────── */
+/* ── 設定：名單來源 ───────────────────────────────────────── */
 export interface LeadSource {
   id: string;
   name: string;

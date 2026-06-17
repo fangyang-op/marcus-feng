@@ -7,7 +7,7 @@ import type { LucideIcon } from "lucide-react";
  * 都是純展示元件，可直接在各 Demo 的 client 頁面內使用。
  */
 
-/** 內容容器:統一頁面內距與最大寬度 */
+/** 內容容器：統一頁面內距與最大寬度 */
 export function PageContainer({
   children,
   className = "",

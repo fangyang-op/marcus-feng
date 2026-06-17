@@ -39,7 +39,7 @@ export const UPCOMING_ACTIVITIES: NexusActivity[] = [
   },
   {
     id: "act-3",
-    name: "加拿大學簽 SDS 新制說明 (顧問內訓)",
+    name: "加拿大學簽 SDS 新制說明 （顧問內訓）",
     date: "2025-07-22",
     time: "10:30 - 11:30",
     location: "線上 Webinar",
@@ -91,7 +91,7 @@ export const RECENT_FEED: FeedItem[] = [
   {
     id: "feed-3",
     type: "ANNOUNCEMENT",
-    title: "英國 Graduate Route 簽證效期維持兩年 (官方公告)",
+    title: "英國 Graduate Route 簽證效期維持兩年 （官方公告）",
     preview: "近期傳聞調整為 18 個月並未通過；現行畢業生工作簽維持原 24 個月，碩博另計。",
     date: "2025-06-10",
     isVerified: true,
@@ -99,7 +99,7 @@ export const RECENT_FEED: FeedItem[] = [
   {
     id: "feed-4",
     type: "WIKI",
-    title: "TOEFL vs IELTS 選擇指南 (依目標國家)",
+    title: "TOEFL vs IELTS 選擇指南 （依目標國家）",
     preview: "美國多數理工科系兩者皆收；部分英國與澳洲學程偏好 IELTS，附各校接受度速查。",
     date: "2025-06-08",
   },
@@ -431,7 +431,7 @@ export const SCHOOLS: NexusSchool[] = [
     qsRanking: 28,
     usNewsRanking: 47,
     theRanking: 30,
-    tuitionRange: "€ 0 – 6,000 / 年 (公立)",
+    tuitionRange: "€ 0 – 6,000 / 年 （公立）",
     tuitionSortUsd: 3000,
     requirements: { gpa: "3.0", toefl: "88", ielts: "6.5" },
     successfulAdmits: 14,
@@ -451,7 +451,7 @@ export const SCHOOLS: NexusSchool[] = [
     qsRanking: 99,
     usNewsRanking: 96,
     theRanking: 90,
-    tuitionRange: "€ 0 – 5,000 / 年 (公立)",
+    tuitionRange: "€ 0 – 5,000 / 年 （公立）",
     tuitionSortUsd: 2500,
     requirements: { gpa: "2.9", toefl: "88", ielts: "6.0" },
     successfulAdmits: 11,
@@ -828,7 +828,7 @@ export const EP_COURSES: EPCourse[] = [
   { name: "General English (一般英語)", pricePerWeek: 380, note: "每週 20 堂，最常見入門課程" },
   { name: "Intensive English (密集班)", pricePerWeek: 460, note: "每週 30 堂，進度較快" },
   { name: "IELTS 考試衝刺班", pricePerWeek: 520, note: "針對升學門檻設計" },
-  { name: "升學銜接課程 (Pathway)", pricePerWeek: 560, note: "可銜接合作大學" },
+  { name: "升學銜接課程 （Pathway）", pricePerWeek: 560, note: "可銜接合作大學" },
 ];
 
 export interface EPAccommodation {
@@ -840,8 +840,8 @@ export interface EPAccommodation {
 
 export const EP_ACCOMMODATIONS: EPAccommodation[] = [
   { id: "none", name: "自行安排 / 不需住宿", pricePerWeek: 0, note: "" },
-  { id: "homestay", name: "寄宿家庭 (含早晚餐)", pricePerWeek: 320, note: "沉浸式語言環境" },
-  { id: "residence", name: "學生宿舍 (單人房)", pricePerWeek: 410, note: "近校區、獨立空間" },
+  { id: "homestay", name: "寄宿家庭 （含早晚餐）", pricePerWeek: 320, note: "沉浸式語言環境" },
+  { id: "residence", name: "學生宿舍 （單人房）", pricePerWeek: 410, note: "近校區、獨立空間" },
   { id: "apartment", name: "共享公寓", pricePerWeek: 360, note: "彈性高、可自炊" },
 ];
 
@@ -1546,8 +1546,8 @@ export interface AiModelOption {
   provider: "Gemini" | "Claude";
   name: string;
   tagline: string;
-  speedLabel: string; // 例:「最快」
-  qualityLabel: string; // 例:「品質最高」
+  speedLabel: string; // 例：「最快」
+  qualityLabel: string; // 例：「品質最高」
 }
 
 export const AI_MODEL_OPTIONS: AiModelOption[] = [

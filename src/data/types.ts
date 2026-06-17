@@ -1,6 +1,6 @@
 /**
  * 共用型別定義。各資料檔（site / metrics / projects ...）都引用這裡的型別。
- * 需要中英切換的欄位型別是 L = { zh, en };不切換的（技術標籤、連結、專有名詞）維持 string。
+ * 需要中英切換的欄位型別是 L = { zh, en }；不切換的（技術標籤、連結、專有名詞）維持 string。
  */
 import type { L } from "@/i18n/types";
 
@@ -16,7 +16,7 @@ export interface LinkItem {
 
 /** 核心成果數字卡 */
 export interface Metric {
-  /** 主數字（含單位,中英可不同,例如 "450 萬" / "NT$4.5M"） */
+  /** 主數字（含單位，中英可不同，例如 "450 萬" / "NT$4.5M"） */
   value: L;
   /** 數字下方標題 */
   label: L;
@@ -50,7 +50,7 @@ export interface KnowledgeDoc {
   summary: L;
   /** 文件涵蓋重點 */
   points: L[];
-  /** 可下載 PDF 路徑（放在 /public/docs/ 下）;requestOnly 時可省略 */
+  /** 可下載 PDF 路徑（放在 /public/docs/ 下）；requestOnly 時可省略 */
   pdfHref?: string;
   /** 不公開下載、改為「來信索取」（例如涉及系統防護細節的資安文件） */
   requestOnly?: boolean;

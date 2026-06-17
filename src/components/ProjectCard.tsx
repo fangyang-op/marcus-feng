@@ -42,7 +42,7 @@ const ACCENT: Record<
   },
 };
 
-/** 中文標籤的英文對照（技術名詞不在表內,英文模式直接沿用原字串） */
+/** 中文標籤的英文對照（技術名詞不在表內，英文模式直接沿用原字串） */
 const TAG_EN: Record<string, string> = {
   品牌設計: "Brand Design",
   資料建模: "Data Modeling",
@@ -95,8 +95,8 @@ export function ProjectCard({ project }: { project: Project }) {
           </div>
         </div>
 
-        {/* CTA:mt-auto 下沉到卡片底部,讓各卡按鈕在同一列對齊。
-            EN 模式保留一行說明（有 Demo 顯示「Demo UI is in Chinese」,無 Demo 留空佔位）,
+        {/* CTA:mt-auto 下沉到卡片底部，讓各卡按鈕在同一列對齊。
+            EN 模式保留一行說明（有 Demo 顯示「Demo UI is in Chinese」，無 Demo 留空佔位），
             使有/無 Demo 的卡片按鈕也對齊。 */}
         <div className="mt-auto pt-6">
           <div className="flex flex-wrap items-center gap-2.5">

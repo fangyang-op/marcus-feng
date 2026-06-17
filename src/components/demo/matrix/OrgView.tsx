@@ -72,7 +72,7 @@ export function OrgView({ data, year }: { data: YearData; year: MatrixYear }) {
         subtitle={`四大區 × ${headcount} 位顧問的營收結構與人效分析（${year} 年度）`}
         right={
           <div className="flex items-center gap-2">
-            {/* 全域 toggle:營收佔比 ↔ 月度趨勢 */}
+            {/* 全域 toggle：營收佔比 ↔ 月度趨勢 */}
             <div className="flex rounded-lg bg-slate-100 p-1">
               <button
                 type="button"
@@ -300,7 +300,7 @@ function TrendBlock({
   // 同期比較的三年度色（當前年度突顯）
   const yoyColors = ["#FFB761", "#FF5C8D", "#FF2D6C"];
 
-  // 重要:recharts 的 <Line> 必須是 <LineChart> 的「直接子節點」，
+  // 重要：recharts 的 <Line> 必須是 <LineChart> 的「直接子節點」，
   // 不可包在 React Fragment 裡（否則 recharts 偵測不到、整條線不會畫）。
   // 因此這裡先攤平成一個 <Line> 陣列再交給 LineChart。
   const lineElements = compareYoY
@@ -318,7 +318,7 @@ function TrendBlock({
         />
       ))
     : [
-        // 該區總營收:虛線
+        // 該區總營收：虛線
         <Line
           key="__region_total"
           type="monotone"

@@ -138,7 +138,7 @@ export function SourceView({ data, year }: { data: YearData; year: string }) {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
           <h3 className="mb-4 flex items-center gap-2 font-bold text-ink">
-            <Target className="h-5 w-5 text-violet-500" /> 來源佔比 (成交件數)
+            <Target className="h-5 w-5 text-violet-500" /> 來源佔比 （成交件數）
           </h3>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">

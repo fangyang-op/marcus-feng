@@ -6,7 +6,7 @@ import { ArrowLeft, Menu, X, type LucideIcon } from "lucide-react";
 
 /**
  * ── 三個 Demo 共用的外殼 ──────────────────────────────────────
- * 提供:頂部紅色「Demo 環境」橫幅 + 左側欄（可分組、行動版抽屜） + 頂欄 + 主內容捲動區
+ * 提供：頂部紅色「Demo 環境」橫幅 + 左側欄（可分組、行動版抽屜） + 頂欄 + 主內容捲動區
  * + 選用的右下角浮動元件（AI 助理）。
  *
  * 每個 Demo 自己持有「目前在看哪個 view」的 state，透過 activeKey/onSelect 控制側欄。
@@ -20,7 +20,7 @@ export interface DemoNavItem {
   label: string;
   icon: LucideIcon;
   badge?: string | number;
-  /** 選用:分組標題（同組連續項目共用第一個出現的 group 當區隔線標題） */
+  /** 選用：分組標題（同組連續項目共用第一個出現的 group 當區隔線標題） */
   group?: string;
 }
 
@@ -185,7 +185,7 @@ export function DemoShell({
         })}
       </nav>
 
-      {/* 底部:返回作品集 */}
+      {/* 底部：返回作品集 */}
       <div
         className={`shrink-0 p-2.5 ${
           darkSidebar ? "border-t border-slate-800" : "border-t border-slate-100"

@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * 數字滾動動畫（count-up）。進入視窗時從 0 數到目標值。
- * 會保留原字串的前後綴與千分位格式，例如:
+ * 會保留原字串的前後綴與千分位格式，例如：
  *   "+140%" → 動畫 0→140，前綴 "+" 後綴 "%"
  *   "NT$4.5M" → 0→4.5，前綴 "NT$" 後綴 "M"
  * 解析不到數字時，直接原樣顯示（不動畫）。
- * 語系切換導致 value 改變時:若已動畫過則直接顯示新值（不重數）。
+ * 語系切換導致 value 改變時：若已動畫過則直接顯示新值（不重數）。
  */
 const NUM = /[\d,]+(?:\.\d+)?/;
 
@@ -31,7 +31,7 @@ export function CountUp({
     return m ? buildAt(value, m, 0) : value;
   });
 
-  // 進入視窗時動畫一次（用 valueRef 取最新值,避免切語系後數到舊值）
+  // 進入視窗時動畫一次（用 valueRef 取最新值，避免切語系後數到舊值）
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
@@ -67,7 +67,7 @@ export function CountUp({
     return () => io.disconnect();
   }, [duration]);
 
-  // value 改變（語系切換）:已數過直接顯示新值;還沒進視窗則顯示新值的 0 起點
+  // value 改變（語系切換）：已數過直接顯示新值；還沒進視窗則顯示新值的 0 起點
   useEffect(() => {
     const m = value.match(NUM);
     if (started.current) setDisplay(value);

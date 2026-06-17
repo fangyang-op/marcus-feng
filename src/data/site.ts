@@ -3,7 +3,7 @@ import type { L } from "@/i18n/types";
 
 /**
  * ── 網站主角基本資料 ──────────────────────────────────────────
- * 需要中英切換的欄位寫成 { zh, en };姓名、Email、連結等專有資訊維持單一字串。
+ * 需要中英切換的欄位寫成 { zh, en }；姓名、Email、連結等專有資訊維持單一字串。
  */
 export const siteConfig = {
   name: "馮若陽 Marcus Feng",

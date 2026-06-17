@@ -11,7 +11,7 @@ export const knowledgeDocs: KnowledgeDoc[] = [
     id: "crm-build-log",
     title: { zh: "CRM 建置實錄", en: "CRM Build Log" },
     summary: {
-      zh: "從營運痛點到上線系統的完整記錄:需求拆解、資料模型設計、權限制度、版控與字數帳本機制，以及非工程背景如何用 AI 工具把它做出來。",
+      zh: "從營運痛點到上線系統的完整記錄：需求拆解、資料模型設計、權限制度、版控與字數帳本機制，以及非工程背景如何用 AI 工具把它做出來。",
       en: "A complete record from operational pain points to a live system: requirements breakdown, data model design, permission controls, version control and a word-count ledger mechanism—and how a non-engineer built it all with AI tools.",
     },
     points: [
@@ -24,7 +24,7 @@ export const knowledgeDocs: KnowledgeDoc[] = [
         en: "Design decisions behind school-list versioning, the word-count ledger, and the application board",
       },
       {
-        zh: "可交接:讓接手的人看得懂「為什麼這樣設計」",
+        zh: "可交接：讓接手的人看得懂「為什麼這樣設計」",
         en: "Built to hand off: successors can understand the “why” behind every design choice",
       },
     ],
@@ -35,16 +35,16 @@ export const knowledgeDocs: KnowledgeDoc[] = [
     id: "ai-collab-log",
     title: { zh: "AI 協作開發實錄", en: "AI-Assisted Development Log" },
     summary: {
-      zh: "非工程背景如何與 AI（Claude Code）協作，從零把三套內部系統做到上線的方法論:如何拆任務、如何驗收、如何讓 AI 產出可維護的程式碼。",
+      zh: "非工程背景如何與 AI（Claude Code）協作，從零把三套內部系統做到上線的方法論：如何拆任務、如何驗收、如何讓 AI 產出可維護的程式碼。",
       en: "A methodology for how a non-engineer collaborates with AI (Claude Code) to take three internal systems from zero to production: how to break down tasks, how to review deliverables, and how to get AI to produce maintainable code.",
     },
     points: [
       {
-        zh: "任務拆解與驗收標準:怎麼讓 AI 不亂寫",
+        zh: "任務拆解與驗收標準：怎麼讓 AI 不亂寫",
         en: "Task breakdown and acceptance criteria: how to keep AI on track",
       },
       {
-        zh: "從 Prompt 到可上線:測試、資安、部署的實務",
+        zh: "從 Prompt 到可上線：測試、資安、部署的實務",
         en: "From prompt to production: the practical work of testing, security, and deployment",
       },
       {
@@ -75,7 +75,7 @@ export const knowledgeDocs: KnowledgeDoc[] = [
         en: "Sample write-ups for risk severity ratings and remediation recommendations",
       },
       {
-        zh: "可重複執行:換系統也能照表操課",
+        zh: "可重複執行：換系統也能照表操課",
         en: "Repeatable: the same playbook applies cleanly to any other system",
       },
     ],

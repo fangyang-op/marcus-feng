@@ -3,7 +3,7 @@
 import { useLocale, type Locale } from "@/i18n";
 
 /**
- * 中 / EN 語系切換鈕(分段式)。體積小,桌機與手機 header 都放得下。
+ * 中 / EN 語系切換鈕（分段式）。體積小，桌機與手機 header 都放得下。
  */
 export function LangToggle({ className = "" }: { className?: string }) {
   const { locale, setLocale } = useLocale();

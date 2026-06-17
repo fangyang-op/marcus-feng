@@ -4,7 +4,7 @@ import { Section } from "./ui/Section";
 import { about } from "@/data/about";
 import { useLocale } from "@/i18n";
 
-/** 關於我 / About:照片 + 一段有故事性的短文 */
+/** 關於我 / About：照片 + 一段有故事性的短文 */
 export function About() {
   const { t } = useLocale();
   return (

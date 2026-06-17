@@ -60,7 +60,7 @@ export function StudentDetailView({
   // 依「該學生」的狀態判斷四個進階 tab 是否解鎖
   const unlocked = isStudentUnlocked(detail.statusCode);
 
-  // 防呆:若目前選中的是被鎖的 tab（理論上點不到），一律退回「概覽」，
+  // 防呆：若目前選中的是被鎖的 tab（理論上點不到），一律退回「概覽」，
   // 絕不渲染被鎖頁面的內容。
   const isTabLocked = (key: TabKey) => !unlocked && LOCKABLE.includes(key);
   const activeTab: TabKey = isTabLocked(tab) ? "overview" : tab;
@@ -71,7 +71,7 @@ export function StudentDetailView({
   };
 
   const onTabClick = (key: TabKey) => {
-    if (isTabLocked(key)) return; // 上鎖:點了不切換
+    if (isTabLocked(key)) return; // 上鎖：點了不切換
     setTab(key);
   };
 
@@ -139,7 +139,7 @@ export function StudentDetailView({
         </div>
       </div>
 
-      {/* 上鎖說明:招生中 / 暫停未成交時，提示四個進階分頁尚未開放 */}
+      {/* 上鎖說明：招生中 / 暫停未成交時，提示四個進階分頁尚未開放 */}
       {!unlocked && (
         <LockNotice statusLabel={status?.label ?? "—"} />
       )}
@@ -168,7 +168,7 @@ function LockNotice({ statusLabel }: { statusLabel: string }) {
       </span>
       <div className="min-w-0">
         <p className="text-sm font-semibold text-crm-ink">
-          此學生尚未成交（目前狀態:{statusLabel}）
+          此學生尚未成交（目前狀態：{statusLabel}）
         </p>
         <p className="mt-0.5 text-sm text-ink-soft">
           「成交 / 選校表 / 文件 / 申請」四個分頁會在成交後自動解鎖。

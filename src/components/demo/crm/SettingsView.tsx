@@ -41,7 +41,7 @@ interface SettingCard {
   desc: string;
   /** 角落小統計，讓設定看起來真的在運作 */
   stat: string;
-  /** 點擊行為:開 Modal（條列）或進入子頁 */
+  /** 點擊行為：開 Modal（條列）或進入子頁 */
   detail?: string[];
   subpage?: SubpageKey;
 }
@@ -241,7 +241,7 @@ export function SettingsView() {
   );
 }
 
-/* ── 子頁共用:返回列 ─────────────────────────────────────── */
+/* ── 子頁共用：返回列 ─────────────────────────────────────── */
 function SubpageHeader({
   icon: Icon,
   title,
@@ -323,7 +323,7 @@ function EditButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-/* ── 子頁:轉介人 ─────────────────────────────────────────── */
+/* ── 子頁：轉介人 ─────────────────────────────────────────── */
 function ReferrersSubpage({
   onBack,
   onToast,
@@ -409,7 +409,7 @@ function ReferrersSubpage({
   );
 }
 
-/* ── 子頁:名單來源 ───────────────────────────────────────── */
+/* ── 子頁：名單來源 ───────────────────────────────────────── */
 function LeadSourcesSubpage({
   onBack,
   onToast,

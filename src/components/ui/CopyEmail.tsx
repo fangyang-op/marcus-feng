@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Mail, Check } from "lucide-react";
 
 /**
- * 點擊複製 Email 到剪貼簿（取代 mailto:，避免強制開啟郵件軟體）。
+ * 點擊複製 Email 到剪貼簿（取代 mailto：，避免強制開啟郵件軟體）。
  * 複製成功後在上方浮出「已複製 ✓」tooltip,2 秒後淡出。Email 文字可見、可手動選取。
  */
 export function CopyEmail({

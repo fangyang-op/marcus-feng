@@ -18,7 +18,7 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* 中英混排:數字與英文用 Inter，中文落到 Noto Sans TC */
+  /* 中英混排：數字與英文用 Inter，中文落到 Noto Sans TC */
   ::selection {
     @apply bg-brand-600/15 text-brand-900;
   }

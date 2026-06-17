@@ -29,7 +29,7 @@ function Inline({ value, pp = false }: { value: number; pp?: boolean }) {
   );
 }
 
-/** KPI 翻轉卡:正面為數字卡（沿用 StatCard 視覺），背面為口徑/拆分補充。 */
+/** KPI 翻轉卡：正面為數字卡（沿用 StatCard 視覺），背面為口徑/拆分補充。 */
 function KpiFlip({
   icon: Icon,
   label,
@@ -118,7 +118,7 @@ export function OverviewView({ data }: { data: YearData }) {
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <Sparkles className="h-4 w-4 text-matrix-rose" />
           <span className="text-sm font-bold text-ink-soft">本月焦點</span>
-          <span className="text-xs text-ink-muted">資料月份:{summary.monthLabel}</span>
+          <span className="text-xs text-ink-muted">資料月份：{summary.monthLabel}</span>
           <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-600">
             旺季高峰
           </span>
@@ -157,7 +157,7 @@ export function OverviewView({ data }: { data: YearData }) {
         </div>
       </div>
 
-      {/* ── 4 張 KPI(FlipCard:點擊翻轉看口徑與拆分)── */}
+      {/* ── 4 張 KPI(FlipCard：點擊翻轉看口徑與拆分)── */}
       <div>
         <div className="mb-2 flex items-center gap-1.5 text-[11px] text-ink-muted">
           <RotateCw className="h-3 w-3 text-matrix-rose" />
@@ -177,7 +177,7 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "旺季高峰", v: `${peakMonth.month}・${peakMonth.consults} 件` },
               { k: "較去年同期", v: `▲ ${kpi.consultationsYoY}%` },
             ]}
-            backNote="口徑:含四來源（洋碩/通路/網單/自招）所有進線諮詢，不去重。"
+            backNote="口徑：含四來源（洋碩/通路/網單/自招）所有進線諮詢，不去重。"
           />
           <KpiFlip
             icon={TrendingUp}
@@ -193,11 +193,11 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "YoY", v: `▲ ${kpi.conversionYoY} 個百分點` },
               { k: "標桿值", v: "25.0%" },
             ]}
-            backNote="口徑:成交筆數 ÷ 實際諮詢數；標桿為內部年度目標線。"
+            backNote="口徑：成交筆數 ÷ 實際諮詢數；標桿為內部年度目標線。"
           />
           <KpiFlip
             icon={DollarSign}
-            label="總營收 (含回傭)"
+            label="總營收 （含回傭）"
             value={wanInt(kpi.totalRevenue)}
             delta={kpi.revenueYoY ? { value: `▲ ${kpi.revenueYoY}%`, positive: true } : undefined}
             hint={`B2B 回傭 ${kpi.commissionCount} 筆`}
@@ -208,7 +208,7 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "最強月份", v: `${peakMonth.month}・${wan(peakMonth.revenue)}` },
               { k: "較去年同期", v: `▲ ${kpi.revenueYoY}%` },
             ]}
-            backNote="口徑:B2C 為學生端簽約學費；B2B 為合作通路完成媒合後之回傭。"
+            backNote="口徑：B2C 為學生端簽約學費；B2B 為合作通路完成媒合後之回傭。"
           />
           <KpiFlip
             icon={ShieldCheck}
@@ -223,7 +223,7 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "YoY", v: `▲ ${kpi.maintenanceYoY} 個百分點` },
               { k: "判定門檻", v: "必填欄位 ≥ 90%" },
             ]}
-            backNote="口徑:必填欄位（學歷/目標國/預算/時程）完整度達門檻者計為有效維護。"
+            backNote="口徑：必填欄位（學歷/目標國/預算/時程）完整度達門檻者計為有效維護。"
           />
         </div>
       </div>
@@ -434,7 +434,7 @@ export function OverviewView({ data }: { data: YearData }) {
         <Card className="lg:col-span-2">
           <h3 className="mb-5 flex items-center gap-2 text-base font-semibold text-ink">
             <LineIcon className="h-5 w-5 text-matrix-rose" />
-            熱門留學國家 (申請意向)
+            熱門留學國家 （申請意向）
           </h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">

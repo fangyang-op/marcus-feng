@@ -30,7 +30,7 @@ export function ConsultantView({ data }: { data: YearData }) {
   return (
     <PageContainer>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-        {/* 左:排行榜 */}
+        {/* 左：排行榜 */}
         <div className="lg:col-span-4">
           <Card padded={false} className="flex h-full flex-col">
             <div className="space-y-3 border-b border-slate-100 bg-slate-50 p-4">
@@ -118,7 +118,7 @@ export function ConsultantView({ data }: { data: YearData }) {
           </Card>
         </div>
 
-        {/* 右:選定顧問詳情 */}
+        {/* 右：選定顧問詳情 */}
         {selected && (
           <div className="flex flex-col gap-6 lg:col-span-8">
             <div className="mb-1 flex items-center gap-2">

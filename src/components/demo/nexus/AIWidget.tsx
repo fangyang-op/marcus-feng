@@ -18,7 +18,7 @@ import {
 
 /**
  * 浮動 AI 助理 widget（右下角可開合）。
- * 展開後:標題列 + 多對話 thread 側欄 + Quick prompt chips + 對話泡泡 + 輸入框。
+ * 展開後：標題列 + 多對話 thread 側欄 + Quick prompt chips + 對話泡泡 + 輸入框。
  * 送出後 append 一則罐頭回覆（輪流取用，不接 API、不用亂數）。
  */
 export function AIWidget() {

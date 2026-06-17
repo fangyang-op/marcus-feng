@@ -17,11 +17,11 @@ export const about = {
   /** 2–3 段短文，段落之間會自動留白 */
   paragraphs: [
     {
-      zh: "我的職涯起點不是營運，而是製造業的專案管理（和碩 NPI）。從硬體導入、影視製作到教育服務，這條跨產業的路徑讓我養成一個習慣:先看懂業務的真正痛點，再決定怎麼解。",
+      zh: "我的職涯起點不是營運，而是製造業的專案管理（和碩 NPI）。從硬體導入、影視製作到教育服務，這條跨產業的路徑讓我養成一個習慣：先看懂業務的真正痛點，再決定怎麼解。",
       en: "I didn't start out in operations — I began in manufacturing project management as an NPI engineer at Pegatron. From hardware introduction to film and TV production to education services, that cross-industry path taught me one habit: understand what's truly hurting the business before deciding how to fix it.",
     },
     {
-      zh: "在放洋留遊學，我發現營運的瓶頸不在「不夠努力」，而在「沒有系統」——資料散落、流程靠人、知識留在個人腦中。於是我做了一件營運人通常不會做的事:以非工程背景，親手用 AI 協作開發把 CRM、數據分析、知識庫三套系統建出來，並導入團隊。",
+      zh: "在放洋留遊學，我發現營運的瓶頸不在「不夠努力」，而在「沒有系統」——資料散落、流程靠人、知識留在個人腦中。於是我做了一件營運人通常不會做的事：以非工程背景，親手用 AI 協作開發把 CRM、數據分析、知識庫三套系統建出來，並導入團隊。",
       en: "At FangYang Global Education, I realized the bottleneck in operations wasn't a lack of effort — it was the lack of systems. Data was scattered, processes lived in people's heads, and knowledge never left individual minds. So I did something most operations people wouldn't: with no engineering background, I hand-built three systems — a CRM, an analytics platform, and a knowledge base — through AI-assisted development, then rolled them out across the team.",
     },
     {

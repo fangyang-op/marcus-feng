@@ -6,12 +6,12 @@ import { useLocale } from "@/i18n";
 
 const ctaIcon = [ArrowRight, Download, Linkedin];
 
-/** Hero 區:姓名、定位標語、一句話、三顆 CTA(中英切換) */
+/** Hero 區：姓名、定位標語、一句話、三顆 CTA(中英切換) */
 export function Hero() {
   const { locale, t } = useLocale();
   return (
     <div id="top" className="relative overflow-hidden">
-      {/* 背景:深藍漸層光暈 */}
+      {/* 背景：深藍漸層光暈 */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-brand-50/80 via-white to-white" />
         <div className="absolute -top-24 left-1/2 h-[480px] w-[760px] -translate-x-1/2 rounded-full bg-brand-200/40 blur-3xl" />
@@ -27,7 +27,7 @@ export function Hero() {
           <h1 className="mt-6 text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
             {t(siteConfig.tagline)}
           </h1>
-          {/* 副標只在中文模式顯示英文標語;英文模式不再倒過來顯示中文標語 */}
+          {/* 副標只在中文模式顯示英文標語；英文模式不再倒過來顯示中文標語 */}
           {locale === "zh" && (
             <p className="mt-3 text-lg font-medium text-brand-700 sm:text-xl">
               {siteConfig.tagline.en}

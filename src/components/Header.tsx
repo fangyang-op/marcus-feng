@@ -5,7 +5,7 @@ import { siteConfig } from "@/data/site";
 import { useLocale } from "@/i18n";
 import { LangToggle } from "./ui/LangToggle";
 
-/** 頂部導覽:sticky、半透明毛玻璃、桌機顯示錨點;中/EN 切換鈕桌機手機都顯示 */
+/** 頂部導覽：sticky、半透明毛玻璃、桌機顯示錨點；中/EN 切換鈕桌機手機都顯示 */
 export function Header() {
   const { t } = useLocale();
   return (

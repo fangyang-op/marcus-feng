@@ -10,10 +10,10 @@ import {
 
 /**
  * ── 中 / En 語系切換 ──────────────────────────────────────
- * 前端切換(localStorage 記住,網址不變)。主頁全部中英;Demo 子頁維持中文。
+ * 前端切換（localStorage 記住，網址不變）。主頁全部中英；Demo 子頁維持中文。
  *
- * 雙語文字寫成 { zh, en };用 useLocale() 的 t() 取出當前語系字串。
- * 型別 Locale / L 放在 ./types(無 "use client"),資料檔可安全 import。
+ * 雙語文字寫成 { zh, en }；用 useLocale（） 的 t（） 取出當前語系字串。
+ * 型別 Locale / L 放在 ./types（無 "use client"），資料檔可安全 import。
  */
 import type { Locale, L } from "./types";
 export type { Locale, L } from "./types";
@@ -31,7 +31,7 @@ const Ctx = createContext<LocaleCtx | null>(null);
 const STORAGE_KEY = "mf-locale";
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  // 伺服器與首次 render 都用 zh(避免 hydration 不一致),掛載後再讀 localStorage
+  // 伺服器與首次 render 都用 zh（避免 hydration 不一致），掛載後再讀 localStorage
   const [locale, setLocaleState] = useState<Locale>("zh");
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 export function useLocale(): LocaleCtx {
   const ctx = useContext(Ctx);
   if (!ctx) {
-    // 容錯:未包在 Provider 內時退回中文(理論上不會發生)
+    // 容錯：未包在 Provider 內時退回中文（理論上不會發生）
     return {
       locale: "zh",
       setLocale: () => {},

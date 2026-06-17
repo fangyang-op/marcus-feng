@@ -6,7 +6,7 @@ import { metrics } from "@/data/metrics";
 import { ui } from "@/data/ui";
 import { useLocale } from "@/i18n";
 
-/** 核心成果條:4 個數字卡片(中英切換) */
+/** 核心成果條：4 個數字卡片（中英切換） */
 export function MetricsBar() {
   const { t } = useLocale();
   return (

@@ -76,7 +76,7 @@ export function PlacementView() {
     );
   }, [draft, analyzed]);
 
-  /** 「分析」動作:鎖定草稿為基準、重置 What-if 滑桿到該基準 */
+  /** 「分析」動作：鎖定草稿為基準、重置 What-if 滑桿到該基準 */
   const runAnalysis = () => {
     setAnalyzing(true);
     const snapshot = { ...draft };
@@ -116,7 +116,7 @@ export function PlacementView() {
       />
 
       <div className="flex flex-col gap-6 lg:flex-row">
-        {/* 左:輸入 */}
+        {/* 左：輸入 */}
         <div className="w-full flex-none lg:w-80">
           <Card className="lg:sticky lg:top-4">
             <div className="mb-5 flex items-center gap-3 border-b border-slate-100 pb-4">
@@ -197,7 +197,7 @@ export function PlacementView() {
           </Card>
         </div>
 
-        {/* 右:結果 */}
+        {/* 右：結果 */}
         <div className="min-w-0 flex-1 space-y-6">
           {analyzing && (
             <div className="flex items-center gap-3 rounded-xl border border-nexus-pink/20 bg-nexus-pink/5 px-5 py-4 text-sm font-medium text-nexus-pink">
@@ -249,7 +249,7 @@ export function PlacementView() {
                   )}
                 </div>
                 <p className="mb-4 text-xs leading-relaxed text-ink-soft">
-                  拖動滑桿即時模擬:若學生 GPA 或 TOEFL 改變，各校錄取機率如何變動?(以本次分析輪廓為基準線性推估，不重新呼叫 AI)
+                  拖動滑桿即時模擬:若學生 GPA 或 TOEFL 改變，各校錄取機率如何變動？(以本次分析輪廓為基準線性推估，不重新呼叫 AI)
                 </p>
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                   <Slider
@@ -282,7 +282,7 @@ export function PlacementView() {
               {/* 三欄結果 */}
               <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 <Column
-                  title="夢幻 (Dream)"
+                  title="夢幻 （Dream）"
                   note="衝刺嘗試"
                   color="text-rose-600 border-rose-200"
                   icon={<Trophy className="h-5 w-5" />}
@@ -292,7 +292,7 @@ export function PlacementView() {
                   hasWhatIf={hasWhatIf}
                 />
                 <Column
-                  title="合適 (Match)"
+                  title="合適 （Match）"
                   note="主力申請"
                   color="text-emerald-600 border-emerald-200"
                   icon={<CheckCircle className="h-5 w-5" />}
@@ -302,7 +302,7 @@ export function PlacementView() {
                   hasWhatIf={hasWhatIf}
                 />
                 <Column
-                  title="保底 (Safety)"
+                  title="保底 （Safety）"
                   note="低風險"
                   color="text-blue-600 border-blue-200"
                   icon={<AlertCircle className="h-5 w-5" />}

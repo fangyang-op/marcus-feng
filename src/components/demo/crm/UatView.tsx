@@ -38,7 +38,7 @@ export function UatView() {
     <PageContainer>
       <PageTitle
         icon={ClipboardCheck}
-        title="內部封測 (UAT)"
+        title="內部封測 （UAT）"
         subtitle={`${UAT_SECTIONS.length} 個測試章節 · 合計 ${UAT_SUMMARY.total} 項驗收項目`}
       />
 

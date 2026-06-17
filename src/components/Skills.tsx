@@ -59,7 +59,7 @@ function SkillColumn({
   );
 }
 
-/** 能力與技術:左工具鏈、右營運能力 */
+/** 能力與技術：左工具鏈、右營運能力 */
 export function Skills() {
   const { t } = useLocale();
   return (

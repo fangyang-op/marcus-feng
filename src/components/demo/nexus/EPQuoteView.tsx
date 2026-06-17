@@ -130,7 +130,7 @@ export function EPQuoteView() {
       </div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-        {/* 左:目前步驟表單 */}
+        {/* 左：目前步驟表單 */}
         <div className="lg:col-span-2">
           <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             {step === 0 && (
@@ -384,7 +384,7 @@ export function EPQuoteView() {
           </div>
         </div>
 
-        {/* 右:即時費用預覽 */}
+        {/* 右：即時費用預覽 */}
         <div className="lg:col-span-1">
           <div className="sticky top-4 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div className="bg-gradient-to-r from-nexus-pink to-nexus-purple px-4 py-3 text-white">
@@ -428,7 +428,7 @@ export function EPQuoteView() {
                   </span>
                 </div>
                 <div className="mt-1 text-[10px] text-ink-muted">
-                  外幣原價：{campus.currency} {fmt(computed.foreignTotal)} · 匯率{" "}
+                  外幣原價:{campus.currency} {fmt(computed.foreignTotal)} · 匯率{" "}
                   {campus.exchangeRate}
                 </div>
               </div>

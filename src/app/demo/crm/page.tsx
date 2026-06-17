@@ -39,7 +39,7 @@ const NAV_TITLES: Record<ViewKey, string> = {
 
 export default function CrmDemoPage() {
   const [view, setView] = useState<ViewKey>("students");
-  /** 學生 360 詳情:null = 列表；否則為學生 id */
+  /** 學生 360 詳情：null = 列表；否則為學生 id */
   const [openStudent, setOpenStudent] = useState<string | null>(null);
   /** 從儀表板提醒進來時，預選「待分配後端」tab */
   const [studentsTab, setStudentsTab] = useState<"all" | "unassigned">("all");
@@ -71,7 +71,7 @@ export default function CrmDemoPage() {
     if (key === "students") setStudentsTab("all");
   };
 
-  // 標題:在學生詳情時顯示「學生詳情」
+  // 標題：在學生詳情時顯示「學生詳情」
   const title =
     view === "students" && openStudent ? "學生詳情" : NAV_TITLES[view];
 

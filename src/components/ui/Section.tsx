@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-/** 區塊外層:統一左右留白、最大寬度與垂直節奏 */
+/** 區塊外層：統一左右留白、最大寬度與垂直節奏 */
 export function Section({
   id,
   className = "",
@@ -17,7 +17,7 @@ export function Section({
   );
 }
 
-/** 區塊標題:小標 + 大標 + 選用副標 */
+/** 區塊標題：小標 + 大標 + 選用副標 */
 export function SectionHeading({
   eyebrow,
   title,

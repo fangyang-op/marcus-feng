@@ -5,7 +5,7 @@ import { timeline } from "@/data/timeline";
 import { ui } from "@/data/ui";
 import { useLocale } from "@/i18n";
 
-/** 經歷時間軸:精簡、由新到舊(中英切換) */
+/** 經歷時間軸：精簡、由新到舊（中英切換） */
 export function Timeline() {
   const { t } = useLocale();
   return (

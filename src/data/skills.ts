@@ -2,8 +2,8 @@ import type { SkillGroup } from "./types";
 
 /**
  * ── 能力與技術 ────────────────────────────────────────────
- * 左半:工具鏈（我實際用來建系統的技術）
- * 右半:營運能力（我作為營運人的核心職能）
+ * 左半：工具鏈（我實際用來建系統的技術）
+ * 右半：營運能力（我作為營運人的核心職能）
  * 直接增刪字串即可。
  */
 
@@ -57,7 +57,7 @@ export const operations: SkillGroup[] = [
   {
     title: { zh: "流程與系統", en: "Process & Systems" },
     items: [
-      { zh: "流程設計 (SOP)", en: "Process Design (SOP)" },
+      { zh: "流程設計 （SOP）", en: "Process Design (SOP)" },
       { zh: "Customer Journey Map", en: "Customer Journey Map" },
       { zh: "系統需求拆解", en: "System Requirements Breakdown" },
       { zh: "資料治理", en: "Data Governance" },

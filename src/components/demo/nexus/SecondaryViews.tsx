@@ -68,7 +68,7 @@ export function RankingsView() {
   const [onlyDaShuo, setOnlyDaShuo] = useState(false);
   const [onlyYangShuo, setOnlyYangShuo] = useState(false);
   const [onlyScholarship, setOnlyScholarship] = useState(false);
-  // 國家快篩:空集合 = 全部
+  // 國家快篩：空集合 = 全部
   const [countries, setCountries] = useState<Set<RankingCountryCode>>(new Set());
   const [toast, setToast] = useState<string | null>(null);
   const [modal, setModal] = useState<{ title: string; body: string } | null>(null);
@@ -256,7 +256,7 @@ export function RankingsView() {
               <CheckChip label="洋碩" checked={onlyYangShuo} onChange={() => setOnlyYangShuo((v) => !v)} />
               <CheckChip label="獎學金" checked={onlyScholarship} onChange={() => setOnlyScholarship((v) => !v)} />
 
-              <span className="ml-2 text-xs font-bold text-ink-muted">國家快篩:</span>
+              <span className="ml-2 text-xs font-bold text-ink-muted">國家快篩：</span>
               <button
                 type="button"
                 onClick={() => setCountries(new Set())}

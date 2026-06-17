@@ -6,7 +6,7 @@ import { ui } from "@/data/ui";
 import { useLocale } from "@/i18n";
 import { CopyEmail } from "./ui/CopyEmail";
 
-/** 頁尾:聯絡方式 + 自建宣告(中英切換) */
+/** 頁尾：聯絡方式 + 自建宣告（中英切換） */
 export function Footer() {
   const { t } = useLocale();
   return (

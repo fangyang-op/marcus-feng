@@ -82,7 +82,7 @@ export function SchoolDatabaseView() {
     const rows = SCHOOLS.filter((s) => {
       if (country !== "全部" && s.country !== country) return false;
       if (type !== "全部" && s.type !== type) return false;
-      // 成績門檻:輸入值代表「我能接受的最低門檻」，只顯示要求 <= 輸入值的學校
+      // 成績門檻：輸入值代表「我能接受的最低門檻」，只顯示要求 <= 輸入值的學校
       if (Number.isFinite(gpaThreshold) && numOrZero(s.requirements.gpa) > gpaThreshold) return false;
       if (Number.isFinite(toeflThreshold) && numOrZero(s.requirements.toefl) > toeflThreshold) return false;
       if (Number.isFinite(ieltsThreshold) && numOrZero(s.requirements.ielts) > ieltsThreshold) return false;
@@ -164,7 +164,7 @@ export function SchoolDatabaseView() {
               className="inline-flex items-center gap-1 rounded-lg border border-violet-200 bg-violet-50 px-2.5 py-1.5 text-xs font-bold text-violet-700 hover:bg-violet-100"
             >
               <Sparkles className="h-3.5 w-3.5" />
-              向量化 ({SCHOOL_VECTORIZED.done}/{SCHOOL_VECTORIZED.total})
+              向量化 （{SCHOOL_VECTORIZED.done}/{SCHOOL_VECTORIZED.total}）
             </button>
             <button
               type="button"
@@ -246,7 +246,7 @@ export function SchoolDatabaseView() {
 
             {/* 排序方式 */}
             <div className="flex flex-wrap items-center gap-1.5 border-t border-slate-100 pt-3">
-              <span className="mr-1 text-xs font-bold text-ink-muted">排序方式:</span>
+              <span className="mr-1 text-xs font-bold text-ink-muted">排序方式：</span>
               {SCHOOL_SORTS.map((opt) => {
                 const active = sortKey === opt.key;
                 return (
@@ -277,7 +277,7 @@ export function SchoolDatabaseView() {
 
       <div className="mb-3 flex flex-wrap items-center gap-2 text-sm text-ink-muted">
         <span>
-          篩選結果:<span className="font-bold text-ink">{filtered.length}</span> 所
+          篩選結果：<span className="font-bold text-ink">{filtered.length}</span> 所
         </span>
         <span className="text-slate-300">·</span>
         <span>
@@ -572,7 +572,7 @@ function SchoolModal({
             onClick={onSave}
             className="rounded-lg bg-nexus-pink px-4 py-2 text-sm font-semibold text-white hover:bg-nexus-purple"
           >
-            儲存資料 (展示用)
+            儲存資料 （展示用）
           </button>
         </div>
       </div>

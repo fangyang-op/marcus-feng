@@ -41,7 +41,7 @@ export function DashboardView() {
 
   return (
     <PageContainer>
-      {/* 時段問候 (時段固定為示意，避免讀取系統時間造成 hydration 不一致) */}
+      {/* 時段問候 （時段固定為示意，避免讀取系統時間造成 hydration 不一致） */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-ink">
           午安，歡迎回到{" "}
@@ -55,7 +55,7 @@ export function DashboardView() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* 左欄:即將到來的活動 */}
+        {/* 左欄：即將到來的活動 */}
         <div>
           <div className="mb-3 flex items-center gap-2">
             <span className="h-5 w-1.5 rounded-full bg-nexus-pink" />
@@ -127,7 +127,7 @@ export function DashboardView() {
           </div>
         </div>
 
-        {/* 右欄:4 張 StatCard */}
+        {/* 右欄：4 張 StatCard */}
         <div>
           <div className="mb-3 hidden items-center gap-2 lg:flex">
             <span className="h-5 w-1.5 rounded-full bg-transparent" />

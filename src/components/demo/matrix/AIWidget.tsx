@@ -130,7 +130,7 @@ export function AIWidget() {
   );
 }
 
-/** 極簡 Markdown 渲染:支援 **粗體**、- 清單、> 引言、標題行 */
+/** 極簡 Markdown 渲染：支援 **粗體**、- 清單、> 引言、標題行 */
 function Markdownish({ text }: { text: string }) {
   const lines = text.split("\n");
   return (
