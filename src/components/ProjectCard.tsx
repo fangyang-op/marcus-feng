@@ -50,7 +50,7 @@ export function ProjectCard({ project }: { project: Project }) {
   const a = ACCENT[project.accent];
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition-shadow hover:shadow-card-hover">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
       {/* 頂部強調色條 */}
       <div className={`h-1 w-full ${a.bar}`} />
 
