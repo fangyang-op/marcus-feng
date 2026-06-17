@@ -168,7 +168,7 @@ export function UatView() {
                 實際情況(範例)
               </p>
               <div className="mt-1 rounded-lg border border-rose-200 bg-rose-50/60 p-3 text-sm text-rose-700">
-                與預期不符,需開立修復工單交由開發確認。
+                與預期不符，需開立修復工單交由開發確認。
               </div>
             </div>
             <label className="block">
@@ -177,7 +177,7 @@ export function UatView() {
               </span>
               <textarea
                 rows={3}
-                placeholder="描述重現步驟與影響範圍…(Demo 示意,不會送出)"
+                placeholder="描述重現步驟與影響範圍…(Demo 示意，不會送出)"
                 className="mt-1 w-full resize-none rounded-lg border border-slate-200 p-2.5 text-sm text-ink-soft outline-none focus:border-crm"
               />
             </label>

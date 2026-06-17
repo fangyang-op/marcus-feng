@@ -355,7 +355,7 @@ export function EPQuoteView() {
                   </button>
                 </div>
                 <p className="mt-3 text-xs text-ink-muted">
-                  以上按鈕於 Demo 中為展示用,不會實際送出。
+                  以上按鈕於 Demo 中為展示用，不會實際送出。
                 </p>
               </StepWrap>
             )}
@@ -434,7 +434,7 @@ export function EPQuoteView() {
               </div>
 
               <div className="mt-3 rounded-lg bg-slate-50 p-2 text-[11px] text-ink-muted">
-                金額為示意假值,實際開單以最新匯率與廠商報價為準。
+                金額為示意假值，實際開單以最新匯率與廠商報價為準。
               </div>
             </div>
           </div>

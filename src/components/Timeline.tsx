@@ -8,7 +8,7 @@ export function Timeline() {
       <SectionHeading
         eyebrow="Experience"
         title="經歷"
-        description="從製造業專案管理到留遊學營運,一路把「發現問題」延伸到「動手建系統」。"
+        description="從製造業專案管理到留遊學營運，一路把「發現問題」延伸到「動手建系統」。"
       />
 
       <ol className="mt-10 space-y-0">

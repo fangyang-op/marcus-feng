@@ -6,7 +6,7 @@ import type { Project, AccentKey } from "@/data/types";
 import { Tag } from "./ui/Tag";
 
 /**
- * 各專案強調色。class 寫成完整字串,讓 Tailwind JIT 能正確掃描。
+ * 各專案強調色。class 寫成完整字串，讓 Tailwind JIT 能正確掃描。
  * (對應 tailwind.config.ts 內的 crm / nexus / matrix / brand 色)
  */
 const ACCENT: Record<

@@ -88,7 +88,7 @@ export function DashboardView() {
               onClick={() =>
                 setModal({
                   title: primary.name,
-                  body: `${primary.date} · ${primary.time} · ${primary.location}。報名與議程連結將在正式系統中提供,本 Demo 為示意。`,
+                  body: `${primary.date} · ${primary.time} · ${primary.location}。報名與議程連結將在正式系統中提供，本 Demo 為示意。`,
                 })
               }
               className="relative z-10 inline-flex w-fit items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-nexus-pink shadow-sm transition-colors hover:bg-rose-50"
@@ -106,7 +106,7 @@ export function DashboardView() {
                 onClick={() =>
                   setModal({
                     title: a.name,
-                    body: `${a.date} · ${a.time} · ${a.location}。詳細議程與報名於正式系統中提供,本 Demo 為示意。`,
+                    body: `${a.date} · ${a.time} · ${a.location}。詳細議程與報名於正式系統中提供，本 Demo 為示意。`,
                   })
                 }
                 className="flex w-full items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition-shadow hover:shadow-md"

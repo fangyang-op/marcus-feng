@@ -39,7 +39,7 @@ interface SettingCard {
   icon: LucideIcon;
   title: string;
   desc: string;
-  /** 角落小統計,讓設定看起來真的在運作 */
+  /** 角落小統計，讓設定看起來真的在運作 */
   stat: string;
   /** 點擊行為:開 Modal(條列)或進入子頁 */
   detail?: string[];
@@ -230,7 +230,7 @@ export function SettingsView() {
               ))}
             </ul>
             <p className="mt-4 text-xs text-ink-muted">
-              此模組於作品集 Demo 中為示意,正式系統可實際設定並寫入資料。
+              此模組於作品集 Demo 中為示意，正式系統可實際設定並寫入資料。
             </p>
           </div>
         )}

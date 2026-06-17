@@ -6,14 +6,14 @@ import { PageContainer, PageTitle, Card } from "./primitives";
 
 /**
  * ── Demo 共用互動 widget ──────────────────────────────────────
- * 三個 Demo(CRM / Nexus / Matrix)共用,確保「說明卡 / Modal / Toast / 翻轉卡」風格一致。
+ * 三個 Demo(CRM / Nexus / Matrix)共用，確保「說明卡 / Modal / Toast / 翻轉卡」風格一致。
  * 用途:消除「點不動的尷尬」——次要頁用 FeatureNotice,no-op 按鈕用 DemoModal/DemoToast,
  * 招牌 KPI 卡用 FlipCard。
  */
 
 /**
  * FeatureNotice — 次要功能頁的「功能說明卡」(原則 B)。
- * 左:功能說明 + 條列重點;右:CSS 示意 mockup(可自訂,否則用預設骨架)。
+ * 左:功能說明 + 條列重點;右:CSS 示意 mockup(可自訂，否則用預設骨架)。
  * 讓「點不動」變成「有內容可讀」。
  */
 export function FeatureNotice({
@@ -66,7 +66,7 @@ export function FeatureNotice({
   );
 }
 
-/** 預設 CSS 骨架 mockup(灰階區塊),不使用真實截圖 */
+/** 預設 CSS 骨架 mockup(灰階區塊)，不使用真實截圖 */
 function DefaultMockup() {
   return (
     <div className="space-y-3 rounded-lg border border-dashed border-slate-200 bg-slate-50/60 p-4">
@@ -91,7 +91,7 @@ function DefaultMockup() {
 
 /**
  * DemoModal — 受控小視窗(原則 C)。
- * 用於 no-op 按鈕點下去的回應:「Demo 環境示意,此功能在正式系統中可用」。
+ * 用於 no-op 按鈕點下去的回應:「Demo 環境示意，此功能在正式系統中可用」。
  * open / onClose 由呼叫端的 useState 控制。
  */
 export function DemoModal({
@@ -126,7 +126,7 @@ export function DemoModal({
         <h3 className="text-base font-bold text-ink">{title}</h3>
         <div className="mt-2 text-sm leading-relaxed text-ink-soft">
           {children ?? (
-            <p>此功能於作品集 Demo 中為示意,在正式系統中可實際操作(含資料寫入與 API)。</p>
+            <p>此功能於作品集 Demo 中為示意，在正式系統中可實際操作(含資料寫入與 API)。</p>
           )}
         </div>
         <div className="mt-5 flex justify-end">

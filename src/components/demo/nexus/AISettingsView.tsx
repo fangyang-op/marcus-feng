@@ -25,7 +25,7 @@ import {
 
 const NEXUS_ACCENT = "bg-nexus-pink";
 
-// 寫死的遮罩字串(非真實金鑰,純示意)
+// 寫死的遮罩字串(非真實金鑰，純示意)
 const MASKED_GEMINI = "AIza••••••••••••••••••••••••••3xQ7";
 const MASKED_CLAUDE = "sk-ant-••••••••••••••••••••••••9fD2";
 
@@ -49,7 +49,7 @@ export function AISettingsView() {
       <PageTitle
         icon={Sparkles}
         title="AI 設定"
-        subtitle="模型金鑰、對話模型與向量化維護(全為示意,互動為純前端)"
+        subtitle="模型金鑰、對話模型與向量化維護(全為示意，互動為純前端)"
       />
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">

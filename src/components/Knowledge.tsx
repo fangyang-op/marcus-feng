@@ -5,7 +5,7 @@ import { siteConfig } from "@/data/site";
 
 /**
  * 知識傳承區 — 差異化重點。
- * 深藍底反白,把「個人工作 → 團隊可繼承資產」這個賣點放大。
+ * 深藍底反白，把「個人工作 → 團隊可繼承資產」這個賣點放大。
  */
 export function Knowledge() {
   return (
@@ -15,7 +15,7 @@ export function Knowledge() {
           invert
           eyebrow="Knowledge Transfer"
           title="把個人工作變成團隊可繼承的資產"
-          description="會建系統還不夠 —— 我把建置過程、AI 協作方法與資安稽核寫成文件,讓接手的人看得懂、用得上。這是我和「只會用工具的人」最大的不同。"
+          description="會建系統還不夠 —— 我把建置過程、AI 協作方法與資安稽核寫成文件，讓接手的人看得懂、用得上。這是我和「只會用工具的人」最大的不同。"
         />
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
@@ -41,8 +41,8 @@ export function Knowledge() {
                 ))}
               </ul>
 
-              {/* CTA:三張卡都用「全寬按鈕 + 一行說明」結構,讓按鈕水平對齊;
-                  下載卡的說明行留隱形佔位,三張卡會一起被說明文字往下撐。 */}
+              {/* CTA:三張卡都用「全寬按鈕 + 一行說明」結構，讓按鈕水平對齊;
+                  下載卡的說明行留隱形佔位，三張卡會一起被說明文字往下撐。 */}
               <div className="mt-6">
                 {doc.requestOnly ? (
                   <a
@@ -66,7 +66,7 @@ export function Knowledge() {
                   </a>
                 )}
                 <p
-                  className={`mt-2 text-xs leading-relaxed text-slate-400 ${
+                  className={`mt-2 text-center text-xs leading-relaxed text-slate-400 ${
                     doc.requestOnly ? "" : "invisible select-none"
                   }`}
                   aria-hidden={doc.requestOnly ? undefined : true}

@@ -146,7 +146,7 @@ export function RankingsView() {
               onClick={() =>
                 setModal({
                   title: "向量化狀態",
-                  body: "目前已向量化 593 筆榜單資料,供 AI 助理檢索歷屆相似背景。此為 Demo 示意。",
+                  body: "目前已向量化 593 筆榜單資料，供 AI 助理檢索歷屆相似背景。此為 Demo 示意。",
                 })
               }
               className="inline-flex items-center gap-1 rounded-lg border border-violet-200 bg-violet-50 px-2.5 py-1.5 text-xs font-bold text-violet-700 hover:bg-violet-100"
@@ -178,7 +178,7 @@ export function RankingsView() {
               onClick={() =>
                 setModal({
                   title: "清除榜單快取",
-                  body: "在正式系統中可清除本地榜單快取並重新拉取 Google Sheet。此為 Demo 示意,不會刪除任何資料。",
+                  body: "在正式系統中可清除本地榜單快取並重新拉取 Google Sheet。此為 Demo 示意，不會刪除任何資料。",
                 })
               }
             />
@@ -356,7 +356,7 @@ export function RankingsView() {
               {rows.length === 0 && (
                 <tr>
                   <td colSpan={10} className="px-4 py-10 text-center text-sm text-ink-muted">
-                    找不到符合條件的歷屆紀錄,請調整搜尋或國家過濾。
+                    找不到符合條件的歷屆紀錄，請調整搜尋或國家過濾。
                   </td>
                 </tr>
               )}
@@ -444,7 +444,7 @@ const STAGE_COLOR: Record<string, PillColor> = {
   已出發: "emerald",
 };
 
-/** 由「NT$ 286,000」字串解析出數字,無金額(—)回傳 0 */
+/** 由「NT$ 286,000」字串解析出數字，無金額(—)回傳 0 */
 const parseAmount = (s: string) => {
   const n = parseInt(s.replace(/[^0-9]/g, ""), 10);
   return Number.isFinite(n) ? n : 0;

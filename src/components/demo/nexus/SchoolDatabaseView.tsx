@@ -82,7 +82,7 @@ export function SchoolDatabaseView() {
     const rows = SCHOOLS.filter((s) => {
       if (country !== "全部" && s.country !== country) return false;
       if (type !== "全部" && s.type !== type) return false;
-      // 成績門檻:輸入值代表「我能接受的最低門檻」,只顯示要求 <= 輸入值的學校
+      // 成績門檻:輸入值代表「我能接受的最低門檻」，只顯示要求 <= 輸入值的學校
       if (Number.isFinite(gpaThreshold) && numOrZero(s.requirements.gpa) > gpaThreshold) return false;
       if (Number.isFinite(toeflThreshold) && numOrZero(s.requirements.toefl) > toeflThreshold) return false;
       if (Number.isFinite(ieltsThreshold) && numOrZero(s.requirements.ielts) > ieltsThreshold) return false;
@@ -158,7 +158,7 @@ export function SchoolDatabaseView() {
               onClick={() =>
                 setModal({
                   title: "向量化狀態",
-                  body: `目前已向量化 ${SCHOOL_VECTORIZED.done} / ${SCHOOL_VECTORIZED.total} 所院校,供 AI 助理檢索課程與門檻。此為 Demo 示意。`,
+                  body: `目前已向量化 ${SCHOOL_VECTORIZED.done} / ${SCHOOL_VECTORIZED.total} 所院校，供 AI 助理檢索課程與門檻。此為 Demo 示意。`,
                 })
               }
               className="inline-flex items-center gap-1 rounded-lg border border-violet-200 bg-violet-50 px-2.5 py-1.5 text-xs font-bold text-violet-700 hover:bg-violet-100"
@@ -180,7 +180,7 @@ export function SchoolDatabaseView() {
               onClick={() =>
                 setModal({
                   title: "新增校所",
-                  body: "在正式系統中可新增院校並填入排名、學費與門檻。此為 Demo 示意,不會寫入資料。",
+                  body: "在正式系統中可新增院校並填入排名、學費與門檻。此為 Demo 示意，不會寫入資料。",
                 })
               }
               className="inline-flex items-center gap-1 rounded-lg bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
@@ -378,7 +378,7 @@ export function SchoolDatabaseView() {
 
       {filtered.length === 0 && (
         <Card className="text-center text-sm text-ink-muted">
-          找不到符合條件的院校,請調整搜尋或成績篩選。
+          找不到符合條件的院校，請調整搜尋或成績篩選。
         </Card>
       )}
 

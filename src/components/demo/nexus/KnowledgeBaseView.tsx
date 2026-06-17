@@ -129,7 +129,7 @@ export function KnowledgeBaseView() {
             ))}
             {list.length === 0 && (
               <Card className="col-span-full text-center text-sm text-ink-muted">
-                找不到符合條件的文章,請調整分類或搜尋。
+                找不到符合條件的文章，請調整分類或搜尋。
               </Card>
             )}
           </div>

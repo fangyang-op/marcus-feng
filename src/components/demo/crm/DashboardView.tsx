@@ -71,7 +71,7 @@ export function DashboardView({ onGoUnassigned }: { onGoUnassigned: () => void }
             <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600" />
             <span className="text-amber-900">
               有 <strong className="tabular">{dupCount}</strong>{" "}
-              筆名單覆蓋了重複手機號碼,請確認
+              筆名單覆蓋了重複手機號碼，請確認
             </span>
           </div>
           <span className="flex shrink-0 items-center gap-1 font-medium text-amber-800">
@@ -110,7 +110,7 @@ export function DashboardView({ onGoUnassigned }: { onGoUnassigned: () => void }
       >
         <div>
           <p className="text-ink-soft">
-            系統偵測到 2 組名單的手機號碼重複,可能為同一位學生重複進線,建議合併或標記。
+            系統偵測到 2 組名單的手機號碼重複，可能為同一位學生重複進線，建議合併或標記。
           </p>
           <ul className="mt-3 space-y-2 text-sm">
             <li className="flex items-center justify-between rounded-lg border border-slate-200 px-3 py-2">
@@ -123,7 +123,7 @@ export function DashboardView({ onGoUnassigned }: { onGoUnassigned: () => void }
             </li>
           </ul>
           <p className="mt-4 text-xs text-ink-muted">
-            正式系統中可一鍵合併名單或忽略告警,此處為 Demo 示意。
+            正式系統中可一鍵合併名單或忽略告警，此處為 Demo 示意。
           </p>
         </div>
       </DemoModal>

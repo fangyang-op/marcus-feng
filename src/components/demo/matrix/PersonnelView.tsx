@@ -24,7 +24,7 @@ const REGION_META: Record<string, { sub: string }> = {
 const REGIONS = ["北一區", "桃竹區", "中一區", "南一區"];
 
 export function PersonnelView({ data }: { data: YearData }) {
-  // 本地可切換狀態(示意,不持久化)
+  // 本地可切換狀態(示意，不持久化)
   const [overrides, setOverrides] = useState<Record<string, Status>>({});
   const [toast, setToast] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -51,7 +51,7 @@ export function PersonnelView({ data }: { data: YearData }) {
       const rate = members.length > 0 ? (active / members.length) * 100 : 0;
       return { region, total: members.length, active, onLeave, inactive, rate };
     });
-    // overrides 影響 active 計數,需作為依賴
+    // overrides 影響 active 計數，需作為依賴
   }, [data.consultants, overrides]);
 
   const totalHead = data.consultants.length;
@@ -62,7 +62,7 @@ export function PersonnelView({ data }: { data: YearData }) {
       <PageTitle
         icon={Settings}
         title="人員編制設定"
-        subtitle={`四區共 ${totalHead} 位顧問編制與在職狀態管理(點擊 chip 切換在職/留停/離職,即時提示)`}
+        subtitle={`四區共 ${totalHead} 位顧問編制與在職狀態管理(點擊 chip 切換在職/留停/離職，即時提示)`}
       />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -197,7 +197,7 @@ export function PersonnelView({ data }: { data: YearData }) {
       >
         <div className="space-y-3">
           <p>
-            正式系統中,此處可新增顧問、設定所屬區域、調整年度編制與績效目標,並即時同步至各報表。
+            正式系統中，此處可新增顧問、設定所屬區域、調整年度編制與績效目標，並即時同步至各報表。
           </p>
           <ul className="space-y-1.5 text-[13px]">
             <li className="flex items-center gap-2">
@@ -211,7 +211,7 @@ export function PersonnelView({ data }: { data: YearData }) {
             </li>
           </ul>
           <p className="text-xs text-ink-muted">
-            為作品集展示,此 Demo 不寫入後端;上方狀態 chip 可實際點擊切換以體驗互動。
+            為作品集展示，此 Demo 不寫入後端;上方狀態 chip 可實際點擊切換以體驗互動。
           </p>
         </div>
       </DemoModal>

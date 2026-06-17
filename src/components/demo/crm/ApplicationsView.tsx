@@ -29,7 +29,7 @@ import {
 
 export function ApplicationsView() {
   const [mode, setMode] = useState<"board" | "table">("board");
-  /** 本地複製一份,讓卡片可在欄位間移動,不影響原始常數 */
+  /** 本地複製一份，讓卡片可在欄位間移動，不影響原始常數 */
   const [apps, setApps] = useState<ApplicationCard[]>(() =>
     APPLICATIONS.map((a) => ({ ...a }))
   );

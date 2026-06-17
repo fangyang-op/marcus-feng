@@ -16,7 +16,7 @@ export function Footer() {
               想找一位「能自己動手建系統的營運人」?
             </h2>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">
-              無論是營運制度、CRM / 數據系統建置,或 AI 導入,歡迎聊聊。
+              無論是營運制度、CRM / 數據系統建置，或 AI 導入，歡迎聊聊。
             </p>
           </div>
 

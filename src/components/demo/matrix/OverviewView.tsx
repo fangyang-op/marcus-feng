@@ -29,7 +29,7 @@ function Inline({ value, pp = false }: { value: number; pp?: boolean }) {
   );
 }
 
-/** KPI 翻轉卡:正面為數字卡(沿用 StatCard 視覺),背面為口徑/拆分補充。 */
+/** KPI 翻轉卡:正面為數字卡(沿用 StatCard 視覺)，背面為口徑/拆分補充。 */
 function KpiFlip({
   icon: Icon,
   label,
@@ -102,7 +102,7 @@ export function OverviewView({ data }: { data: YearData }) {
   const maxPkg = packages[0]?.count || 1;
   const sortedDemo = [...demographics].sort((a, b) => b.count - a.count);
 
-  // 年度 B2C / B2B 拆分(由月度序列彙總,寫死資料、可重現)
+  // 年度 B2C / B2B 拆分(由月度序列彙總，寫死資料、可重現)
   const b2cTotal = monthlyStats.reduce((a, m) => a + m.b2cStudentRevenue, 0);
   const b2bTotal = monthlyStats.reduce((a, m) => a + m.b2bCommissionRevenue, 0);
   const b2bShare = kpi.totalRevenue > 0 ? (b2bTotal / kpi.totalRevenue) * 100 : 0;
@@ -161,7 +161,7 @@ export function OverviewView({ data }: { data: YearData }) {
       <div>
         <div className="mb-2 flex items-center gap-1.5 text-[11px] text-ink-muted">
           <RotateCw className="h-3 w-3 text-matrix-rose" />
-          四張 KPI 皆可點擊翻轉,背面為 B2C/B2B 拆分、YoY/MoM 與口徑說明
+          四張 KPI 皆可點擊翻轉，背面為 B2C/B2B 拆分、YoY/MoM 與口徑說明
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <KpiFlip
@@ -177,7 +177,7 @@ export function OverviewView({ data }: { data: YearData }) {
               { k: "旺季高峰", v: `${peakMonth.month}・${peakMonth.consults} 件` },
               { k: "較去年同期", v: `▲ ${kpi.consultationsYoY}%` },
             ]}
-            backNote="口徑:含四來源(洋碩/通路/網單/自招)所有進線諮詢,不去重。"
+            backNote="口徑:含四來源(洋碩/通路/網單/自招)所有進線諮詢，不去重。"
           />
           <KpiFlip
             icon={TrendingUp}

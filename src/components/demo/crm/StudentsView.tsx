@@ -94,7 +94,7 @@ export function StudentsView({
             icon={Plus}
             primary
             primaryClass="bg-crm hover:bg-crm-ink"
-            onClick={() => fireToast("新增學生表單為 Demo 示意,正式系統可建立名單")}
+            onClick={() => fireToast("新增學生表單為 Demo 示意，正式系統可建立名單")}
           >
             新增學生
           </TopbarButton>
@@ -188,7 +188,7 @@ export function StudentsView({
       {totalPages > 1 && (
         <nav className="mt-4 flex items-center justify-between text-sm">
           <span className="text-ink-muted">
-            第 {safePage} 頁,共 {totalPages} 頁
+            第 {safePage} 頁，共 {totalPages} 頁
           </span>
           <div className="flex gap-2">
             <button

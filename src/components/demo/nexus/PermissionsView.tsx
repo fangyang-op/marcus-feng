@@ -19,7 +19,7 @@ import {
 const NEXUS_ACCENT = "bg-nexus-pink";
 
 export function PermissionsView() {
-  // 以 id → active 的覆寫表保存切換結果(純前端,不接 API)
+  // 以 id → active 的覆寫表保存切換結果(純前端，不接 API)
   const [overrides, setOverrides] = useState<Record<string, boolean>>({});
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState<string | null>(null);

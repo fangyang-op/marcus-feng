@@ -1,6 +1,6 @@
 /**
- * 共用型別定義。各資料檔(site / metrics / projects ...)都引用這裡的型別,
- * 你編輯資料時 TypeScript 會即時提示欄位,降低改錯的機會。
+ * 共用型別定義。各資料檔(site / metrics / projects ...)都引用這裡的型別，
+ * 你編輯資料時 TypeScript 會即時提示欄位，降低改錯的機會。
  */
 
 export type AccentKey = "crm" | "nexus" | "matrix" | "brand" | "slate";
@@ -15,11 +15,11 @@ export interface LinkItem {
 
 /** 核心成果數字卡 */
 export interface Metric {
-  /** 主數字,例如 "+140%" */
+  /** 主數字，例如 "+140%" */
   value: string;
-  /** 數字下方標題,例如 "營收成長" */
+  /** 數字下方標題，例如 "營收成長" */
   label: string;
-  /** 補充說明,例如 "NT$748萬 → 1,795萬" */
+  /** 補充說明，例如 "NT$748萬 → 1,795萬" */
   detail: string;
 }
 
@@ -35,7 +35,7 @@ export interface Project {
   highlights: string[];
   /** 技術標籤 */
   tags: string[];
-  /** Demo 子頁連結(僅 CRM / Nexus / Matrix 有,其餘為 undefined) */
+  /** Demo 子頁連結(僅 CRM / Nexus / Matrix 有，其餘為 undefined) */
   demoHref?: string;
   /** 卡片強調色 */
   accent: AccentKey;

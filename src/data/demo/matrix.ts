@@ -1,8 +1,8 @@
 /**
  * ── Matrix 營運數據分析中心 — Demo 假資料 ─────────────────────────
- * 全部寫死成固定常數,不使用亂數或當下時間,避免 SSR / hydration 不一致。
- * 三個年度 (2024 / 2025 / 2026) 各一份,YoY 漸增以便圖表好看。
- * 所有名稱皆為中性假名(顧問 A~L / 北一區~南一區 / 測試方案),不含任何真實資料。
+ * 全部寫死成固定常數，不使用亂數或當下時間，避免 SSR / hydration 不一致。
+ * 三個年度 (2024 / 2025 / 2026) 各一份，YoY 漸增以便圖表好看。
+ * 所有名稱皆為中性假名(顧問 A~L / 北一區~南一區 / 測試方案)，不含任何真實資料。
  */
 
 export type MatrixYear = "2024" | "2025" | "2026";
@@ -96,7 +96,7 @@ export interface ConsultantRow {
   name: string;
   region: string;
   status: "active" | "inactive" | "on_leave";
-  hireDate: string; // 寫死字串,如 "2021-03-15"
+  hireDate: string; // 寫死字串，如 "2021-03-15"
   consults: number;
   sales: number;
   conversionRate: number;
@@ -119,7 +119,7 @@ export interface SourceStat {
   revenue: number;
   conversionRate: number;
   inviteRate: number;
-  // diff (vs 去年同期,百分點 / 數量已預先算好)
+  // diff (vs 去年同期，百分點 / 數量已預先算好)
   assignedDiff: number;
   salesDiff: number;
   convDiff: number;
@@ -159,7 +159,7 @@ export interface YearData {
 
 const round1 = (n: number) => Math.round(n * 10) / 10;
 
-/** 由固定的 12 個基礎權重 + 年度倍率,逐月寫出 monthlyStats(固定、可重現) */
+/** 由固定的 12 個基礎權重 + 年度倍率，逐月寫出 monthlyStats(固定、可重現) */
 function buildMonthly(
   consultsBase: number[],
   conv: number[], // 每月轉換率 %
@@ -309,7 +309,7 @@ function buildConsultant(
   tag: ConsultantRow["tag"],
 ): ConsultantRow {
   const conversionRate = round1((sales / consults) * 100);
-  // 國別漏斗(固定四國,依顧問成交量比例分配)
+  // 國別漏斗(固定四國，依顧問成交量比例分配)
   const funnel = [
     { country: "美國", consults: Math.round(consults * 0.34), sales: Math.round(sales * 0.36) },
     { country: "英國", consults: Math.round(consults * 0.26), sales: Math.round(sales * 0.27) },
@@ -329,14 +329,14 @@ function buildConsultant(
     const gs = Math.round(sales * g.s);
     return { grade: g.grade, consults: gc, sales: gs, conversion: gc > 0 ? round1((gs / gc) * 100) : 0 };
   });
-  // 月度趨勢(以年度轉換率 + 固定季節權重,逐月寫出)
+  // 月度趨勢(以年度轉換率 + 固定季節權重，逐月寫出)
   const seasonW = [0.86, 0.9, 1.04, 0.98, 0.94, 1.02, 1.08, 1.02, 1.12, 1.18, 1.06, 0.92];
   const monthlyTrends = MONTHS.map((month, i) => ({
     month,
     conversionRate: round1(conversionRate * seasonW[i]),
     revenue: Math.round((totalRevenue / 12) * seasonW[i]),
   }));
-  // 顧問目標 = 實際 / 達成率(寫死的達成率,讓績效監控有差異)
+  // 顧問目標 = 實際 / 達成率(寫死的達成率，讓績效監控有差異)
   const achievement = tag === "star" ? 1.08 : tag === "warn" ? 0.72 : 0.91;
   const targetRevenue = Math.round(totalRevenue / achievement);
   return {
@@ -361,7 +361,7 @@ function buildConsultant(
 // ───────────────────────── 來源建構器 ─────────────────────────
 
 function buildSources(yearMul: number): SourceStat[] {
-  // 四來源的基礎(2024 基準),乘上年度倍率
+  // 四來源的基礎(2024 基準)，乘上年度倍率
   const defs = [
     { sourceName: "洋碩", assigned: 980, inviteRate: 64, conv: 22.5, avgDeal: 168000, assignedDiff: 12, salesDiff: 9, convDiff: 1.4, w: 1.0 },
     { sourceName: "通路", assigned: 1240, inviteRate: 52, conv: 16.8, avgDeal: 152000, assignedDiff: 22, salesDiff: 14, convDiff: 0.8, w: 0.92 },
@@ -406,7 +406,7 @@ function buildSources(yearMul: number): SourceStat[] {
 // ───────────────────────── 產品熱力圖建構器 ─────────────────────────
 
 function buildProducts(yearMul: number): ProductRow[] {
-  // 產品 × 12 月,固定逐月權重(數值越大底色越深)
+  // 產品 × 12 月，固定逐月權重(數值越大底色越深)
   const defs: { name: string; base: number; avgDeal: number; w: number[] }[] = [
     { name: "全程留學規劃", base: 18, avgDeal: 188000, w: [0.7, 0.8, 1.2, 1.0, 0.9, 1.0, 1.3, 1.1, 1.4, 1.6, 1.2, 0.8] },
     { name: "名校申請方案", base: 14, avgDeal: 168000, w: [0.6, 0.7, 1.1, 1.0, 0.9, 1.1, 1.2, 1.0, 1.5, 1.7, 1.1, 0.7] },
@@ -491,8 +491,8 @@ function buildYear(
     topSourceConv: topSource.conversionRate,
     headline:
       summary.yoyRev >= 0
-        ? `${focus.month}營收較去年同期成長 ${summary.yoyRev}%,招生動能維持正向`
-        : `${focus.month}營收較去年同期下滑 ${Math.abs(summary.yoyRev)}%,建議檢視招生管道配置`,
+        ? `${focus.month}營收較去年同期成長 ${summary.yoyRev}%，招生動能維持正向`
+        : `${focus.month}營收較去年同期下滑 ${Math.abs(summary.yoyRev)}%，建議檢視招生管道配置`,
   };
 
   const regionRates = buildRegionRates(consultants);
@@ -636,7 +636,7 @@ export const MATRIX_DATA: Record<MatrixYear, YearData> = {
 // ───────────────────────── AI 助理罐頭內容 ─────────────────────────
 
 export const AI_SUGGESTED_QUESTIONS = [
-  "今年營收與去年同期的差異,以及招生管道績效變動?",
+  "今年營收與去年同期的差異，以及招生管道績效變動?",
   "哪一個招生管道的成交效率最高?下季預算該往哪投?",
   "今年營收有明顯的季節性波動嗎?預估全年總營收?",
   "用一句話總結:我們今年最核心的營運問題是什麼?",
@@ -644,13 +644,13 @@ export const AI_SUGGESTED_QUESTIONS = [
 
 export const AI_CANNED_REPLY: Record<string, string> = {
   default:
-    "您好,我是 Matrix 數據決策助理。我可以為您分析各年度的營收數據,提供跨年度趨勢與策略建議。\n\n請從下方建議問題開始,或直接輸入您想了解的指標。",
-  "今年營收與去年同期的差異,以及招生管道績效變動?":
-    "**營收 YoY 摘要**\n\n- 本年度總營收較去年同期成長約 **18.5%**,動能維持正向。\n- 四大來源中,**洋碩** 與 **自招** 的成交轉化率最高(22.5% / 19.6%),是營收主力。\n- **網單** 分配量最大但有效名單率偏低(41%),建議優化名單品質而非單純加量。\n\n> 建議:把網單超量的預算,逐步移轉到自招與洋碩的深度經營。",
+    "您好，我是 Matrix 數據決策助理。我可以為您分析各年度的營收數據，提供跨年度趨勢與策略建議。\n\n請從下方建議問題開始，或直接輸入您想了解的指標。",
+  "今年營收與去年同期的差異，以及招生管道績效變動?":
+    "**營收 YoY 摘要**\n\n- 本年度總營收較去年同期成長約 **18.5%**，動能維持正向。\n- 四大來源中，**洋碩** 與 **自招** 的成交轉化率最高(22.5% / 19.6%)，是營收主力。\n- **網單** 分配量最大但有效名單率偏低(41%)，建議優化名單品質而非單純加量。\n\n> 建議:把網單超量的預算，逐步移轉到自招與洋碩的深度經營。",
   "哪一個招生管道的成交效率最高?下季預算該往哪投?":
-    "**管道效率排序(成交轉化率)**\n\n1. 洋碩 — 22.5%\n2. 自招 — 19.6%\n3. 通路 — 16.8%\n4. 網單 — 12.4%\n\n**下季預算建議**\n\n- 自招的單位成本最低且轉化高 → 加碼校園說明會與舊生推薦。\n- 洋碩維持現有投放,並提高有效名單跟進速度。",
+    "**管道效率排序(成交轉化率)**\n\n1. 洋碩 — 22.5%\n2. 自招 — 19.6%\n3. 通路 — 16.8%\n4. 網單 — 12.4%\n\n**下季預算建議**\n\n- 自招的單位成本最低且轉化高 → 加碼校園說明會與舊生推薦。\n- 洋碩維持現有投放，並提高有效名單跟進速度。",
   "今年營收有明顯的季節性波動嗎?預估全年總營收?":
-    "**季節性觀察**\n\n- 旺季落在 **9–10 月**(開學前申請高峰),諮詢量與營收同步衝高。\n- 淡季在 **1–2 月** 與年底 **12 月**。\n\n**全年預估**\n\n依目前每月軌跡線性外推,全年總營收可望落在歷史高點,YoY 約 +18~22%。",
+    "**季節性觀察**\n\n- 旺季落在 **9–10 月**(開學前申請高峰)，諮詢量與營收同步衝高。\n- 淡季在 **1–2 月** 與年底 **12 月**。\n\n**全年預估**\n\n依目前每月軌跡線性外推，全年總營收可望落在歷史高點，YoY 約 +18~22%。",
   "用一句話總結:我們今年最核心的營運問題是什麼?":
-    "**一句話總結**\n\n> 「進件量充足,但網單管道的有效名單率偏低,拖累整體轉化效率;核心課題是名單品質與跟進速度的優化。」",
+    "**一句話總結**\n\n> 「進件量充足，但網單管道的有效名單率偏低，拖累整體轉化效率;核心課題是名單品質與跟進速度的優化。」",
 };

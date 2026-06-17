@@ -14,7 +14,7 @@ export const siteConfig = {
   org: "放洋留遊學",
   /** 一句話自我介紹 */
   summary:
-    "非工程背景,卻能辨識營運問題並親手建出解決它的系統。從營收成長、團隊管理到 CRM、數據分析與 AI 工具,我把「會用工具」變成「能交付系統」。",
+    "非工程背景，卻能辨識營運問題並親手建出解決它的系統。從營收成長、團隊管理到 CRM、數據分析與 AI 工具，我把「會用工具」變成「能交付系統」。",
 
   /** 正式上線網址(用於 Open Graph / canonical 絕對連結) */
   url: "https://marcus-feng.vercel.app",
@@ -22,7 +22,7 @@ export const siteConfig = {
   /** ── 聯絡方式 ── */
   email: "marcus.jyfeng@gmail.com",
   linkedin: "https://www.linkedin.com/in/marcus-jyfeng",
-  /** 履歷 PDF(放在 /public/docs/resume.pdf,先用 placeholder,替換成真檔即可) */
+  /** 履歷 PDF(放在 /public/docs/resume.pdf，先用 placeholder，替換成真檔即可) */
   resumeHref: "/docs/resume.pdf",
 
   /** ── 頂部導覽錨點 ── */
@@ -35,7 +35,7 @@ export const siteConfig = {
     { label: "聯絡", href: "#contact" },
   ] as LinkItem[],
 
-  /** 頁尾自建宣告(本身就是能力證明,請保留) */
+  /** 頁尾自建宣告(本身就是能力證明，請保留) */
   builtWith: "本站以 Next.js + Tailwind 自建並部署於 Vercel",
 };
 

@@ -270,7 +270,7 @@ function TrendBlock({
   year: MatrixYear;
   compareYoY: boolean;
 }) {
-  // 各顧問彩線(取本區前 5 名,避免線太多)
+  // 各顧問彩線(取本區前 5 名，避免線太多)
   const topMembers = useMemo(
     () => [...members].sort((a, b) => b.totalRevenue - a.totalRevenue).slice(0, 5),
     [members],
@@ -300,7 +300,7 @@ function TrendBlock({
   // 同期比較的三年度色(當前年度突顯)
   const yoyColors = ["#FFB761", "#FF5C8D", "#FF2D6C"];
 
-  // 重要:recharts 的 <Line> 必須是 <LineChart> 的「直接子節點」,
+  // 重要:recharts 的 <Line> 必須是 <LineChart> 的「直接子節點」，
   // 不可包在 React Fragment 裡(否則 recharts 偵測不到、整條線不會畫)。
   // 因此這裡先攤平成一個 <Line> 陣列再交給 LineChart。
   const lineElements = compareYoY

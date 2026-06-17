@@ -167,7 +167,7 @@ function SchoolDetail({ s }: { s: SchoolRow }) {
         ))}
       </dl>
       <p className="mt-4 text-xs text-ink-muted">
-        以上門檻為依排名推導之示意值,正式系統會串接各校官方申請資料。
+        以上門檻為依排名推導之示意值，正式系統會串接各校官方申請資料。
       </p>
     </div>
   );

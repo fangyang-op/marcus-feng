@@ -60,7 +60,7 @@ export function StudentDetailView({
   // 依「該學生」的狀態判斷四個進階 tab 是否解鎖
   const unlocked = isStudentUnlocked(detail.statusCode);
 
-  // 防呆:若目前選中的是被鎖的 tab(理論上點不到),一律退回「概覽」,
+  // 防呆:若目前選中的是被鎖的 tab(理論上點不到)，一律退回「概覽」，
   // 絕不渲染被鎖頁面的內容。
   const isTabLocked = (key: TabKey) => !unlocked && LOCKABLE.includes(key);
   const activeTab: TabKey = isTabLocked(tab) ? "overview" : tab;
@@ -94,7 +94,7 @@ export function StudentDetailView({
           </span>
           <button
             type="button"
-            onClick={() => fireToast("狀態切換為示意,正式系統可直接變更")}
+            onClick={() => fireToast("狀態切換為示意，正式系統可直接變更")}
             className="transition-transform hover:scale-105"
             title="點擊變更狀態(Demo 示意)"
           >
@@ -103,7 +103,7 @@ export function StudentDetailView({
         </div>
         <button
           type="button"
-          onClick={() => fireToast("編輯模式為 Demo 示意,正式系統可寫入資料")}
+          onClick={() => fireToast("編輯模式為 Demo 示意，正式系統可寫入資料")}
           className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-semibold text-ink-soft transition-colors hover:bg-slate-50"
         >
           <Pencil className="h-4 w-4" /> 編輯
@@ -139,7 +139,7 @@ export function StudentDetailView({
         </div>
       </div>
 
-      {/* 上鎖說明:招生中 / 暫停未成交時,提示四個進階分頁尚未開放 */}
+      {/* 上鎖說明:招生中 / 暫停未成交時，提示四個進階分頁尚未開放 */}
       {!unlocked && (
         <LockNotice statusLabel={status?.label ?? "—"} />
       )}

@@ -9,7 +9,7 @@ export function MetricsBar() {
       <SectionHeading
         eyebrow="Impact"
         title="可量化的營運成果"
-        description="不只「做過」,而是把營運決策變成能用數字驗證的結果。"
+        description="不只「做過」，而是把營運決策變成能用數字驗證的結果。"
       />
       <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {metrics.map((m) => (

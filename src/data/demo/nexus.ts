@@ -131,7 +131,7 @@ export interface NexusSchool {
   /** 每年學費中位數(統一換算為美元等值，僅供排序用，寫死假值) */
   tuitionSortUsd: number;
   requirements: { gpa: string; toefl: string; ielts: string };
-  /** 成功錄取數(歷屆累計,排序用假值) */
+  /** 成功錄取數(歷屆累計，排序用假值) */
   successfulAdmits: number;
   programs: string[];
   tags: string[];
@@ -653,9 +653,9 @@ export const SCHOOL_SORTS: { key: SchoolSortKey; label: string }[] = [
   { key: "ielts", label: "IELTS 要求" },
 ];
 
-/** 尚未維護的學校筆數(對齊真實畫面琥珀色提示,寫死) */
+/** 尚未維護的學校筆數(對齊真實畫面琥珀色提示，寫死) */
 export const SCHOOL_UNMAINTAINED_COUNT = 5;
-/** 院校向量化進度(已/總,對齊真實畫面徽章) */
+/** 院校向量化進度(已/總，對齊真實畫面徽章) */
 export const SCHOOL_VECTORIZED = { done: 294, total: 302 };
 
 // ============================================================================
@@ -977,7 +977,7 @@ export interface RankingRow {
   isYangShuo: boolean;
   /** 是否取得獎學金 */
   hasScholarship: boolean;
-  /** 獎學金金額(NTD,無則 0;用於上方累積加總) */
+  /** 獎學金金額(NTD，無則 0;用於上方累積加總) */
   scholarshipNtd: number;
   /** 獎學金顯示字串(無則「—」) */
   scholarship: string;
@@ -1043,7 +1043,7 @@ export const RANKING_ROWS: RankingRow[] = [
   { id: "r-34", student: "童＊安", major: "中興大學 應數系", year: "2024", countryCode: "CAD", school: "UBC", program: "Computer Science", gpa: "3.4", toefl: "95", isDaShuo: true, isYangShuo: false, hasScholarship: true, scholarshipNtd: 92000, scholarship: "C$ 4,000 入學獎", result: "錄取" },
 ];
 
-/** 榜單累積獲取獎學金(NTD,由上方資料加總;留尾數對齊真實畫面樣式) */
+/** 榜單累積獲取獎學金(NTD，由上方資料加總;留尾數對齊真實畫面樣式) */
 export const RANKING_SCHOLARSHIP_TOTAL_NTD = 32427333.74;
 
 // ============================================================================
@@ -1622,7 +1622,7 @@ export const USER_ROLE_LABEL: Record<UserRole, string> = {
 
 export interface PermissionUser {
   id: string;
-  empId: string; // 員工編號假值,如 EMP-1024
+  empId: string; // 員工編號假值，如 EMP-1024
   name: string; // 中文假名
   role: UserRole;
   team: string;

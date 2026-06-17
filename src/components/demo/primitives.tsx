@@ -3,8 +3,8 @@ import type { LucideIcon } from "lucide-react";
 
 /**
  * ── Demo 共用 UI primitives ───────────────────────────────────
- * 三個 Demo(CRM / Nexus / Matrix)共用的視覺零件,確保風格一致。
- * 都是純展示元件,可直接在各 Demo 的 client 頁面內使用。
+ * 三個 Demo(CRM / Nexus / Matrix)共用的視覺零件，確保風格一致。
+ * 都是純展示元件，可直接在各 Demo 的 client 頁面內使用。
  */
 
 /** 內容容器:統一頁面內距與最大寬度 */

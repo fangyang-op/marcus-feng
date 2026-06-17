@@ -190,7 +190,7 @@ export function PlacementView() {
 
               {dirty && hasResult && !analyzing && (
                 <p className="rounded-lg bg-amber-50 px-3 py-2 text-[11px] font-medium text-amber-700">
-                  條件已修改,點「重新分析」以更新右側落點結果。
+                  條件已修改，點「重新分析」以更新右側落點結果。
                 </p>
               )}
             </div>
@@ -202,7 +202,7 @@ export function PlacementView() {
           {analyzing && (
             <div className="flex items-center gap-3 rounded-xl border border-nexus-pink/20 bg-nexus-pink/5 px-5 py-4 text-sm font-medium text-nexus-pink">
               <Loader2 className="h-5 w-5 animate-spin" />
-              正在比對歷屆榜單與院校門檻,計算各校落點機率…
+              正在比對歷屆榜單與院校門檻，計算各校落點機率…
             </div>
           )}
 
@@ -249,7 +249,7 @@ export function PlacementView() {
                   )}
                 </div>
                 <p className="mb-4 text-xs leading-relaxed text-ink-soft">
-                  拖動滑桿即時模擬:若學生 GPA 或 TOEFL 改變,各校錄取機率如何變動?(以本次分析輪廓為基準線性推估,不重新呼叫 AI)
+                  拖動滑桿即時模擬:若學生 GPA 或 TOEFL 改變，各校錄取機率如何變動?(以本次分析輪廓為基準線性推估，不重新呼叫 AI)
                 </p>
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                   <Slider
@@ -322,7 +322,7 @@ export function PlacementView() {
               </span>
               <h3 className="text-base font-bold text-ink">輸入學生條件後開始分析</h3>
               <p className="mt-2 max-w-sm text-sm text-ink-muted">
-                填寫左側 GPA / TOEFL / 目標科系與國家,點「開始 AI 分析」即可取得 Dream / Match / Safety 三檔落點與錄取機率。
+                填寫左側 GPA / TOEFL / 目標科系與國家，點「開始 AI 分析」即可取得 Dream / Match / Safety 三檔落點與錄取機率。
               </p>
             </Card>
           )}

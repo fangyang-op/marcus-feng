@@ -1,7 +1,7 @@
 /**
  * ── CRM 全端營運平台 — Demo 假資料 + 型別 ─────────────────────
  * 留學代辦內部 CRM 的 UI 骨架還原。所有資料皆為固定常數(無亂數、無 Date.now),
- * 以避免 SSR/hydration 不一致。姓名/顧問/區域一律假名;校名為公開大學,數字為合理假值。
+ * 以避免 SSR/hydration 不一致。姓名/顧問/區域一律假名;校名為公開大學，數字為合理假值。
  */
 
 import type { PillColor } from "@/components/demo/primitives";
@@ -46,13 +46,13 @@ export interface StudentRow {
   degree: string;
   intake: string;
   createdAt: string;
-  /** 當前學校 / 科系(用於詳情頁,固定常數) */
+  /** 當前學校 / 科系(用於詳情頁，固定常數) */
   schoolZh: string;
   majorZh: string;
-  /** 目標主修(英文,用於詳情頁) */
+  /** 目標主修(英文，用於詳情頁) */
   targetMajor: string;
   gpa: string;
-  /** 語言成績(顯示用字串,如 "TOEFL 105" 或 "IELTS 7.0") */
+  /** 語言成績(顯示用字串，如 "TOEFL 105" 或 "IELTS 7.0") */
   langTest: string;
   langScore: string;
 }
@@ -99,7 +99,7 @@ export function isUnassignedBackend(s: StudentRow): boolean {
  * 因此「成交 / 選校表 / 文件 / 申請」四個 tab 需在成交後才解鎖。
  * - recruitment(招生中)或 special(暫停且未成交)→ 上鎖
  * - closed(已成交)或 application(申請中)→ 解鎖
- * 概覽 / 時間軸 / 成績永遠可用,故不在此判斷範圍。
+ * 概覽 / 時間軸 / 成績永遠可用，故不在此判斷範圍。
  */
 export function isStudentUnlocked(statusCode: string): boolean {
   const cat = STATUS_META[statusCode]?.category;
@@ -151,9 +151,9 @@ export interface StudentDetail {
   applications: ApplicationCard[];
 }
 
-/* ── 詳情建構用的固定資料池(deterministic,無亂數)──────── */
+/* ── 詳情建構用的固定資料池(deterministic，無亂數)──────── */
 
-/** 國家 → 選校表候選(衝刺/主攻/保底,依目標主修無關,純展示) */
+/** 國家 → 選校表候選(衝刺/主攻/保底，依目標主修無關，純展示) */
 const SCHOOL_POOL_BY_COUNTRY: Record<
   string,
   { dream: string[]; match: string[]; safety: string[] }
@@ -180,7 +180,7 @@ const SCHOOL_POOL_BY_COUNTRY: Record<
   },
 };
 
-/** 主修 → program 字尾(英文,展示用) */
+/** 主修 → program 字尾(英文，展示用) */
 function programFor(targetMajor: string, country: string): string {
   const uk = country === "英國";
   const au = country === "澳洲";
@@ -199,12 +199,12 @@ function programFor(targetMajor: string, country: string): string {
 /** 來源類型池 */
 const SOURCE_TYPES = ["線上廣告", "校園講座", "同事轉介", "舊生介紹", "官網表單", "教育展"];
 const CONSULT_NOTES = [
-  "意願高,已預約二訪",
-  "預算明確,鎖定排名前段",
-  "家長同行,需補申請時程說明",
-  "校友推薦,信任度高",
-  "比較多家,需強化方案差異",
-  "目標清楚,時間較趕",
+  "意願高，已預約二訪",
+  "預算明確，鎖定排名前段",
+  "家長同行，需補申請時程說明",
+  "校友推薦，信任度高",
+  "比較多家，需強化方案差異",
+  "目標清楚，時間較趕",
 ];
 
 /** 把 id "s07" → 7;非數字回退 0 */
@@ -213,14 +213,14 @@ function idIndex(id: string): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-/** 申請狀態(展示用,依序對應 timeline 階段) */
+/** 申請狀態(展示用，依序對應 timeline 階段) */
 const DETAIL_APP_STATUSES: ApplicationStatusCode[] = [
   "submitted", "pending_send", "admitted", "docs_required", "interview", "waitlisted",
 ];
 
 /**
- * 依學生列表資料,deterministic 組出該學生「自己的」360 詳情。
- * 全部由 id index 與列表欄位推導,無亂數、無讀取系統時間,確保 SSR 一致且不張冠李戴。
+ * 依學生列表資料，deterministic 組出該學生「自己的」360 詳情。
+ * 全部由 id index 與列表欄位推導，無亂數、無讀取系統時間，確保 SSR 一致且不張冠李戴。
  */
 function buildDetail(s: StudentRow): StudentDetail {
   const idx = idIndex(s.id);
@@ -281,9 +281,9 @@ function buildDetail(s: StudentRow): StudentDetail {
 
   // 時間軸:依狀態階段顯示已發生的事件(較新在上)
   const allEvents: { date: string; title: string; desc: string; color: PillColor; minStage: number }[] = [
-    { date: dateAfter(s.createdAt, 0), title: "建立名單", desc: `經由${SOURCE_TYPES[idx % SOURCE_TYPES.length]}進線,由 ${s.frontend ?? "前端顧問"} 接洽`, color: "slate", minStage: 0 },
+    { date: dateAfter(s.createdAt, 0), title: "建立名單", desc: `經由${SOURCE_TYPES[idx % SOURCE_TYPES.length]}進線，由 ${s.frontend ?? "前端顧問"} 接洽`, color: "slate", minStage: 0 },
     { date: dateAfter(s.createdAt, 14), title: "完成需求諮詢", desc: `鎖定 ${primaryCountry} ${s.degree}・${s.targetMajor}`, color: "cyan", minStage: 0 },
-    { date: dateAfter(s.createdAt, 40), title: "完成成交", desc: `簽署${isFlagship ? "旗艦全套" : "標準"}方案,啟動後端服務`, color: "emerald", minStage: 1 },
+    { date: dateAfter(s.createdAt, 40), title: "完成成交", desc: `簽署${isFlagship ? "旗艦全套" : "標準"}方案，啟動後端服務`, color: "emerald", minStage: 1 },
     { date: dateAfter(s.createdAt, 75), title: "選校表定稿", desc: `共 ${pool.dream.length + pool.match.length + pool.safety.length} 所(衝刺/主攻/保底)`, color: "violet", minStage: 2 },
     { date: dateAfter(s.createdAt, 120), title: "送出第一所申請", desc: `${pool.match[0]} 已於系統送件`, color: "blue", minStage: 2 },
   ];
@@ -340,7 +340,7 @@ function buildDetail(s: StudentRow): StudentDetail {
     ...pool.safety.map((school) => ({ tier: "safety" as const, school, program: programFor(s.targetMajor, primaryCountry), country: primaryCountry })),
   ];
 
-  // 申請卡:取選校表前幾所,依狀態給不同申請狀態
+  // 申請卡:取選校表前幾所，依狀態給不同申請狀態
   const appsSource = [...pool.match, ...pool.dream, ...pool.safety].slice(0, stage >= 2 ? 4 : stage === 1 ? 2 : 1);
   const applications: ApplicationCard[] = appsSource.map((school, i) => ({
     id: `${s.id}-app${i + 1}`,
@@ -372,9 +372,9 @@ function buildDetail(s: StudentRow): StudentDetail {
   };
 }
 
-/** 在 base 日期(YYYY-MM-DD)上加 days 天,回傳 YYYY-MM-DD。純字串運算,不讀系統時間。 */
+/** 在 base 日期(YYYY-MM-DD)上加 days 天，回傳 YYYY-MM-DD。純字串運算，不讀系統時間。 */
 function dateAfter(base: string, days: number): string {
-  // 用 UTC 固定運算,避免時區造成的非決定性
+  // 用 UTC 固定運算，避免時區造成的非決定性
   const [y, m, d] = base.split("-").map((n) => parseInt(n, 10));
   const t = Date.UTC(y, m - 1, d) + days * 86400000;
   const dt = new Date(t);
@@ -384,7 +384,7 @@ function dateAfter(base: string, days: number): string {
   return `${yy}-${mm}-${dd}`;
 }
 
-/** 預先建好所有學生的詳情(module scope 常數,無亂數無時間依賴) */
+/** 預先建好所有學生的詳情(module scope 常數，無亂數無時間依賴) */
 export const STUDENT_DETAIL: Record<string, StudentDetail> = Object.fromEntries(
   STUDENTS.map((s) => [s.id, buildDetail(s)])
 );
@@ -437,13 +437,13 @@ export interface ApplicationCard {
   school: string;
   program: string;
   country: string;
-  /** 寫死字串;逾期判斷用固定「今天」常數比較,不讀系統時間 */
+  /** 寫死字串;逾期判斷用固定「今天」常數比較，不讀系統時間 */
   deadline: string;
   round: string;
   statusCode: ApplicationStatusCode;
 }
 
-/** 看板逾期判斷基準日(寫死,避免 hydration 不一致) */
+/** 看板逾期判斷基準日(寫死，避免 hydration 不一致) */
 export const TODAY = "2025-06-17";
 
 export const APPLICATIONS: ApplicationCard[] = [
@@ -568,7 +568,7 @@ export interface UatSection {
   cases: UatCase[];
 }
 
-/** UAT 章節 + 測試項(全寫死,合計 24 項) */
+/** UAT 章節 + 測試項(全寫死，合計 24 項) */
 export const UAT_SECTIONS: UatSection[] = [
   {
     key: "auth",
@@ -578,7 +578,7 @@ export const UAT_SECTIONS: UatSection[] = [
       { id: "u-auth-1", title: "顧問帳號正確密碼登入", expected: "登入成功並導向儀表板", status: "pass" },
       { id: "u-auth-2", title: "錯誤密碼連續 5 次", expected: "帳號暫時鎖定並顯示提示", status: "pass" },
       { id: "u-auth-3", title: "前端顧問檢視他人成交金額", expected: "金額欄位應遮罩為「—」", status: "fail" },
-      { id: "u-auth-4", title: "登出後返回上一頁", expected: "需重新登入,不得讀取舊資料", status: "pass" },
+      { id: "u-auth-4", title: "登出後返回上一頁", expected: "需重新登入，不得讀取舊資料", status: "pass" },
       { id: "u-auth-5", title: "停用帳號嘗試登入", expected: "拒絕登入並提示聯絡管理員", status: "untested" },
     ],
   },
@@ -612,7 +612,7 @@ export const UAT_SECTIONS: UatSection[] = [
     cases: [
       { id: "u-deal-1", title: "成交後檢視績效拆分", expected: "前端/後端/轉介比例合計為 100%", status: "pass" },
       { id: "u-deal-2", title: "無後端顧問的成交案", expected: "拆分僅顯示前端與轉介兩列", status: "pass" },
-      { id: "u-deal-3", title: "旗艦方案字數額度顯示", expected: "餘額 = 總額 − 已用,且不為負", status: "fail" },
+      { id: "u-deal-3", title: "旗艦方案字數額度顯示", expected: "餘額 = 總額 − 已用，且不為負", status: "fail" },
       { id: "u-deal-4", title: "本月成交統計", expected: "儀表板數字與列表筆數一致", status: "untested" },
     ],
   },
@@ -638,7 +638,7 @@ export const UAT_SECTIONS: UatSection[] = [
   },
 ];
 
-/** 攤平所有測試項,用於統計 */
+/** 攤平所有測試項，用於統計 */
 export const UAT_ALL_CASES: UatCase[] = UAT_SECTIONS.flatMap((s) => s.cases);
 
 export const UAT_SUMMARY = {

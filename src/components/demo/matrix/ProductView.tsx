@@ -17,7 +17,7 @@ export function ProductView({ data }: { data: YearData }) {
     ...products.flatMap((p) => p.monthly.map((m) => (metric === "revenue" ? m.revenue : m.count))),
   );
 
-  // 玫紅色階熱力(inline rgba,數值越大越深)
+  // 玫紅色階熱力(inline rgba，數值越大越深)
   const cellStyle = (value: number) => {
     if (value === 0) return { background: "#f8fafc", color: "#cbd5e1" };
     const intensity = Math.min(value / maxVal, 1);
@@ -40,7 +40,7 @@ export function ProductView({ data }: { data: YearData }) {
               <Grid3x3 className="h-6 w-6 text-matrix-rose" />
               產品組成統計
             </h2>
-            <p className="mt-1 text-sm text-ink-muted">產品 × 12 月玫紅色階熱力圖,數值越大底色越深</p>
+            <p className="mt-1 text-sm text-ink-muted">產品 × 12 月玫紅色階熱力圖，數值越大底色越深</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center rounded-lg bg-slate-100 p-1">

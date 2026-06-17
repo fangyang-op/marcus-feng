@@ -9,7 +9,7 @@ import { ArrowLeft, Menu, X, type LucideIcon } from "lucide-react";
  * 提供:頂部紅色「Demo 環境」橫幅 + 左側欄(可分組、行動版抽屜) + 頂欄 + 主內容捲動區
  * + 選用的右下角浮動元件(AI 助理)。
  *
- * 每個 Demo 自己持有「目前在看哪個 view」的 state,透過 activeKey/onSelect 控制側欄。
+ * 每個 Demo 自己持有「目前在看哪個 view」的 state，透過 activeKey/onSelect 控制側欄。
  * accent 控制品牌色(crm 粉 / nexus 粉紫 / matrix 玫紅),darkSidebar 給 Matrix 用深色側欄。
  */
 
@@ -213,7 +213,7 @@ export function DemoShell({
         className={`flex h-9 shrink-0 items-center justify-center gap-2 px-4 text-center text-[12px] font-semibold text-white ${t.bannerBg}`}
       >
         <span className="flex h-1.5 w-1.5 rounded-full bg-white/90" />
-        Demo 環境 · 所有資料為示意,非真實營運數據
+        Demo 環境 · 所有資料為示意，非真實營運數據
       </div>
 
       <div className="flex flex-1 overflow-hidden">

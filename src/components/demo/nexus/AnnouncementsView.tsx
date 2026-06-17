@@ -35,7 +35,7 @@ export function AnnouncementsView() {
       cat === "全部"
         ? ANNOUNCEMENTS
         : ANNOUNCEMENTS.filter((a) => a.category === cat);
-    // 置頂優先,其餘維持原本(已寫死)日期降冪
+    // 置頂優先，其餘維持原本(已寫死)日期降冪
     return [...filtered].sort((a, b) => Number(b.pinned) - Number(a.pinned));
   }, [cat]);
 
