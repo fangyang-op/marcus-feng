@@ -14,15 +14,17 @@ export const projects: Project[] = [
     name: "CRM 全端營運平台",
     tagline: "把「學生即專案」的留學全流程,從招生到入學收進同一個系統協作管理。",
     description:
-      "為留學代辦團隊打造的內部 CRM。以「每位學生就是一個專案」為核心,串起招生、諮詢、成交、選校、文件、申請到入學的完整生命週期,讓前後端顧問在同一平台協作,並把字數帳本、選校表版控、申請進度與績效拆分制度化。",
+      "為留學代辦團隊打造的內部 CRM。以「每位學生就是一個專案」為核心,串起招生、諮詢、成交、選校、文件、申請到入學的完整生命週期,讓前後端顧問在同一平台協作,並把字數帳本、選校表版控、申請進度與績效拆分制度化。系統由我主導開發、資安整改獨立完成,目前正逐步移交資訊部維運。",
     highlights: [
       "學生 360 詳情頁:概覽 / 時間軸 / 成績 / 成交 / 選校表 / 文件 / 申請 七大分頁",
       "申請看板(9 種狀態)與表格雙視圖,跨校追蹤截止與結果",
       "服務方案、成交與績效拆分制度化,支援多角色權限(顧問 / 主管 / Admin)",
       "字數帳本(只進不改的流水帳)與文件三層版控,杜絕版本混亂",
-      "資安工程達 A 級:導入 SonarQube、Semgrep 靜態掃描,Security 評級達 A 級,未發現重大漏洞",
-      "production 級存取控制:Supabase RLS 列級權限(預設 deny)+ 敏感帳密加密儲存",
-      "撰寫可複用資安稽核 Playbook,並將此套方法後續沿用至其他平台",
+      "資安整改 E→A(獨立完成):公司資訊部提供一份初步資安檢查報告作為標準(初始 Security Review 為 E 級),我獨立完成所有整改",
+      "導入 SonarQube、Semgrep 靜態掃描並自行修補所有問題 → Security B→A、資安複審 Security Review E→A、可靠性 C→A",
+      "建立 91 項自動化測試(單元 + 跨角色權限實測 + 端到端),漏洞與重大 Bug 歸零",
+      "production 級存取控制:Supabase RLS 列級權限(預設 deny)+ 欄位級權限(防越權改派學生 / 改收款人)+ 敏感帳密加密",
+      "將整套整改寫成可複用資安稽核 Playbook,並沿用至後續其他平台",
     ],
     tags: ["Next.js", "TypeScript", "Supabase", "Tailwind", "shadcn/ui", "Vercel"],
     demoHref: "/demo/crm",
@@ -113,7 +115,7 @@ export const projects: Project[] = [
     description:
       "在自建系統上線前後,主動導入資安檢測與稽核流程:從靜態掃描、相依套件、權限與機敏資料外洩風險逐項檢查,並把過程寫成可重複執行的 Playbook,讓資安從「靠運氣」變成「有制度」。",
     highlights: [
-      "SonarQube / Semgrep 靜態掃描,Security 評級達 A 級,未發現重大漏洞",
+      "SonarQube / Semgrep 資安整改:Security Review E→A、Security B→A、91 項自動化測試(獨立完成)",
       "靜態程式碼掃描(Semgrep / SonarQube)與相依套件稽核",
       "RLS 權限、機敏資料加密、金鑰外洩風險檢查",
       "資安檢測報告書 + 可重複執行的稽核 Playbook",

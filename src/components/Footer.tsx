@@ -1,5 +1,6 @@
-import { Mail, Linkedin, ArrowUpRight } from "lucide-react";
+import { Linkedin, ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/data/site";
+import { CopyEmail } from "./ui/CopyEmail";
 
 /** 頁尾:聯絡方式 + 自建宣告 */
 export function Footer() {
@@ -20,13 +21,10 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col gap-3 md:items-end md:justify-center">
-            <a
-              href={`mailto:${siteConfig.email}`}
+            <CopyEmail
+              email={siteConfig.email}
               className="inline-flex items-center gap-2.5 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-ink-soft transition-colors hover:border-brand-400 hover:text-brand-700"
-            >
-              <Mail className="h-4 w-4" />
-              {siteConfig.email}
-            </a>
+            />
             <a
               href={siteConfig.linkedin}
               target="_blank"
