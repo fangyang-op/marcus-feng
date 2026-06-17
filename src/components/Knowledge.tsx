@@ -70,13 +70,14 @@ export function Knowledge() {
                     {t(ui.knowledge.download)}
                   </a>
                 )}
+                {/* 固定高度,讓中文 1 行 / 英文 2 行的說明都保留同樣空間,三張卡按鈕對齊 */}
                 <p
-                  className={`mt-2 text-center text-xs leading-relaxed text-slate-400 ${
+                  className={`mt-2 min-h-[2.75rem] text-center text-xs leading-relaxed text-slate-400 ${
                     doc.requestOnly ? "" : "invisible select-none"
                   }`}
                   aria-hidden={doc.requestOnly ? undefined : true}
                 >
-                  {doc.requestOnly && doc.requestNote ? t(doc.requestNote) : "佔位"}
+                  {doc.requestOnly && doc.requestNote ? t(doc.requestNote) : ""}
                 </p>
               </div>
             </article>

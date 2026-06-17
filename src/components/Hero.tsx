@@ -9,10 +9,6 @@ const ctaIcon = [ArrowRight, Download, Linkedin];
 /** Hero 區:姓名、定位標語、一句話、三顆 CTA(中英切換) */
 export function Hero() {
   const { locale, t } = useLocale();
-  // 副標顯示「另一個語系」的標語,維持中英並陳的質感
-  const otherTagline =
-    locale === "zh" ? siteConfig.tagline.en : siteConfig.tagline.zh;
-
   return (
     <div id="top" className="relative overflow-hidden">
       {/* 背景:深藍漸層光暈 */}
@@ -25,15 +21,18 @@ export function Hero() {
         <div className="max-w-3xl animate-fade-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/70 px-3.5 py-1.5 text-sm font-medium text-brand-700 shadow-sm">
             <Sparkles className="h-3.5 w-3.5" />
-            {t(siteConfig.role)} @ {siteConfig.org}
+            {t(siteConfig.role)} @ {t(siteConfig.org)}
           </span>
 
           <h1 className="mt-6 text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
             {t(siteConfig.tagline)}
           </h1>
-          <p className="mt-3 text-lg font-medium text-brand-700 sm:text-xl">
-            {otherTagline}
-          </p>
+          {/* 副標只在中文模式顯示英文標語;英文模式不再倒過來顯示中文標語 */}
+          {locale === "zh" && (
+            <p className="mt-3 text-lg font-medium text-brand-700 sm:text-xl">
+              {siteConfig.tagline.en}
+            </p>
+          )}
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
             {t(siteConfig.summary)}

@@ -17,8 +17,8 @@ export const siteConfig = {
     zh: "資深營運經理 Senior Operations Manager",
     en: "Senior Operations Manager",
   } as L,
-  /** 現職單位（專有名詞，兩種語系皆顯示） */
-  org: "放洋留遊學",
+  /** 現職單位 */
+  org: { zh: "放洋留遊學", en: "FangYang Global Education" } as L,
   /** 一句話自我介紹 */
   summary: {
     zh: "非工程背景，卻能辨識營運問題並親手建出解決它的系統。從營收成長、團隊管理到 CRM、數據分析與 AI 工具，我把「會用工具」變成「能交付系統」。",

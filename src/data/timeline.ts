@@ -7,7 +7,7 @@ import type { TimelineItem } from "./types";
  */
 export const timeline: TimelineItem[] = [
   {
-    org: "放洋留遊學",
+    org: "FangYang Global Education 放洋留遊學",
     role: {
       zh: "資深營運經理 Senior Operations Manager",
       en: "Senior Operations Manager",

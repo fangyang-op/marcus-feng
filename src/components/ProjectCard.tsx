@@ -42,6 +42,15 @@ const ACCENT: Record<
   },
 };
 
+/** 中文標籤的英文對照（技術名詞不在表內,英文模式直接沿用原字串） */
+const TAG_EN: Record<string, string> = {
+  品牌設計: "Brand Design",
+  資料建模: "Data Modeling",
+  資料清洗: "Data Cleaning",
+  資安稽核: "Security Auditing",
+  風險評估: "Risk Assessment",
+};
+
 export function ProjectCard({ project }: { project: Project }) {
   const [open, setOpen] = useState(false);
   const { locale, t } = useLocale();
@@ -61,7 +70,7 @@ export function ProjectCard({ project }: { project: Project }) {
         {/* 技術標籤 */}
         <div className="mt-4 flex flex-wrap gap-1.5">
           {project.tags.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
+            <Tag key={tag}>{locale === "en" ? TAG_EN[tag] ?? tag : tag}</Tag>
           ))}
         </div>
 

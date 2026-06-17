@@ -22,7 +22,7 @@ export const about = {
     },
     {
       zh: "在放洋留遊學，我發現營運的瓶頸不在「不夠努力」，而在「沒有系統」——資料散落、流程靠人、知識留在個人腦中。於是我做了一件營運人通常不會做的事:以非工程背景，親手用 AI 協作開發把 CRM、數據分析、知識庫三套系統建出來，並導入團隊。",
-      en: "At FangYang Study Abroad, I realized the bottleneck in operations wasn't a lack of effort — it was the lack of systems. Data was scattered, processes lived in people's heads, and knowledge never left individual minds. So I did something most operations people wouldn't: with no engineering background, I hand-built three systems — a CRM, an analytics platform, and a knowledge base — through AI-assisted development, then rolled them out across the team.",
+      en: "At FangYang Global Education, I realized the bottleneck in operations wasn't a lack of effort — it was the lack of systems. Data was scattered, processes lived in people's heads, and knowledge never left individual minds. So I did something most operations people wouldn't: with no engineering background, I hand-built three systems — a CRM, an analytics platform, and a knowledge base — through AI-assisted development, then rolled them out across the team.",
     },
     {
       zh: "我相信營運的價值不只是「把事做完」，而是「把事變成可複製、可傳承的系統」。這也是我和「只會用工具的人」最大的不同——我把方法寫成文檔，讓團隊能繼承，讓組織不依賴任何單一個人。",
