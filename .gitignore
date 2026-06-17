@@ -32,3 +32,6 @@ next-env.d.ts
 
 # claude code 開發工具(預覽設定與工作流腳本,不需進版控)
 .claude/
+
+# 內部修正工作日誌(本機保留,不公開)
+RESULT.md
