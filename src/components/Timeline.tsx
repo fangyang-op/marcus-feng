@@ -1,14 +1,19 @@
+"use client";
+
 import { Section, SectionHeading } from "./ui/Section";
 import { timeline } from "@/data/timeline";
+import { ui } from "@/data/ui";
+import { useLocale } from "@/i18n";
 
-/** 經歷時間軸:精簡、由新到舊 */
+/** 經歷時間軸:精簡、由新到舊(中英切換) */
 export function Timeline() {
+  const { t } = useLocale();
   return (
     <Section id="timeline" className="py-16 sm:py-20">
       <SectionHeading
-        eyebrow="Experience"
-        title="經歷"
-        description="從製造業專案管理到留遊學營運，一路把「發現問題」延伸到「動手建系統」。"
+        eyebrow={ui.timeline.eyebrow}
+        title={t(ui.timeline.title)}
+        description={t(ui.timeline.description)}
       />
 
       <ol className="mt-10 space-y-0">
@@ -33,23 +38,23 @@ export function Timeline() {
                 <h3 className="text-base font-bold text-ink">{item.org}</h3>
                 {item.current && (
                   <span className="rounded-full bg-brand-100 px-2 py-0.5 text-xs font-semibold text-brand-700">
-                    現職
+                    {t(ui.timeline.current)}
                   </span>
                 )}
                 <span className="ml-auto text-xs font-medium text-ink-muted">
-                  {item.period}
+                  {t(item.period)}
                 </span>
               </div>
               <p className="mt-0.5 text-sm font-medium text-brand-700">
-                {item.role}
+                {t(item.role)}
               </p>
               <ul className="mt-2.5 space-y-1.5">
                 {item.points.map((p) => (
                   <li
-                    key={p}
+                    key={p.zh}
                     className="relative pl-4 text-sm leading-relaxed text-ink-soft before:absolute before:left-0 before:top-2.5 before:h-1 before:w-1 before:rounded-full before:bg-slate-300"
                   >
-                    {p}
+                    {t(p)}
                   </li>
                 ))}
               </ul>

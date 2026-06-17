@@ -1,22 +1,27 @@
+"use client";
+
 import { Linkedin, ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/data/site";
+import { ui } from "@/data/ui";
+import { useLocale } from "@/i18n";
 import { CopyEmail } from "./ui/CopyEmail";
 
-/** 頁尾:聯絡方式 + 自建宣告 */
+/** 頁尾:聯絡方式 + 自建宣告(中英切換) */
 export function Footer() {
+  const { t } = useLocale();
   return (
     <footer id="contact" className="scroll-mt-20 border-t border-slate-200 bg-slate-50">
       <div className="mx-auto w-full max-w-content px-5 py-16 sm:px-8 sm:py-20">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-brand-600">
-              Get in touch
+              {ui.footer.eyebrow}
             </p>
             <h2 className="mt-3 text-balance text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-              想找一位「能自己動手建系統的營運人」?
+              {t(ui.footer.title)}
             </h2>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">
-              無論是營運制度、CRM / 數據系統建置，或 AI 導入，歡迎聊聊。
+              {t(ui.footer.description)}
             </p>
           </div>
 
@@ -42,7 +47,7 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {siteConfig.name}
           </p>
-          <p className="font-medium">{siteConfig.builtWith}</p>
+          <p className="font-medium">{t(siteConfig.builtWith)}</p>
         </div>
       </div>
     </footer>

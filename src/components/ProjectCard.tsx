@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { ArrowUpRight, ChevronDown, Check } from "lucide-react";
 import type { Project, AccentKey } from "@/data/types";
+import { ui } from "@/data/ui";
+import { useLocale } from "@/i18n";
 import { Tag } from "./ui/Tag";
 
 /**
@@ -13,12 +15,7 @@ const ACCENT: Record<
   AccentKey,
   { bar: string; text: string; btn: string; check: string }
 > = {
-  crm: {
-    bar: "bg-crm",
-    text: "text-crm",
-    btn: "bg-crm hover:bg-crm-ink",
-    check: "text-crm",
-  },
+  crm: { bar: "bg-crm", text: "text-crm", btn: "bg-crm hover:bg-crm-ink", check: "text-crm" },
   nexus: {
     bar: "bg-nexus-pink",
     text: "text-nexus-pink",
@@ -47,6 +44,7 @@ const ACCENT: Record<
 
 export function ProjectCard({ project }: { project: Project }) {
   const [open, setOpen] = useState(false);
+  const { locale, t } = useLocale();
   const a = ACCENT[project.accent];
 
   return (
@@ -55,15 +53,15 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className={`h-1 w-full ${a.bar}`} />
 
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="text-lg font-bold text-ink">{project.name}</h3>
+        <h3 className="text-lg font-bold text-ink">{t(project.name)}</h3>
         <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-          {project.tagline}
+          {t(project.tagline)}
         </p>
 
         {/* 技術標籤 */}
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {project.tags.map((t) => (
-            <Tag key={t}>{t}</Tag>
+          {project.tags.map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
           ))}
         </div>
 
@@ -75,13 +73,13 @@ export function ProjectCard({ project }: { project: Project }) {
         >
           <div className="overflow-hidden">
             <p className="text-sm leading-relaxed text-ink-soft">
-              {project.description}
+              {t(project.description)}
             </p>
             <ul className="mt-4 space-y-2">
               {project.highlights.map((h) => (
-                <li key={h} className="flex gap-2 text-sm text-ink-soft">
+                <li key={h.zh} className="flex gap-2 text-sm text-ink-soft">
                   <Check className={`mt-0.5 h-4 w-4 shrink-0 ${a.check}`} />
-                  <span>{h}</span>
+                  <span>{t(h)}</span>
                 </li>
               ))}
             </ul>
@@ -89,14 +87,14 @@ export function ProjectCard({ project }: { project: Project }) {
         </div>
 
         {/* 按鈕列 */}
-        <div className="mt-6 flex items-center gap-2.5 pt-1">
+        <div className="mt-6 flex flex-wrap items-center gap-2.5 pt-1">
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-semibold text-ink-soft transition-colors hover:border-slate-400"
           >
-            查看說明
+            {t(ui.projects.viewDetails)}
             <ChevronDown
               className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
             />
@@ -107,11 +105,16 @@ export function ProjectCard({ project }: { project: Project }) {
               href={project.demoHref}
               className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold text-white transition-colors ${a.btn}`}
             >
-              進入 Demo
+              {t(ui.projects.openDemo)}
               <ArrowUpRight className="h-4 w-4" />
             </a>
           )}
         </div>
+
+        {/* En 模式下提示 Demo 內容為中文 */}
+        {project.demoHref && locale === "en" && (
+          <p className="mt-2 text-xs text-ink-muted">{ui.projects.demoInChinese.en}</p>
+        )}
       </div>
     </article>
   );

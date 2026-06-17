@@ -1,8 +1,12 @@
+"use client";
+
 import { Section } from "./ui/Section";
 import { about } from "@/data/about";
+import { useLocale } from "@/i18n";
 
 /** 關於我 / About:照片 + 一段有故事性的短文 */
 export function About() {
+  const { t } = useLocale();
   return (
     <Section id="about" className="py-16 sm:py-20">
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
@@ -28,12 +32,12 @@ export function About() {
             {about.eyebrow}
           </p>
           <h2 className="text-balance text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            {about.title}
+            {t(about.title)}
           </h2>
           <div className="mt-6 space-y-5">
             {about.paragraphs.map((p, i) => (
               <p key={i} className="text-base leading-relaxed text-ink-soft sm:text-[17px]">
-                {p}
+                {t(p)}
               </p>
             ))}
           </div>
