@@ -2,13 +2,20 @@
 
 import { useMemo, useState } from "react";
 import {
-  Trophy,
   Users,
   Activity,
-  ArrowUp,
-  ArrowDown,
   Award,
-  Construction,
+  Search,
+  Filter,
+  ChevronDown,
+  ChevronUp,
+  Settings,
+  Sparkles,
+  Download,
+  RefreshCw,
+  Trash2,
+  Coins,
+  Check,
 } from "lucide-react";
 import {
   LineChart,
@@ -28,23 +35,25 @@ import {
   Tabs,
   type PillColor,
 } from "@/components/demo/primitives";
+import { DemoModal, DemoToast } from "@/components/demo/widgets";
 import {
   RANKING_ROWS,
   RANKING_YEARS,
-  RANKING_COUNTRIES,
-  RANKING_RESULTS,
-  RANKING_SORTS,
+  RANKING_COUNTRY_CODES,
+  RANKING_COUNTRY_LABEL,
+  RANKING_SCHOLARSHIP_TOTAL_NTD,
   CRM_STUDENTS,
   CRM_STAGES,
   USAGE_STATS,
   USAGE_ROWS,
   USAGE_DAILY,
-  type RankingSortKey,
+  type RankingCountryCode,
 } from "@/data/demo/nexus";
 
 const NEXUS_TAB = "border-nexus-pink text-nexus-pink";
+const NEXUS_ACCENT = "bg-nexus-pink";
 
-// ── 歷屆榜單(可篩選 + 排序表格)──────────────────────────────────
+// ── 歷屆榜單查詢(對齊真實產品 UI)─────────────────────────────────
 const RESULT_COLOR: Record<string, PillColor> = {
   錄取: "emerald",
   備取: "amber",
@@ -52,45 +61,129 @@ const RESULT_COLOR: Record<string, PillColor> = {
 };
 
 export function RankingsView() {
-  const [year, setYear] = useState<string>("全部");
-  const [country, setCountry] = useState<string>("全部");
-  const [result, setResult] = useState<string>("全部");
-  const [sortKey, setSortKey] = useState<RankingSortKey>("year");
-  const [sortAsc, setSortAsc] = useState(false); // 預設年度新→舊
+  const [year, setYear] = useState<string>("總覽");
+  const [search, setSearch] = useState("");
+  const [filterOpen, setFilterOpen] = useState(true);
+  // 三個 checkbox
+  const [onlyDaShuo, setOnlyDaShuo] = useState(false);
+  const [onlyYangShuo, setOnlyYangShuo] = useState(false);
+  const [onlyScholarship, setOnlyScholarship] = useState(false);
+  // 國家快篩:空集合 = 全部
+  const [countries, setCountries] = useState<Set<RankingCountryCode>>(new Set());
+  const [toast, setToast] = useState<string | null>(null);
+  const [modal, setModal] = useState<{ title: string; body: string } | null>(null);
 
-  const setSort = (key: RankingSortKey) => {
-    if (key === sortKey) setSortAsc((v) => !v);
-    else {
-      setSortKey(key);
-      setSortAsc(false); // 年度/GPA/TOEFL 預設由高到低
-    }
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2000);
+  };
+
+  const allCountries = countries.size === 0;
+
+  const toggleCountry = (code: RankingCountryCode) => {
+    setCountries((prev) => {
+      const next = new Set(prev);
+      if (next.has(code)) next.delete(code);
+      else next.add(code);
+      return next;
+    });
   };
 
   const rows = useMemo(() => {
-    const filtered = RANKING_ROWS.filter((r) => {
-      if (year !== "全部" && r.year !== year) return false;
-      if (country !== "全部" && r.country !== country) return false;
-      if (result !== "全部" && r.result !== result) return false;
+    const q = search.trim().toLowerCase();
+    return RANKING_ROWS.filter((r) => {
+      if (year !== "總覽" && r.year !== year) return false;
+      if (onlyDaShuo && !r.isDaShuo) return false;
+      if (onlyYangShuo && !r.isYangShuo) return false;
+      if (onlyScholarship && !r.hasScholarship) return false;
+      if (!allCountries && !countries.has(r.countryCode)) return false;
+      if (q) {
+        const hit =
+          r.student.toLowerCase().includes(q) ||
+          r.school.toLowerCase().includes(q) ||
+          r.program.toLowerCase().includes(q) ||
+          r.major.toLowerCase().includes(q);
+        if (!hit) return false;
+      }
       return true;
     });
-    const sorted = [...filtered].sort((a, b) => {
-      let cmp = 0;
-      if (sortKey === "year") cmp = a.year.localeCompare(b.year);
-      else if (sortKey === "gpa") cmp = parseFloat(a.gpa) - parseFloat(b.gpa);
-      else cmp = parseInt(a.toefl, 10) - parseInt(b.toefl, 10);
-      return sortAsc ? cmp : -cmp;
-    });
-    return sorted;
-  }, [year, country, result, sortKey, sortAsc]);
+  }, [year, search, onlyDaShuo, onlyYangShuo, onlyScholarship, allCountries, countries]);
+
+  // 篩選後的累積獎學金(由資料加總);無篩選時顯示寫死的總額對齊真實畫面
+  const noFilter =
+    year === "總覽" &&
+    !search.trim() &&
+    !onlyDaShuo &&
+    !onlyYangShuo &&
+    !onlyScholarship &&
+    allCountries;
+  const filteredScholarship = rows.reduce((sum, r) => sum + r.scholarshipNtd, 0);
+  const scholarshipTotal = noFilter
+    ? RANKING_SCHOLARSHIP_TOTAL_NTD
+    : filteredScholarship;
 
   const admitCount = rows.filter((r) => r.result === "錄取").length;
 
   return (
     <PageContainer>
       <PageTitle
-        icon={Trophy}
         title="歷屆榜單查詢"
-        subtitle="歷屆錄取資料(姓名已脫敏,全為示意假資料)"
+        subtitle="即時同步 Google Sheet 榜單資料庫"
+        right={
+          <div className="flex flex-wrap items-center gap-1.5">
+            <IconBtn
+              icon={Settings}
+              label="設定"
+              onClick={() =>
+                setModal({
+                  title: "榜單同步設定",
+                  body: "在正式系統中可設定 Google Sheet 來源、同步頻率與欄位對應。此為 Demo 示意。",
+                })
+              }
+            />
+            <button
+              type="button"
+              onClick={() =>
+                setModal({
+                  title: "向量化狀態",
+                  body: "目前已向量化 593 筆榜單資料,供 AI 助理檢索歷屆相似背景。此為 Demo 示意。",
+                })
+              }
+              className="inline-flex items-center gap-1 rounded-lg border border-violet-200 bg-violet-50 px-2.5 py-1.5 text-xs font-bold text-violet-700 hover:bg-violet-100"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              已向量化 593
+            </button>
+            <button
+              type="button"
+              onClick={() => showToast("已開始匯出榜單(Demo 示意)")}
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-ink-soft hover:bg-slate-50"
+            >
+              <Download className="h-3.5 w-3.5" />
+              匯出
+              <ChevronDown className="h-3 w-3" />
+            </button>
+            <button
+              type="button"
+              onClick={() => showToast("請先選擇要同步的年份(Demo 示意)")}
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-ink-soft hover:bg-slate-50"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              請選擇年份同步
+            </button>
+            <IconBtn
+              icon={Trash2}
+              label="清除"
+              tone="danger"
+              onClick={() =>
+                setModal({
+                  title: "清除榜單快取",
+                  body: "在正式系統中可清除本地榜單快取並重新拉取 Google Sheet。此為 Demo 示意,不會刪除任何資料。",
+                })
+              }
+            />
+          </div>
+        }
       />
 
       {/* KPI 摘要 */}
@@ -98,7 +191,7 @@ export function RankingsView() {
         <StatCard label="總筆數" value={`${RANKING_ROWS.length}`} hint="歷屆累計" />
         <StatCard label="篩選結果" value={`${rows.length}`} hint="符合條件" accentClass="text-nexus-pink" />
         <StatCard label="其中錄取" value={`${admitCount}`} hint="本篩選下" accentClass="text-emerald-600" />
-        <StatCard label="涵蓋國家" value={`${RANKING_COUNTRIES.length - 1}`} hint="美英加澳德星" />
+        <StatCard label="涵蓋國家" value={`${RANKING_COUNTRY_CODES.length}`} hint="AUS/CAD/IE/SCT/UK/USA" />
       </div>
 
       {/* 年度 Tabs */}
@@ -111,45 +204,111 @@ export function RankingsView() {
         />
       </div>
 
-      {/* 國家 / 結果 篩選 + 排序 */}
-      <Card className="mb-4">
-        <div className="space-y-2.5">
-          <ChipRow label="國家" options={RANKING_COUNTRIES as readonly string[]} value={country} onChange={setCountry} />
-          <ChipRow label="結果" options={RANKING_RESULTS as readonly string[]} value={result} onChange={setResult} />
-          <div className="flex flex-wrap items-center gap-1.5 border-t border-slate-100 pt-2.5">
-            <span className="mr-1 w-8 text-xs font-bold text-ink-muted">排序</span>
-            {RANKING_SORTS.map((opt) => {
-              const active = sortKey === opt.key;
-              return (
-                <button
-                  key={opt.key}
-                  type="button"
-                  onClick={() => setSort(opt.key)}
-                  className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                    active
-                      ? "border-nexus-pink bg-nexus-pink/10 text-nexus-pink"
-                      : "border-slate-200 bg-white text-ink-soft hover:bg-slate-50"
-                  }`}
-                >
-                  {opt.label}
-                  {active && (sortAsc ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />)}
-                </button>
-              );
-            })}
+      {/* 可收合的篩選面板 */}
+      <Card padded={false} className="mb-4 overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setFilterOpen((v) => !v)}
+          className="flex w-full items-center justify-between px-4 py-3 text-left"
+        >
+          <span className="flex items-center gap-2 text-sm font-bold text-ink">
+            <Filter className="h-4 w-4 text-nexus-pink" />
+            展開搜尋與國家過濾
+          </span>
+          {filterOpen ? (
+            <ChevronUp className="h-4 w-4 text-ink-muted" />
+          ) : (
+            <ChevronDown className="h-4 w-4 text-ink-muted" />
+          )}
+        </button>
+
+        {filterOpen && (
+          <div className="space-y-3 border-t border-slate-100 p-4">
+            {/* 搜尋 + 統計卡 */}
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+              <div className="relative lg:col-span-2">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="搜尋學生姓名、學校名稱、錄取科系或在台科系…"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2.5 pl-9 pr-3 text-sm text-ink outline-none focus:border-nexus-pink focus:bg-white focus:ring-2 focus:ring-nexus-pink/20"
+                />
+              </div>
+              <div className="flex items-center gap-2.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5">
+                <span className="flex h-8 w-8 flex-none items-center justify-center rounded-lg bg-emerald-100 text-emerald-600">
+                  <Coins className="h-4 w-4" />
+                </span>
+                <div className="min-w-0">
+                  <div className="text-[11px] font-semibold text-emerald-700">
+                    累積獲取獎學金
+                  </div>
+                  <div className="truncate font-mono text-sm font-bold text-emerald-700">
+                    NTD$ {scholarshipTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* checkbox + 國家快篩 */}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-3">
+              <CheckChip label="大碩" checked={onlyDaShuo} onChange={() => setOnlyDaShuo((v) => !v)} />
+              <CheckChip label="洋碩" checked={onlyYangShuo} onChange={() => setOnlyYangShuo((v) => !v)} />
+              <CheckChip label="獎學金" checked={onlyScholarship} onChange={() => setOnlyScholarship((v) => !v)} />
+
+              <span className="ml-2 text-xs font-bold text-ink-muted">國家快篩:</span>
+              <button
+                type="button"
+                onClick={() => setCountries(new Set())}
+                className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+                  allCountries
+                    ? "border-blue-500 bg-blue-500 text-white"
+                    : "border-slate-200 bg-white text-ink-soft hover:bg-slate-50"
+                }`}
+              >
+                全部
+              </button>
+              {RANKING_COUNTRY_CODES.map((code) => {
+                const active = countries.has(code);
+                return (
+                  <button
+                    key={code}
+                    type="button"
+                    onClick={() => toggleCountry(code)}
+                    title={RANKING_COUNTRY_LABEL[code]}
+                    className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+                      active
+                        ? "border-nexus-pink bg-nexus-pink/10 text-nexus-pink"
+                        : "border-slate-200 bg-white text-ink-soft hover:bg-slate-50"
+                    }`}
+                  >
+                    <span
+                      className={`flex h-3.5 w-3.5 items-center justify-center rounded border ${
+                        active ? "border-nexus-pink bg-nexus-pink text-white" : "border-slate-300 bg-white"
+                      }`}
+                    >
+                      {active && <Check className="h-2.5 w-2.5" />}
+                    </span>
+                    {code}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </Card>
 
       <Card padded={false} className="overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[920px] text-sm">
+          <table className="w-full min-w-[1000px] text-sm">
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50 text-left text-xs font-bold uppercase tracking-wider text-ink-muted">
-                <th className="px-4 py-3">學生 / 原校系</th>
+                <th className="px-4 py-3">學生 / 在台科系</th>
                 <th className="px-4 py-3">年度</th>
                 <th className="px-4 py-3">國家</th>
                 <th className="px-4 py-3">錄取校</th>
-                <th className="px-4 py-3">學程</th>
+                <th className="px-4 py-3">錄取科系</th>
+                <th className="px-4 py-3">類別</th>
                 <th className="px-4 py-3">GPA</th>
                 <th className="px-4 py-3">TOEFL</th>
                 <th className="px-4 py-3">獎學金</th>
@@ -164,13 +323,23 @@ export function RankingsView() {
                     <div className="text-[11px] text-ink-muted">{r.major}</div>
                   </td>
                   <td className="px-4 py-3 text-ink-soft">{r.year}</td>
-                  <td className="px-4 py-3 text-ink-soft">{r.country}</td>
+                  <td className="px-4 py-3">
+                    <span className="rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[11px] font-bold text-ink-soft">
+                      {r.countryCode}
+                    </span>
+                  </td>
                   <td className="px-4 py-3 text-ink-soft">{r.school}</td>
                   <td className="px-4 py-3 text-ink-soft">{r.program}</td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-wrap gap-1">
+                      {r.isDaShuo && <Pill color="blue">大碩</Pill>}
+                      {r.isYangShuo && <Pill color="violet">洋碩</Pill>}
+                    </div>
+                  </td>
                   <td className="px-4 py-3 font-mono text-ink-soft">{r.gpa}</td>
                   <td className="px-4 py-3 font-mono text-ink-soft">{r.toefl}</td>
                   <td className="px-4 py-3">
-                    {r.scholarship === "—" ? (
+                    {!r.hasScholarship ? (
                       <span className="text-ink-muted">—</span>
                     ) : (
                       <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-600">
@@ -186,8 +355,8 @@ export function RankingsView() {
               ))}
               {rows.length === 0 && (
                 <tr>
-                  <td colSpan={9} className="px-4 py-10 text-center text-sm text-ink-muted">
-                    找不到符合條件的歷屆紀錄,請調整篩選。
+                  <td colSpan={10} className="px-4 py-10 text-center text-sm text-ink-muted">
+                    找不到符合條件的歷屆紀錄,請調整搜尋或國家過濾。
                   </td>
                 </tr>
               )}
@@ -195,39 +364,74 @@ export function RankingsView() {
           </table>
         </div>
       </Card>
+
+      <DemoModal
+        open={modal !== null}
+        onClose={() => setModal(null)}
+        title={modal?.title ?? ""}
+        accentClass={NEXUS_ACCENT}
+      >
+        <p>{modal?.body}</p>
+      </DemoModal>
+      <DemoToast message={toast} accentClass={NEXUS_ACCENT} />
     </PageContainer>
   );
 }
 
-function ChipRow({
+/** 頂部 icon 按鈕(no-op) */
+function IconBtn({
+  icon: Icon,
   label,
-  options,
-  value,
+  onClick,
+  tone = "default",
+}: {
+  icon: typeof Settings;
+  label: string;
+  onClick: () => void;
+  tone?: "default" | "danger";
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className={`inline-flex h-8 w-8 items-center justify-center rounded-lg border transition-colors ${
+        tone === "danger"
+          ? "border-rose-200 bg-rose-50 text-rose-600 hover:bg-rose-100"
+          : "border-slate-300 bg-white text-ink-soft hover:bg-slate-50"
+      }`}
+    >
+      <Icon className="h-4 w-4" />
+    </button>
+  );
+}
+
+/** checkbox 樣式 chip */
+function CheckChip({
+  label,
+  checked,
   onChange,
 }: {
   label: string;
-  options: readonly string[];
-  value: string;
-  onChange: (v: string) => void;
+  checked: boolean;
+  onChange: () => void;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-1.5">
-      <span className="mr-1 w-8 text-xs font-bold text-ink-muted">{label}</span>
-      {options.map((o) => (
-        <button
-          key={o}
-          type="button"
-          onClick={() => onChange(o)}
-          className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-            value === o
-              ? "border-nexus-pink bg-nexus-pink/10 text-nexus-pink"
-              : "border-slate-200 bg-white text-ink-soft hover:bg-slate-50"
-          }`}
-        >
-          {o}
-        </button>
-      ))}
-    </div>
+    <button
+      type="button"
+      onClick={onChange}
+      className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-soft"
+    >
+      <span
+        className={`flex h-4 w-4 items-center justify-center rounded border transition-colors ${
+          checked ? "border-nexus-pink bg-nexus-pink text-white" : "border-slate-300 bg-white"
+        }`}
+      >
+        {checked && <Check className="h-3 w-3" />}
+      </span>
+      {label}
+    </button>
   );
 }
 

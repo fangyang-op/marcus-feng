@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, Coins, CheckCircle2, Circle, Pencil } from "lucide-react";
+import { ArrowLeft, Coins, CheckCircle2, Circle, Pencil, Lock } from "lucide-react";
 
 import {
   PageContainer,
   Card,
   Pill,
-  Tabs,
   ProgressBar,
 } from "@/components/demo/primitives";
 import {
@@ -15,12 +14,28 @@ import {
   STATUS_META,
   APP_STATUS_META,
   isOverdue,
+  isStudentUnlocked,
   type StudentDetail,
   type ApplicationCard,
 } from "@/data/demo/crm";
 import { DemoToast } from "@/components/demo/widgets";
 
-const TAB_ITEMS = [
+type TabKey =
+  | "overview"
+  | "timeline"
+  | "scores"
+  | "deals"
+  | "schools"
+  | "documents"
+  | "applications";
+
+/** 永遠可用的 tab(不受成交與否影響) */
+const ALWAYS_OPEN: TabKey[] = ["overview", "timeline", "scores"];
+
+/** 成交後才解鎖的 tab */
+const LOCKABLE: TabKey[] = ["deals", "schools", "documents", "applications"];
+
+const TAB_ITEMS: { key: TabKey; label: string }[] = [
   { key: "overview", label: "概覽" },
   { key: "timeline", label: "時間軸" },
   { key: "scores", label: "成績" },
@@ -37,14 +52,27 @@ export function StudentDetailView({
   studentId: string;
   onBack: () => void;
 }) {
-  const [tab, setTab] = useState("overview");
+  const [tab, setTab] = useState<TabKey>("overview");
   const [toast, setToast] = useState<string | null>(null);
   const detail = getStudentDetail(studentId);
   const status = STATUS_META[detail.statusCode];
 
+  // 依「該學生」的狀態判斷四個進階 tab 是否解鎖
+  const unlocked = isStudentUnlocked(detail.statusCode);
+
+  // 防呆:若目前選中的是被鎖的 tab(理論上點不到),一律退回「概覽」,
+  // 絕不渲染被鎖頁面的內容。
+  const isTabLocked = (key: TabKey) => !unlocked && LOCKABLE.includes(key);
+  const activeTab: TabKey = isTabLocked(tab) ? "overview" : tab;
+
   const fireToast = (msg: string) => {
     setToast(msg);
     setTimeout(() => setToast(null), 2000);
+  };
+
+  const onTabClick = (key: TabKey) => {
+    if (isTabLocked(key)) return; // 上鎖:點了不切換
+    setTab(key);
   };
 
   return (
@@ -83,24 +111,71 @@ export function StudentDetailView({
       </div>
 
       <div className="mb-5">
-        <Tabs
-          accentClass="border-crm text-crm"
-          value={tab}
-          onChange={setTab}
-          items={TAB_ITEMS}
-        />
+        <div className="flex gap-1 overflow-x-auto border-b border-slate-200">
+          {TAB_ITEMS.map((item) => {
+            const locked = isTabLocked(item.key);
+            const active = item.key === activeTab && !locked;
+            return (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => onTabClick(item.key)}
+                disabled={locked}
+                aria-disabled={locked}
+                title={locked ? "此分頁於成交後解鎖" : undefined}
+                className={`-mb-px flex shrink-0 items-center gap-1.5 border-b-2 px-3.5 py-2.5 text-sm font-medium transition-colors ${
+                  active
+                    ? "border-crm text-crm"
+                    : locked
+                      ? "cursor-not-allowed border-transparent text-slate-300"
+                      : "border-transparent text-ink-muted hover:text-ink-soft"
+                }`}
+              >
+                {locked && <Lock className="h-3.5 w-3.5" />}
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {tab === "overview" && <OverviewTab detail={detail} />}
-      {tab === "timeline" && <TimelineTab detail={detail} />}
-      {tab === "scores" && <ScoresTab detail={detail} />}
-      {tab === "deals" && <DealsTab detail={detail} />}
-      {tab === "schools" && <SchoolsTab detail={detail} />}
-      {tab === "documents" && <DocumentsTab detail={detail} onToast={fireToast} />}
-      {tab === "applications" && <ApplicationsTab detail={detail} />}
+      {/* 上鎖說明:招生中 / 暫停未成交時,提示四個進階分頁尚未開放 */}
+      {!unlocked && (
+        <LockNotice statusLabel={status?.label ?? "—"} />
+      )}
+
+      {activeTab === "overview" && <OverviewTab detail={detail} />}
+      {activeTab === "timeline" && <TimelineTab detail={detail} />}
+      {activeTab === "scores" && <ScoresTab detail={detail} />}
+      {activeTab === "deals" && <DealsTab detail={detail} />}
+      {activeTab === "schools" && <SchoolsTab detail={detail} />}
+      {activeTab === "documents" && (
+        <DocumentsTab detail={detail} onToast={fireToast} />
+      )}
+      {activeTab === "applications" && <ApplicationsTab detail={detail} />}
 
       <DemoToast message={toast} accentClass="bg-crm" />
     </PageContainer>
+  );
+}
+
+/* ── 上鎖說明區塊 ─────────────────────────────────────────── */
+function LockNotice({ statusLabel }: { statusLabel: string }) {
+  return (
+    <div className="mb-4 flex flex-wrap items-start gap-3 rounded-xl border border-crm/20 bg-crm-soft/50 p-4">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-crm-soft text-crm">
+        <Lock className="h-4 w-4" />
+      </span>
+      <div className="min-w-0">
+        <p className="text-sm font-semibold text-crm-ink">
+          此學生尚未成交(目前狀態:{statusLabel})
+        </p>
+        <p className="mt-0.5 text-sm text-ink-soft">
+          「成交 / 選校表 / 文件 / 申請」四個分頁會在成交後自動解鎖。
+          現階段可使用「概覽 / 時間軸 / 成績」掌握名單背景與在校表現。
+        </p>
+      </div>
+    </div>
   );
 }
 

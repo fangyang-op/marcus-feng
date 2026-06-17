@@ -7,6 +7,7 @@ import {
   GraduationCap,
   KanbanSquare,
   Settings,
+  ClipboardCheck,
 } from "lucide-react";
 
 import { DemoShell, type DemoNavItem } from "@/components/demo/DemoShell";
@@ -16,15 +17,23 @@ import { StudentDetailView } from "@/components/demo/crm/StudentDetailView";
 import { ApplicationsView } from "@/components/demo/crm/ApplicationsView";
 import { SchoolsView } from "@/components/demo/crm/SchoolsView";
 import { SettingsView } from "@/components/demo/crm/SettingsView";
-import { STUDENTS, isUnassignedBackend } from "@/data/demo/crm";
+import { UatView } from "@/components/demo/crm/UatView";
+import { STUDENTS, isUnassignedBackend, UAT_SUMMARY } from "@/data/demo/crm";
 
-type ViewKey = "dashboard" | "students" | "schools" | "applications" | "settings";
+type ViewKey =
+  | "dashboard"
+  | "students"
+  | "schools"
+  | "applications"
+  | "uat"
+  | "settings";
 
 const NAV_TITLES: Record<ViewKey, string> = {
   dashboard: "儀表板",
   students: "學生專案管理",
   schools: "常用院校檢索",
   applications: "申請進度看板",
+  uat: "內部封測",
   settings: "設定",
 };
 
@@ -47,6 +56,12 @@ export default function CrmDemoPage() {
     },
     { key: "schools", label: "常用院校檢索", icon: GraduationCap },
     { key: "applications", label: "申請進度看板", icon: KanbanSquare },
+    {
+      key: "uat",
+      label: "內部封測",
+      icon: ClipboardCheck,
+      badge: UAT_SUMMARY.untested,
+    },
     { key: "settings", label: "設定", icon: Settings },
   ];
 
@@ -97,6 +112,7 @@ export default function CrmDemoPage() {
 
       {view === "schools" && <SchoolsView />}
       {view === "applications" && <ApplicationsView />}
+      {view === "uat" && <UatView />}
       {view === "settings" && <SettingsView />}
     </DemoShell>
   );

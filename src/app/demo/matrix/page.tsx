@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  LayoutDashboard, Gauge, UserCog, Share2, Grid3x3, Settings, RefreshCw,
+  LayoutDashboard, Gauge, UserCog, Network, Share2, Grid3x3, Settings, RefreshCw,
 } from "lucide-react";
 import { DemoShell, type DemoNavItem } from "@/components/demo/DemoShell";
 import { TopbarButton } from "@/components/demo/primitives";
@@ -14,12 +14,14 @@ import { ConsultantView } from "@/components/demo/matrix/ConsultantView";
 import { SourceView } from "@/components/demo/matrix/SourceView";
 import { ProductView } from "@/components/demo/matrix/ProductView";
 import { PersonnelView } from "@/components/demo/matrix/PersonnelView";
+import { OrgView } from "@/components/demo/matrix/OrgView";
 import { AIWidget } from "@/components/demo/matrix/AIWidget";
 
 const NAV: DemoNavItem[] = [
   { key: "overview", label: "總覽", icon: LayoutDashboard },
   { key: "performance", label: "即時績效監控", icon: Gauge },
   { key: "consultant", label: "個別顧問分析", icon: UserCog },
+  { key: "org", label: "組織人效統計", icon: Network },
   { key: "source", label: "來源績效統計", icon: Share2 },
   { key: "product", label: "產品組成統計", icon: Grid3x3 },
   { key: "personnel", label: "人員編制設定", icon: Settings },
@@ -29,6 +31,7 @@ const TITLES: Record<string, string> = {
   overview: "總覽 Dashboard",
   performance: "即時績效監控",
   consultant: "個別顧問分析",
+  org: "組織人效統計",
   source: "來源績效統計",
   product: "產品組成統計",
   personnel: "人員編制設定",
@@ -104,6 +107,7 @@ export default function MatrixDemoPage() {
       {view === "overview" && <OverviewView data={data} />}
       {view === "performance" && <PerformanceView data={data} year={year} />}
       {view === "consultant" && <ConsultantView data={data} />}
+      {view === "org" && <OrgView data={data} year={year} />}
       {view === "source" && <SourceView data={data} year={year} />}
       {view === "product" && <ProductView data={data} />}
       {view === "personnel" && <PersonnelView data={data} />}

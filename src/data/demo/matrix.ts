@@ -96,6 +96,7 @@ export interface ConsultantRow {
   name: string;
   region: string;
   status: "active" | "inactive" | "on_leave";
+  hireDate: string; // 寫死字串,如 "2021-03-15"
   consults: number;
   sales: number;
   conversionRate: number;
@@ -195,18 +196,30 @@ const m2024 = buildMonthly(
 );
 
 const consultants2024: ConsultantRow[] = [
-  buildConsultant("顧問 A", "北一區", "active", 318, 72, 8200000, 18.2, 38, "star"),
-  buildConsultant("顧問 B", "北一區", "active", 286, 58, 6400000, 14.5, 44, "normal"),
-  buildConsultant("顧問 C", "北一區", "on_leave", 198, 33, 3600000, 8.1, 61, "warn"),
-  buildConsultant("顧問 D", "桃竹區", "active", 264, 55, 5900000, 13.3, 42, "normal"),
-  buildConsultant("顧問 E", "桃竹區", "active", 232, 49, 5100000, 11.5, 47, "normal"),
-  buildConsultant("顧問 F", "桃竹區", "active", 176, 27, 2900000, 6.5, 58, "warn"),
-  buildConsultant("顧問 G", "中一區", "active", 298, 66, 7200000, 16.2, 40, "star"),
-  buildConsultant("顧問 H", "中一區", "active", 244, 48, 4900000, 11.0, 49, "normal"),
-  buildConsultant("顧問 I", "中一區", "inactive", 152, 22, 2300000, 5.2, 66, "warn"),
-  buildConsultant("顧問 J", "南一區", "active", 271, 57, 6100000, 13.7, 43, "normal"),
-  buildConsultant("顧問 K", "南一區", "active", 218, 43, 4400000, 9.9, 51, "normal"),
-  buildConsultant("顧問 L", "南一區", "active", 188, 30, 3200000, 7.2, 55, "warn"),
+  // 北一區(5)
+  buildConsultant("顧問 A", "北一區", "active", "2019-03-04", 318, 72, 8200000, 11.8, 38, "star"),
+  buildConsultant("顧問 B", "北一區", "active", "2020-07-13", 286, 58, 6400000, 9.2, 44, "normal"),
+  buildConsultant("顧問 C", "北一區", "on_leave", "2021-09-01", 198, 33, 3600000, 5.2, 61, "warn"),
+  buildConsultant("顧問 M", "北一區", "active", "2022-02-21", 226, 45, 5000000, 7.2, 46, "normal"),
+  buildConsultant("顧問 N", "北一區", "active", "2023-06-12", 172, 28, 2800000, 4.0, 57, "warn"),
+  // 桃竹區(5)
+  buildConsultant("顧問 D", "桃竹區", "active", "2019-11-18", 264, 55, 5900000, 8.5, 42, "normal"),
+  buildConsultant("顧問 E", "桃竹區", "active", "2020-05-25", 232, 49, 5100000, 7.3, 47, "normal"),
+  buildConsultant("顧問 F", "桃竹區", "active", "2022-08-08", 176, 27, 2900000, 4.2, 58, "warn"),
+  buildConsultant("顧問 O", "桃竹區", "active", "2021-04-19", 248, 52, 5500000, 7.9, 44, "normal"),
+  buildConsultant("顧問 P", "桃竹區", "on_leave", "2023-10-02", 158, 24, 2400000, 3.5, 60, "warn"),
+  // 中一區(5)
+  buildConsultant("顧問 G", "中一區", "active", "2018-09-10", 298, 66, 7200000, 10.4, 40, "star"),
+  buildConsultant("顧問 H", "中一區", "active", "2020-01-15", 244, 48, 4900000, 7.1, 49, "normal"),
+  buildConsultant("顧問 I", "中一區", "inactive", "2021-12-06", 152, 22, 2300000, 3.3, 66, "warn"),
+  buildConsultant("顧問 Q", "中一區", "active", "2022-05-30", 232, 47, 5000000, 7.2, 45, "normal"),
+  buildConsultant("顧問 R", "中一區", "active", "2023-03-27", 186, 32, 3100000, 4.5, 54, "warn"),
+  // 南一區(5)
+  buildConsultant("顧問 J", "南一區", "active", "2019-06-24", 271, 57, 6100000, 8.8, 43, "normal"),
+  buildConsultant("顧問 K", "南一區", "active", "2020-10-09", 218, 43, 4400000, 6.3, 51, "normal"),
+  buildConsultant("顧問 L", "南一區", "active", "2022-03-14", 188, 30, 3200000, 4.6, 55, "warn"),
+  buildConsultant("顧問 S", "南一區", "active", "2021-07-21", 236, 49, 5200000, 7.5, 45, "normal"),
+  buildConsultant("顧問 T", "南一區", "inactive", "2023-09-05", 162, 25, 2500000, 3.6, 59, "warn"),
 ];
 
 // ───────────────────────── 2025 ─────────────────────────
@@ -219,18 +232,30 @@ const m2025 = buildMonthly(
 );
 
 const consultants2025: ConsultantRow[] = [
-  buildConsultant("顧問 A", "北一區", "active", 372, 89, 10400000, 18.9, 34, "star"),
-  buildConsultant("顧問 B", "北一區", "active", 334, 72, 8100000, 14.7, 40, "normal"),
-  buildConsultant("顧問 C", "北一區", "active", 248, 45, 4900000, 8.9, 55, "normal"),
-  buildConsultant("顧問 D", "桃竹區", "active", 312, 70, 7700000, 14.0, 38, "star"),
-  buildConsultant("顧問 E", "桃竹區", "active", 278, 62, 6600000, 12.0, 43, "normal"),
-  buildConsultant("顧問 F", "桃竹區", "active", 214, 36, 3800000, 6.9, 52, "warn"),
-  buildConsultant("顧問 G", "中一區", "active", 348, 82, 9300000, 16.9, 36, "star"),
-  buildConsultant("顧問 H", "中一區", "active", 290, 61, 6300000, 11.4, 45, "normal"),
-  buildConsultant("顧問 I", "中一區", "on_leave", 196, 31, 3200000, 5.8, 60, "warn"),
-  buildConsultant("顧問 J", "南一區", "active", 322, 74, 8000000, 14.5, 39, "star"),
-  buildConsultant("顧問 K", "南一區", "active", 262, 54, 5500000, 10.0, 47, "normal"),
-  buildConsultant("顧問 L", "南一區", "active", 228, 40, 4100000, 7.4, 50, "warn"),
+  // 北一區(5)
+  buildConsultant("顧問 A", "北一區", "active", "2019-03-04", 372, 89, 10400000, 12.5, 34, "star"),
+  buildConsultant("顧問 B", "北一區", "active", "2020-07-13", 334, 72, 8100000, 9.7, 40, "normal"),
+  buildConsultant("顧問 C", "北一區", "active", "2021-09-01", 248, 45, 4900000, 5.9, 55, "normal"),
+  buildConsultant("顧問 M", "北一區", "active", "2022-02-21", 286, 60, 6600000, 7.9, 42, "normal"),
+  buildConsultant("顧問 N", "北一區", "active", "2023-06-12", 224, 39, 4000000, 4.8, 51, "warn"),
+  // 桃竹區(5)
+  buildConsultant("顧問 D", "桃竹區", "active", "2019-11-18", 312, 70, 7700000, 9.2, 38, "star"),
+  buildConsultant("顧問 E", "桃竹區", "active", "2020-05-25", 278, 62, 6600000, 7.9, 43, "normal"),
+  buildConsultant("顧問 F", "桃竹區", "active", "2022-08-08", 214, 36, 3800000, 4.6, 52, "warn"),
+  buildConsultant("顧問 O", "桃竹區", "active", "2021-04-19", 296, 66, 7200000, 8.6, 40, "star"),
+  buildConsultant("顧問 P", "桃竹區", "active", "2023-10-02", 208, 35, 3500000, 4.2, 53, "warn"),
+  // 中一區(5)
+  buildConsultant("顧問 G", "中一區", "active", "2018-09-10", 348, 82, 9300000, 11.1, 36, "star"),
+  buildConsultant("顧問 H", "中一區", "active", "2020-01-15", 290, 61, 6300000, 7.6, 45, "normal"),
+  buildConsultant("顧問 I", "中一區", "on_leave", "2021-12-06", 196, 31, 3200000, 3.8, 60, "warn"),
+  buildConsultant("顧問 Q", "中一區", "active", "2022-05-30", 282, 60, 6500000, 7.8, 41, "normal"),
+  buildConsultant("顧問 R", "中一區", "active", "2023-03-27", 232, 42, 4200000, 5.0, 49, "warn"),
+  // 南一區(5)
+  buildConsultant("顧問 J", "南一區", "active", "2019-06-24", 322, 74, 8000000, 9.6, 39, "star"),
+  buildConsultant("顧問 K", "南一區", "active", "2020-10-09", 262, 54, 5500000, 6.6, 47, "normal"),
+  buildConsultant("顧問 L", "南一區", "active", "2022-03-14", 228, 40, 4100000, 4.9, 50, "warn"),
+  buildConsultant("顧問 S", "南一區", "active", "2021-07-21", 290, 63, 6800000, 8.1, 41, "star"),
+  buildConsultant("顧問 T", "南一區", "active", "2023-09-05", 212, 36, 3600000, 4.3, 52, "warn"),
 ];
 
 // ───────────────────────── 2026 ─────────────────────────
@@ -243,18 +268,30 @@ const m2026 = buildMonthly(
 );
 
 const consultants2026: ConsultantRow[] = [
-  buildConsultant("顧問 A", "北一區", "active", 432, 108, 13200000, 19.4, 31, "star"),
-  buildConsultant("顧問 B", "北一區", "active", 388, 89, 10100000, 14.8, 37, "star"),
-  buildConsultant("顧問 C", "北一區", "active", 296, 58, 6300000, 9.3, 50, "normal"),
-  buildConsultant("顧問 D", "桃竹區", "active", 362, 86, 9700000, 14.3, 35, "star"),
-  buildConsultant("顧問 E", "桃竹區", "active", 322, 76, 8300000, 12.2, 40, "normal"),
-  buildConsultant("顧問 F", "桃竹區", "active", 252, 46, 4900000, 7.2, 48, "warn"),
-  buildConsultant("顧問 G", "中一區", "active", 404, 100, 11600000, 17.1, 33, "star"),
-  buildConsultant("顧問 H", "中一區", "active", 338, 75, 7900000, 11.6, 42, "normal"),
-  buildConsultant("顧問 I", "中一區", "active", 236, 42, 4300000, 6.3, 56, "warn"),
-  buildConsultant("顧問 J", "南一區", "active", 376, 91, 10000000, 14.7, 36, "star"),
-  buildConsultant("顧問 K", "南一區", "active", 306, 68, 7000000, 10.3, 44, "normal"),
-  buildConsultant("顧問 L", "南一區", "active", 268, 51, 5200000, 7.6, 47, "normal"),
+  // 北一區(5)
+  buildConsultant("顧問 A", "北一區", "active", "2019-03-04", 432, 108, 13200000, 13.0, 31, "star"),
+  buildConsultant("顧問 B", "北一區", "active", "2020-07-13", 388, 89, 10100000, 10.0, 37, "star"),
+  buildConsultant("顧問 C", "北一區", "active", "2021-09-01", 296, 58, 6300000, 6.2, 50, "normal"),
+  buildConsultant("顧問 M", "北一區", "active", "2022-02-21", 344, 78, 8600000, 8.5, 39, "star"),
+  buildConsultant("顧問 N", "北一區", "active", "2023-06-12", 268, 49, 5100000, 5.0, 48, "normal"),
+  // 桃竹區(5)
+  buildConsultant("顧問 D", "桃竹區", "active", "2019-11-18", 362, 86, 9700000, 9.6, 35, "star"),
+  buildConsultant("顧問 E", "桃竹區", "active", "2020-05-25", 322, 76, 8300000, 8.2, 40, "normal"),
+  buildConsultant("顧問 F", "桃竹區", "active", "2022-08-08", 252, 46, 4900000, 4.8, 48, "warn"),
+  buildConsultant("顧問 O", "桃竹區", "active", "2021-04-19", 348, 82, 9200000, 9.1, 37, "star"),
+  buildConsultant("顧問 P", "桃竹區", "active", "2023-10-02", 256, 47, 4700000, 4.6, 49, "normal"),
+  // 中一區(5)
+  buildConsultant("顧問 G", "中一區", "active", "2018-09-10", 404, 100, 11600000, 11.5, 33, "star"),
+  buildConsultant("顧問 H", "中一區", "active", "2020-01-15", 338, 75, 7900000, 7.8, 42, "normal"),
+  buildConsultant("顧問 I", "中一區", "active", "2021-12-06", 236, 42, 4300000, 4.3, 56, "warn"),
+  buildConsultant("顧問 Q", "中一區", "active", "2022-05-30", 334, 74, 8100000, 8.0, 38, "star"),
+  buildConsultant("顧問 R", "中一區", "active", "2023-03-27", 274, 50, 5100000, 5.0, 46, "normal"),
+  // 南一區(5)
+  buildConsultant("顧問 J", "南一區", "active", "2019-06-24", 376, 91, 10000000, 9.9, 36, "star"),
+  buildConsultant("顧問 K", "南一區", "active", "2020-10-09", 306, 68, 7000000, 6.9, 44, "normal"),
+  buildConsultant("顧問 L", "南一區", "active", "2022-03-14", 268, 51, 5200000, 5.1, 47, "normal"),
+  buildConsultant("顧問 S", "南一區", "active", "2021-07-21", 344, 80, 8800000, 8.7, 38, "star"),
+  buildConsultant("顧問 T", "南一區", "active", "2023-09-05", 256, 46, 4600000, 4.5, 49, "normal"),
 ];
 
 // ───────────────────────── 顧問建構器 ─────────────────────────
@@ -263,6 +300,7 @@ function buildConsultant(
   name: string,
   region: string,
   status: ConsultantRow["status"],
+  hireDate: string,
   consults: number,
   sales: number,
   totalRevenue: number,
@@ -305,6 +343,7 @@ function buildConsultant(
     name,
     region,
     status,
+    hireDate,
     consults,
     sales,
     conversionRate,

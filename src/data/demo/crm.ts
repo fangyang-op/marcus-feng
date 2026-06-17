@@ -93,6 +93,19 @@ export function isUnassignedBackend(s: StudentRow): boolean {
   return s.backend === null && (cat === "closed" || cat === "application");
 }
 
+/**
+ * 學生詳情進階分頁是否「已解鎖」。
+ * CRM 流程:成交後才會啟動後端服務(選校 / 文件 / 申請),
+ * 因此「成交 / 選校表 / 文件 / 申請」四個 tab 需在成交後才解鎖。
+ * - recruitment(招生中)或 special(暫停且未成交)→ 上鎖
+ * - closed(已成交)或 application(申請中)→ 解鎖
+ * 概覽 / 時間軸 / 成績永遠可用,故不在此判斷範圍。
+ */
+export function isStudentUnlocked(statusCode: string): boolean {
+  const cat = STATUS_META[statusCode]?.category;
+  return cat === "closed" || cat === "application";
+}
+
 /* ── 儀表板 KPI ───────────────────────────────────────────── */
 export interface DashboardStat {
   label: string;
@@ -474,6 +487,166 @@ export function isOverdue(app: ApplicationCard): boolean {
   const active: ApplicationStatusCode[] = ["pending_send", "submitted", "docs_required", "interview", "waitlisted"];
   return app.deadline < TODAY && active.includes(app.statusCode);
 }
+
+/* ── 設定:轉介人 ─────────────────────────────────────────── */
+export type ReferrerType = "個人" | "機構" | "學校" | "夥伴";
+
+export const REFERRER_TYPE_PILL: Record<ReferrerType, PillColor> = {
+  個人: "blue",
+  機構: "violet",
+  學校: "teal",
+  夥伴: "amber",
+};
+
+export interface Referrer {
+  id: string;
+  name: string;
+  type: ReferrerType;
+  contact: string;
+  active: boolean;
+  /** 累積轉介人數 */
+  referred: number;
+}
+
+export const REFERRERS: Referrer[] = [
+  { id: "r01", name: "校友 周怡安", type: "個人", contact: "LINE demo_chouya", active: true, referred: 12 },
+  { id: "r02", name: "晨光留學講座", type: "機構", contact: "02-2xxx-1101", active: true, referred: 28 },
+  { id: "r03", name: "私立明德高中 輔導室", type: "學校", contact: "04-2xxx-3380", active: true, referred: 19 },
+  { id: "r04", name: "雅思補習班 信義分校", type: "夥伴", contact: "02-2xxx-7745", active: true, referred: 34 },
+  { id: "r05", name: "舊生 林子翔", type: "個人", contact: "LINE demo_linzx", active: false, referred: 5 },
+  { id: "r06", name: "海外職涯顧問社群", type: "機構", contact: "service@example.com", active: true, referred: 16 },
+  { id: "r07", name: "國立文華高中 國際處", type: "學校", contact: "03-5xxx-2204", active: true, referred: 23 },
+  { id: "r08", name: "托福教材出版夥伴", type: "夥伴", contact: "02-2xxx-9982", active: false, referred: 8 },
+  { id: "r09", name: "校友 陳冠霖", type: "個人", contact: "LINE demo_chenkl", active: true, referred: 9 },
+  { id: "r10", name: "青年留學交流協會", type: "機構", contact: "info@example.com", active: true, referred: 21 },
+];
+
+/* ── 設定:名單來源 ───────────────────────────────────────── */
+export interface LeadSource {
+  id: string;
+  name: string;
+  category: string;
+  /** 本月新增名單數 */
+  monthlyLeads: number;
+  active: boolean;
+}
+
+export const LEAD_SOURCES: LeadSource[] = [
+  { id: "ls01", name: "官網諮詢表單", category: "自有官網", monthlyLeads: 42, active: true },
+  { id: "ls02", name: "Google 關鍵字廣告", category: "付費廣告", monthlyLeads: 36, active: true },
+  { id: "ls03", name: "Instagram 私訊", category: "社群經營", monthlyLeads: 24, active: true },
+  { id: "ls04", name: "校園留學講座", category: "線下活動", monthlyLeads: 18, active: true },
+  { id: "ls05", name: "舊生 / 校友轉介", category: "口碑轉介", monthlyLeads: 15, active: true },
+  { id: "ls06", name: "教育展攤位", category: "線下活動", monthlyLeads: 11, active: true },
+  { id: "ls07", name: "Facebook 廣告", category: "付費廣告", monthlyLeads: 9, active: false },
+  { id: "ls08", name: "YouTube 影音", category: "內容行銷", monthlyLeads: 7, active: true },
+];
+
+/* ── 內部封測(UAT)─────────────────────────────────────────── */
+export type UatStatus = "pass" | "fail" | "untested";
+
+export const UAT_STATUS_META: Record<
+  UatStatus,
+  { label: string; pill: PillColor }
+> = {
+  pass: { label: "通過", pill: "green" },
+  fail: { label: "異常", pill: "rose" },
+  untested: { label: "未測", pill: "slate" },
+};
+
+export interface UatCase {
+  id: string;
+  title: string;
+  expected: string;
+  status: UatStatus;
+}
+
+export interface UatSection {
+  key: string;
+  title: string;
+  desc: string;
+  cases: UatCase[];
+}
+
+/** UAT 章節 + 測試項(全寫死,合計 24 項) */
+export const UAT_SECTIONS: UatSection[] = [
+  {
+    key: "auth",
+    title: "登入與權限",
+    desc: "帳號登入、角色權限與資料遮罩",
+    cases: [
+      { id: "u-auth-1", title: "顧問帳號正確密碼登入", expected: "登入成功並導向儀表板", status: "pass" },
+      { id: "u-auth-2", title: "錯誤密碼連續 5 次", expected: "帳號暫時鎖定並顯示提示", status: "pass" },
+      { id: "u-auth-3", title: "前端顧問檢視他人成交金額", expected: "金額欄位應遮罩為「—」", status: "fail" },
+      { id: "u-auth-4", title: "登出後返回上一頁", expected: "需重新登入,不得讀取舊資料", status: "pass" },
+      { id: "u-auth-5", title: "停用帳號嘗試登入", expected: "拒絕登入並提示聯絡管理員", status: "untested" },
+    ],
+  },
+  {
+    key: "students",
+    title: "學生管理",
+    desc: "名單建立、狀態流轉與重複偵測",
+    cases: [
+      { id: "u-stu-1", title: "新增名單必填欄位留空送出", expected: "阻擋送出並標示缺漏欄位", status: "pass" },
+      { id: "u-stu-2", title: "相同手機號重複建立名單", expected: "提示疑似重複並可選擇合併", status: "pass" },
+      { id: "u-stu-3", title: "招生中學生開啟詳情", expected: "成交/選校/文件/申請分頁應上鎖", status: "pass" },
+      { id: "u-stu-4", title: "狀態由「已確認需求」改為「已成交」", expected: "自動解鎖進階分頁並建立服務待辦", status: "fail" },
+      { id: "u-stu-5", title: "搜尋英文名關鍵字", expected: "列表即時過濾出對應學生", status: "pass" },
+    ],
+  },
+  {
+    key: "kanban",
+    title: "申請看板",
+    desc: "看板欄位、逾期標示與卡片操作",
+    cases: [
+      { id: "u-kan-1", title: "截止日早於今天的進行中卡片", expected: "截止日以紅色標示為逾期", status: "pass" },
+      { id: "u-kan-2", title: "依國家篩選看板", expected: "僅顯示該國家的申請卡片", status: "pass" },
+      { id: "u-kan-3", title: "卡片狀態改為「錄取」", expected: "卡片移至錄取欄並更新統計", status: "untested" },
+      { id: "u-kan-4", title: "空欄位顯示", expected: "無卡片欄位顯示空狀態而非錯誤", status: "pass" },
+    ],
+  },
+  {
+    key: "deal",
+    title: "成交與績效",
+    desc: "方案金額、分潤拆分與結算",
+    cases: [
+      { id: "u-deal-1", title: "成交後檢視績效拆分", expected: "前端/後端/轉介比例合計為 100%", status: "pass" },
+      { id: "u-deal-2", title: "無後端顧問的成交案", expected: "拆分僅顯示前端與轉介兩列", status: "pass" },
+      { id: "u-deal-3", title: "旗艦方案字數額度顯示", expected: "餘額 = 總額 − 已用,且不為負", status: "fail" },
+      { id: "u-deal-4", title: "本月成交統計", expected: "儀表板數字與列表筆數一致", status: "untested" },
+    ],
+  },
+  {
+    key: "schools",
+    title: "院校資料",
+    desc: "院校檢索、排名與合作標記",
+    cases: [
+      { id: "u-sch-1", title: "依關鍵字搜尋院校", expected: "中英文校名皆可命中", status: "pass" },
+      { id: "u-sch-2", title: "切換國家分頁", expected: "僅顯示該國院校與對應排名", status: "pass" },
+      { id: "u-sch-3", title: "合作院校標記", expected: "合作院校顯示專屬徽章", status: "pass" },
+    ],
+  },
+  {
+    key: "common",
+    title: "通用",
+    desc: "響應式、空狀態與通知",
+    cases: [
+      { id: "u-com-1", title: "手機寬度檢視資料表", expected: "表格可水平捲動不破版", status: "pass" },
+      { id: "u-com-2", title: "未分配後端顧問告警", expected: "側欄與儀表板顯示待辦數量", status: "pass" },
+      { id: "u-com-3", title: "逾期申請每日摘要", expected: "依設定時間推播一次摘要", status: "untested" },
+    ],
+  },
+];
+
+/** 攤平所有測試項,用於統計 */
+export const UAT_ALL_CASES: UatCase[] = UAT_SECTIONS.flatMap((s) => s.cases);
+
+export const UAT_SUMMARY = {
+  total: UAT_ALL_CASES.length,
+  pass: UAT_ALL_CASES.filter((c) => c.status === "pass").length,
+  fail: UAT_ALL_CASES.filter((c) => c.status === "fail").length,
+  untested: UAT_ALL_CASES.filter((c) => c.status === "untested").length,
+};
 
 /* ── 常用院校檢索 ─────────────────────────────────────────── */
 export type SchoolCountry = "US" | "UK" | "CA" | "AU";
