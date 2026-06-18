@@ -73,8 +73,8 @@ export const ui = {
   footer: {
     eyebrow: "Get in touch",
     title: {
-      zh: "想找一位「能自己動手建系統的營運人」？",
-      en: "Looking for an operations leader who actually builds systems?",
+      zh: "想找一位「能自己動手打造地基的營運人」？",
+      en: "Looking for an operations leader who actually builds the foundation?",
     } as L,
     description: {
       zh: "無論是營運制度、CRM / 數據系統建置，或 AI 導入，歡迎聊聊。",
