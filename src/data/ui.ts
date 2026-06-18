@@ -74,7 +74,7 @@ export const ui = {
     eyebrow: "Get in touch",
     title: {
       zh: "想找一位「能把營運變成可規模化系統的人」？",
-      en: "Looking for an operations leader who makes systems scale?",
+      en: "Looking for an operations leader who scales systems?",
     } as L,
     description: {
       zh: "無論是營運制度、CRM / 數據系統建置，或 AI 導入，歡迎聊聊。",
