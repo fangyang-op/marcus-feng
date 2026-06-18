@@ -22,7 +22,7 @@ export const siteConfig = {
   /** 一句話自我介紹 */
   summary: {
     zh: "非工程背景，卻能辨識營運問題並親手建出解決它的系統。從營收成長、團隊管理到 CRM、數據分析與 AI 工具，我把「會用工具」變成「讓營運規模化的系統」。",
-    en: "From a non-engineering background, I spot operational problems and build the systems that solve them — myself. From revenue growth and team leadership to CRM, data analytics and AI tooling, I turn “knowing the tools” into “systems that scale.”",
+    en: "From a non-engineering background, I spot operational problems and build the systems that solve them — myself. From revenue growth and team leadership to CRM, data analytics and AI tooling, I turn “knowing the tools” into “scaling the operation.”",
   } as L,
 
   /** 正式上線網址（用於 Open Graph / canonical 絕對連結） */
