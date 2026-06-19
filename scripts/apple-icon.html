@@ -1,0 +1,23 @@
+<!doctype html>
+<!--
+  Apple touch icon 來源(180×180,不透明;iOS 會自行圓角)。改後重新渲染成 src/app/apple-icon.png:
+  CHROME=~/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell
+  "$CHROME" --headless --hide-scrollbars --force-device-scale-factor=1 \
+    --window-size=180,180 --screenshot=src/app/apple-icon.png "file://$(pwd)/scripts/apple-icon.html"
+-->
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 180px; height: 180px; }
+  body {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #2547eb 0%, #1e2eaf 100%);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: #fff; font-weight: 700; font-size: 84px; letter-spacing: -3px;
+  }
+</style>
+</head>
+<body>MF</body>
+</html>
