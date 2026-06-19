@@ -25,9 +25,9 @@ const ogTitle = `${siteConfig.name}・${siteConfig.tagline.zh}`;
 const ogDescription = siteConfig.tagline.en;
 const ogImage = {
   // 換圖後沿用同檔名，加版本號讓 FB / LinkedIn / 104 重新抓圖（避開舊快取）
-  url: "/og-image.png?v=3",
-  width: 1264,
-  height: 622,
+  url: "/og-image.png?v=4",
+  width: 1200,
+  height: 630,
   alt: ogTitle,
   type: "image/png",
 };
