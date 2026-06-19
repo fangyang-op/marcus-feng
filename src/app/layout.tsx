@@ -19,12 +19,15 @@ const notoSansTC = Noto_Sans_TC({
   display: "swap",
 });
 
-// metadata 為伺服器端、固定值：SEO / 分享預覽以中文為預設（站內可前端切 En）
-const ogTitle = `${siteConfig.name} — ${siteConfig.tagline.zh}`;
+// metadata 為伺服器端、固定值（站內可前端切 En）。
+// 分享卡：標題用「姓名・中文定位」、描述用英文標語；皆取自 siteConfig，改標語會自動同步。
+const ogTitle = `${siteConfig.name}・${siteConfig.tagline.zh}`;
+const ogDescription = siteConfig.tagline.en;
 const ogImage = {
-  url: "/og-image.png",
-  width: 1200,
-  height: 630,
+  // 換圖後沿用同檔名，加版本號讓 FB / LinkedIn / 104 重新抓圖（避開舊快取）
+  url: "/og-image.png?v=3",
+  width: 1264,
+  height: 622,
   alt: ogTitle,
   type: "image/png",
 };
@@ -42,7 +45,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: ogTitle,
-    description: siteConfig.summary.zh,
+    description: ogDescription,
     url: siteConfig.url,
     siteName: siteConfig.name,
     type: "website",
@@ -52,7 +55,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: ogTitle,
-    description: siteConfig.summary.zh,
+    description: ogDescription,
     images: [ogImage],
   },
 };
