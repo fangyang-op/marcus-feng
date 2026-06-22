@@ -70,16 +70,19 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(4px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        // 現職時間軸藍點的呼吸光暈(吸氣放大變淡、吐氣縮小變亮)
-        breathe: {
-          "0%, 100%": { opacity: "0.6", transform: "scale(1)" },
-          "50%": { opacity: "0.15", transform: "scale(1.9)" },
+        // 現職時間軸藍點的雷達脈衝(由中心放大後消散,持續不斷)
+        radar: {
+          "0%": { opacity: "0.5", transform: "scale(1)" },
+          "70%": { opacity: "0.12" },
+          "100%": { opacity: "0", transform: "scale(2)" },
         },
       },
       animation: {
         "fade-up": "fade-up 0.5s ease-out both",
         "fade-in": "fade-in 0.25s ease-out both",
-        breathe: "breathe 2.6s ease-in-out infinite",
+        radar: "radar 2.4s ease-out infinite",
+        // 第二圈:延遲半個週期,讓雷達持續不斷(延遲寫進簡寫,避免被覆蓋)
+        "radar-2": "radar 2.4s ease-out 1.2s infinite",
       },
     },
   },

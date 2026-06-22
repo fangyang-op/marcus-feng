@@ -40,12 +40,20 @@ export function Header() {
       className={`sticky top-0 z-50 transition-colors duration-300 ${
         scrolled
           ? "border-b border-slate-200/70 bg-white/80 backdrop-blur-md"
-          : "bg-transparent"
+          : // 在 Hero 上:液態玻璃(霧面底塊,讓導覽有依託但仍透出電路)。
+            // 用 inset 底緣高光當玻璃邊,不佔高度 → 不會再露頂部白線。
+            "bg-white/10 shadow-[inset_0_-1px_0_rgba(255,255,255,0.14)] backdrop-blur-xl backdrop-saturate-150"
       }`}
     >
       <div className="mx-auto flex h-16 w-full max-w-content items-center justify-between gap-2 px-5 sm:px-8">
         <Link href="#top" className="group flex shrink-0 items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white">
+          <span
+            className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold text-white transition-colors ${
+              onDark
+                ? "border border-white/20 bg-white/10 backdrop-blur-sm"
+                : "bg-brand-600"
+            }`}
+          >
             MF
           </span>
           <span

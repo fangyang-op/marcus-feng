@@ -47,7 +47,7 @@ export const ui = {
       en: "Turning my work into assets the team can inherit",
     } as L,
     description: {
-      zh: "會建系統還不夠 —— 我把建置過程、AI 協作方法與資安稽核寫成文件，讓接手的人看得懂、用得上。這是我和「只會用工具的人」最大的不同。",
+      zh: "會建系統還不夠——我把建置過程、AI 協作方法與資安稽核寫成文件，讓接手的人看得懂、用得上。這是我和「只會用工具的人」最大的不同。",
       en: "Building systems isn’t enough — I document the build process, my AI workflow and security audits so whoever takes over can actually use them. That’s what sets me apart from people who just use tools.",
     } as L,
     download: { zh: "下載 PDF", en: "Download PDF" } as L,
@@ -58,8 +58,8 @@ export const ui = {
     eyebrow: "Capabilities",
     title: { zh: "工具鏈 × 營運能力", en: "Toolchain × Operations" } as L,
     description: {
-      zh: "左邊是我用來把想法變成系統的技術；右邊是我作為營運人的核心職能。兩者結合，才能既看得到問題、也做得出解法。",
-      en: "On the left, the tech I use to turn ideas into systems; on the right, my core skills as an operations person. Together, they let me both spot problems and ship solutions.",
+      zh: "「工具鏈」是我把想法變成系統的技術；「營運能力」是我帶團隊、設計制度、交出成果的核心職能。兩者結合，才能既看得到問題、也做得出解法。",
+      en: "“Toolchain” is the tech I use to turn ideas into systems; “Operations” is my core craft — leading teams, designing processes, and delivering results. Together, they let me spot problems and ship solutions.",
     } as L,
     toolchainTitle: { zh: "工具鏈 Toolchain", en: "Toolchain" } as L,
     toolchainSub: {

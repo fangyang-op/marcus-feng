@@ -22,12 +22,18 @@ export function Timeline() {
             {/* 時間軸線 + 點 */}
             <div className="flex flex-col items-center">
               <span className="relative mt-1.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center">
-                {/* 現職:呼吸光暈 */}
+                {/* 現職:雷達脈衝(兩圈錯開時間,放大後消散、持續不斷) */}
                 {item.current && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute h-3.5 w-3.5 rounded-full bg-brand-500 motion-safe:animate-breathe"
-                  />
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="absolute h-3.5 w-3.5 rounded-full bg-brand-500 motion-safe:animate-radar"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="absolute h-3.5 w-3.5 rounded-full bg-brand-500 motion-safe:animate-radar-2"
+                    />
+                  </>
                 )}
                 <span
                   className={`relative h-3.5 w-3.5 rounded-full border-2 ${
