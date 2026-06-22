@@ -13,7 +13,9 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-[#090e22] text-white"
+      // -mt-16 把深色 Hero 拉到 sticky header 後面(內容用 pt 補回),
+      // 讓最頂端的透明 header 後面是深色 Hero 而非白色 body → 白字可見。
+      className="relative -mt-16 overflow-hidden bg-[#090e22] text-white"
     >
       {/* 深色漸層底 + 中央光暈(與 Canvas 核心呼應) */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(110%_90%_at_50%_42%,#16225a_0%,#0b1228_55%,#070b1c_100%)]" />
@@ -22,7 +24,7 @@ export function Hero() {
       {/* 底部與下方淺色區銜接的淡出 */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#070b1c]" />
 
-      <div className="relative z-10 mx-auto w-full max-w-content px-5 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28">
+      <div className="relative z-10 mx-auto w-full max-w-content px-5 pb-20 pt-36 sm:px-8 sm:pb-28 sm:pt-44">
         <div className="max-w-3xl animate-fade-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-brand-200 backdrop-blur-sm">
             <Sparkles className="h-3.5 w-3.5" />

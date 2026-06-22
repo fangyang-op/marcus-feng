@@ -1,22 +1,62 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/data/site";
 import { useLocale } from "@/i18n";
 import { LangToggle } from "./ui/LangToggle";
 
-/** 頂部導覽：sticky、半透明毛玻璃、桌機顯示錨點；中/EN 切換鈕桌機手機都顯示 */
+/**
+ * 頂部導覽：sticky、捲動感知。
+ * 在深色 Hero 上時 → 透明背景 + 白字;捲過 Hero 後 → 白底毛玻璃 + 深字。
+ * 桌機顯示錨點;中/EN 切換鈕桌機手機都顯示。
+ */
 export function Header() {
   const { t } = useLocale();
+  // 預設 false = 一開始在深色 Hero 上(透明)。SSR 與首幀一致,避免 hydration 不符。
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    // 用 scrollY 判斷,並加「樓地板門檻」:scroll≈0(在 Hero 頂端)時保證為 false(透明),
+    // 避免初次載入量測未就緒而誤判成已捲過 → 頂部變白底、白字看不見。
+    const update = () => {
+      const hero = document.getElementById("top");
+      const threshold = Math.max(120, (hero?.offsetHeight ?? 600) - 72);
+      setScrolled(window.scrollY > threshold);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  const onDark = !scrolled;
+
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-50 transition-colors duration-300 ${
+        scrolled
+          ? "border-b border-slate-200/70 bg-white/80 backdrop-blur-md"
+          : "bg-transparent"
+      }`}
+    >
       <div className="mx-auto flex h-16 w-full max-w-content items-center justify-between gap-2 px-5 sm:px-8">
         <Link href="#top" className="group flex shrink-0 items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-700 text-sm font-bold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white">
             MF
           </span>
-          <span className="hidden text-sm font-semibold text-ink sm:inline">
-            馮若陽 <span className="text-ink-muted">Marcus Feng</span>
+          <span
+            className={`hidden text-sm font-semibold transition-colors sm:inline ${
+              onDark ? "text-white" : "text-ink"
+            }`}
+          >
+            馮若陽{" "}
+            <span className={onDark ? "text-white/60" : "text-ink-muted"}>
+              Marcus Feng
+            </span>
           </span>
         </Link>
 
@@ -25,7 +65,11 @@ export function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-slate-100 hover:text-brand-700"
+              className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                onDark
+                  ? "text-white/80 hover:bg-white/10 hover:text-white"
+                  : "text-ink-soft hover:bg-slate-100 hover:text-brand-700"
+              }`}
             >
               {t(item.label)}
             </a>
@@ -33,12 +77,16 @@ export function Header() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
-          <LangToggle />
+          <LangToggle onDark={onDark} />
           <a
             href={siteConfig.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-lg bg-brand-700 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-800"
+            className={`inline-flex items-center rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${
+              onDark
+                ? "border border-white/20 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
+                : "bg-brand-700 text-white shadow-sm hover:bg-brand-800"
+            }`}
           >
             LinkedIn
           </a>
