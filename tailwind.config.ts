@@ -65,9 +65,21 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(12px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        // 較快的淡入(切換旗艦詳情面板用)
+        "fade-in": {
+          "0%": { opacity: "0", transform: "translateY(4px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        // 現職時間軸藍點的呼吸光暈(吸氣放大變淡、吐氣縮小變亮)
+        breathe: {
+          "0%, 100%": { opacity: "0.6", transform: "scale(1)" },
+          "50%": { opacity: "0.15", transform: "scale(1.9)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.5s ease-out both",
+        "fade-in": "fade-in 0.25s ease-out both",
+        breathe: "breathe 2.6s ease-in-out infinite",
       },
     },
   },

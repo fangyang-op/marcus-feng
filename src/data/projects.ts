@@ -89,8 +89,8 @@ export const projects: Project[] = [
         en: "AI placement analysis: enter a student profile to generate Dream / Match / Safety tiers and admission probabilities, with What-if sliders for real-time simulation.",
       },
       {
-        zh: "EP 遊學報價系統：7 步驟精靈 + 右側即時費用試算",
-        en: "EP study-tour quoting system: a 7-step wizard with live cost estimation in the right panel.",
+        zh: "遊學報價系統：7 步驟精靈 + 右側即時費用試算",
+        en: "Study-tour quoting system: a 7-step wizard with live cost estimation in the right panel.",
       },
       {
         zh: "全域浮動 AI 助理：多對話 thread、模型切換、可綁定歷屆案例",

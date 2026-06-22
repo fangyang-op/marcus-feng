@@ -18,7 +18,7 @@ import { AIWidget } from "@/components/demo/nexus/AIWidget";
 import { DashboardView } from "@/components/demo/nexus/DashboardView";
 import { SchoolDatabaseView } from "@/components/demo/nexus/SchoolDatabaseView";
 import { PlacementView } from "@/components/demo/nexus/PlacementView";
-import { EPQuoteView } from "@/components/demo/nexus/EPQuoteView";
+import { QuoteView } from "@/components/demo/nexus/QuoteView";
 import { AnnouncementsView } from "@/components/demo/nexus/AnnouncementsView";
 import { KnowledgeBaseView } from "@/components/demo/nexus/KnowledgeBaseView";
 import { AISettingsView } from "@/components/demo/nexus/AISettingsView";
@@ -36,7 +36,7 @@ const NAV: DemoNavItem[] = [
   { key: "schools", label: "常用院校資料庫", icon: Building2, group: "主功能" },
   { key: "rankings", label: "歷屆榜單", icon: Trophy, group: "主功能" },
   { key: "placement", label: "AI 落點分析", icon: Sparkles, group: "主功能" },
-  { key: "quote", label: "EP 報價系統", icon: Calculator, group: "遊學資訊專區" },
+  { key: "quote", label: "遊學報價系統", icon: Calculator, group: "遊學資訊專區" },
   { key: "crm", label: "遊學學員 CRM", icon: Users, group: "遊學資訊專區" },
   { key: "aiSettings", label: "AI 設定", icon: Sparkles, group: "管理員專區" },
   { key: "permissions", label: "權限管理系統", icon: ShieldCheck, group: "管理員專區" },
@@ -50,7 +50,7 @@ const TITLES: Record<string, string> = {
   schools: "常用院校資料庫",
   rankings: "歷屆榜單查詢",
   placement: "AI 落點分析",
-  quote: "EP 報價系統",
+  quote: "遊學報價系統",
   crm: "遊學學員 CRM",
   aiSettings: "AI 設定",
   permissions: "權限管理系統",
@@ -75,7 +75,7 @@ export default function NexusDemoPage() {
       case "placement":
         return <PlacementView />;
       case "quote":
-        return <EPQuoteView />;
+        return <QuoteView />;
       case "crm":
         return <CrmView />;
       case "aiSettings":

@@ -16,21 +16,21 @@ import { PageContainer, PageTitle } from "@/components/demo/primitives";
 import { DemoToast } from "@/components/demo/widgets";
 import {
   QUOTE_STEPS,
-  EP_CAMPUSES,
-  EP_COURSES,
-  EP_ACCOMMODATIONS,
-  EP_ADDONS,
+  QUOTE_CAMPUSES,
+  QUOTE_COURSES,
+  QUOTE_ACCOMMODATIONS,
+  QUOTE_ADDONS,
   DISCOUNT_OPTIONS,
-  type EPCampus,
+  type QuoteCampus,
 } from "@/data/demo/nexus";
 
 const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
 const NEXUS_ACCENT = "bg-nexus-pink";
 
-export function EPQuoteView() {
+export function QuoteView() {
   const [step, setStep] = useState(0);
-  const [campusId, setCampusId] = useState(EP_CAMPUSES[0].id);
-  const [courseName, setCourseName] = useState(EP_COURSES[0].name);
+  const [campusId, setCampusId] = useState(QUOTE_CAMPUSES[0].id);
+  const [courseName, setCourseName] = useState(QUOTE_COURSES[0].name);
   const [weeks, setWeeks] = useState(12);
   const [startDate, setStartDate] = useState("2025-09-01");
   const [accId, setAccId] = useState("homestay");
@@ -43,10 +43,10 @@ export function EPQuoteView() {
     setTimeout(() => setToast(null), 2000);
   };
 
-  const campus = EP_CAMPUSES.find((c) => c.id === campusId) as EPCampus;
-  const course = EP_COURSES.find((c) => c.name === courseName) ?? EP_COURSES[0];
-  const acc = EP_ACCOMMODATIONS.find((a) => a.id === accId) ?? EP_ACCOMMODATIONS[0];
-  const addOns = EP_ADDONS.filter((a) => addOnIds.includes(a.id));
+  const campus = QUOTE_CAMPUSES.find((c) => c.id === campusId) as QuoteCampus;
+  const course = QUOTE_COURSES.find((c) => c.name === courseName) ?? QUOTE_COURSES[0];
+  const acc = QUOTE_ACCOMMODATIONS.find((a) => a.id === accId) ?? QUOTE_ACCOMMODATIONS[0];
+  const addOns = QUOTE_ADDONS.filter((a) => addOnIds.includes(a.id));
   const discount = DISCOUNT_OPTIONS.find((d) => d.id === discountId) ?? DISCOUNT_OPTIONS[0];
 
   const computed = useMemo(() => {
@@ -85,8 +85,8 @@ export function EPQuoteView() {
 
   const reset = () => {
     setStep(0);
-    setCampusId(EP_CAMPUSES[0].id);
-    setCourseName(EP_COURSES[0].name);
+    setCampusId(QUOTE_CAMPUSES[0].id);
+    setCourseName(QUOTE_COURSES[0].name);
     setWeeks(12);
     setAccId("homestay");
     setAddOnIds(["reg", "insurance"]);
@@ -97,7 +97,7 @@ export function EPQuoteView() {
     <PageContainer>
       <PageTitle
         icon={Calculator}
-        title="EP 報價系統"
+        title="遊學報價系統"
         subtitle="7 步驟報價精靈 · 右側即時費用試算（示意）"
       />
 
@@ -136,7 +136,7 @@ export function EPQuoteView() {
             {step === 0 && (
               <StepWrap title="選擇校區">
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  {EP_CAMPUSES.map((c) => (
+                  {QUOTE_CAMPUSES.map((c) => (
                     <SelectButton
                       key={c.id}
                       active={campusId === c.id}
@@ -160,7 +160,7 @@ export function EPQuoteView() {
             {step === 1 && (
               <StepWrap title="選擇課程">
                 <div className="space-y-2">
-                  {EP_COURSES.map((c) => (
+                  {QUOTE_COURSES.map((c) => (
                     <SelectButton
                       key={c.name}
                       active={courseName === c.name}
@@ -221,7 +221,7 @@ export function EPQuoteView() {
             {step === 3 && (
               <StepWrap title="住宿安排">
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  {EP_ACCOMMODATIONS.map((a) => (
+                  {QUOTE_ACCOMMODATIONS.map((a) => (
                     <SelectButton
                       key={a.id}
                       active={accId === a.id}
@@ -243,7 +243,7 @@ export function EPQuoteView() {
             {step === 4 && (
               <StepWrap title="加購項目">
                 <div className="space-y-1.5">
-                  {EP_ADDONS.map((a) => {
+                  {QUOTE_ADDONS.map((a) => {
                     const on = addOnIds.includes(a.id);
                     return (
                       <button
@@ -392,7 +392,7 @@ export function EPQuoteView() {
                 <Coins className="h-4 w-4" /> 即時費用預覽
               </div>
               <div className="mt-0.5 text-xs text-white/90">
-                EP · {campus.city} · {weeks} 週
+                Lumina · {campus.city} · {weeks} 週
               </div>
             </div>
             <div className="p-4">

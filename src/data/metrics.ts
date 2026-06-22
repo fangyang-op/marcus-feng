@@ -21,8 +21,11 @@ export const metrics: Metric[] = [
     detail: { zh: "支援 30 人部門營運", en: "Supporting a 30-person department" },
   },
   {
-    value: { zh: "3,300 萬+", en: "NT$33M+" },
-    label: { zh: "學生累計獲取獎學金", en: "Student Scholarships Secured" },
-    detail: { zh: "經手學生海外獎助總額", en: "Total overseas aid won by students I advised" },
+    value: { zh: "3 套系統", en: "3 systems" },
+    label: { zh: "親手打造、導入團隊日常工作流", en: "Hand-built into daily workflow" },
+    detail: {
+      zh: "全端 CRM、數據分析、知識庫",
+      en: "Full-stack CRM, analytics & knowledge base",
+    },
   },
 ];

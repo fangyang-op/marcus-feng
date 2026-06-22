@@ -21,13 +21,22 @@ export function Timeline() {
           <li key={item.org} className="relative flex gap-5 pb-8 last:pb-0">
             {/* 時間軸線 + 點 */}
             <div className="flex flex-col items-center">
-              <span
-                className={`mt-1.5 h-3.5 w-3.5 shrink-0 rounded-full border-2 ${
-                  item.current
-                    ? "border-brand-600 bg-brand-600"
-                    : "border-slate-300 bg-white"
-                }`}
-              />
+              <span className="relative mt-1.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center">
+                {/* 現職:呼吸光暈 */}
+                {item.current && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute h-3.5 w-3.5 rounded-full bg-brand-500 motion-safe:animate-breathe"
+                  />
+                )}
+                <span
+                  className={`relative h-3.5 w-3.5 rounded-full border-2 ${
+                    item.current
+                      ? "border-brand-600 bg-brand-600"
+                      : "border-slate-300 bg-white"
+                  }`}
+                />
+              </span>
               {i < timeline.length - 1 && (
                 <span className="mt-1 w-px flex-1 bg-slate-200" />
               )}

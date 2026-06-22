@@ -25,6 +25,19 @@ export const ui = {
     openDemo: { zh: "進入 Demo", en: "Open demo" } as L,
     /** En 模式下，有 Demo 的卡片提示 Demo 內容為中文 */
     demoInChinese: { zh: "", en: "Demo UI is in Chinese" } as L,
+    /** 旗艦展示:目前檢視中的標記 */
+    viewing: { zh: "檢視中", en: "Viewing" } as L,
+    /** 選一個系統看細節的提示 */
+    selectHint: {
+      zh: "選一個系統，看完整說明與成果。",
+      en: "Pick a system to see the full write-up and outcomes.",
+    } as L,
+    /** 支援型作品(無 Demo)分區 */
+    moreWork: { zh: "其他作品", en: "More work" } as L,
+    moreWorkDesc: {
+      zh: "支援營運的專案與資產。",
+      en: "Supporting projects and assets.",
+    } as L,
   },
 
   knowledge: {

@@ -20,6 +20,10 @@ export const timeline: TimelineItem[] = [
         en: "Drove +140% revenue growth (NT$7.48M → NT$17.95M) and closed a NT$4.5M annual framework contract",
       },
       {
+        zh: "經手學生累計獲取海外獎助 3,300 萬+",
+        en: "Advised students who secured NT$33M+ in overseas scholarships and aid in total",
+      },
+      {
         zh: "辨識營運痛點並親手自建 CRM / Nexus / Matrix 三套內部系統並導入團隊",
         en: "Identified operational pain points and personally built three in-house systems — CRM, Nexus, and Matrix — rolling them out across the team",
       },

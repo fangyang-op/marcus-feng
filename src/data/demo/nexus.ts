@@ -483,8 +483,8 @@ export const SCHOOLS: NexusSchool[] = [
   },
   {
     id: "sch-ep-vancouver",
-    name: "EP Language School — Vancouver",
-    chineseName: "EP 語言學校 溫哥華校",
+    name: "Lumina Language School — Vancouver",
+    chineseName: "Lumina 語言學校 溫哥華校",
     country: "加拿大",
     location: "Vancouver, BC",
     type: "語言學校",
@@ -503,8 +503,8 @@ export const SCHOOLS: NexusSchool[] = [
   },
   {
     id: "sch-ep-london",
-    name: "EP Language School — London",
-    chineseName: "EP 語言學校 倫敦校",
+    name: "Lumina Language School — London",
+    chineseName: "Lumina 語言學校 倫敦校",
     country: "英國",
     location: "London",
     type: "語言學校",
@@ -787,7 +787,7 @@ export const PLACEMENT_REASONING =
   "依據輸入的 GPA 3.6（4.0 制）、TOEFL 102 與目標科系 Computer Science，並比對歷屆 40 筆相似背景錄取榜單後，建議採「2 衝刺 / 2 主力 / 2 保底」的選校結構。學術因子在主力與保底校已達標，夢幻校仍需以研究經歷與作品集補強。拖動下方 What-if 滑桿可即時觀察成績變動對各校錄取機率的影響（採線性推估，不重新呼叫 AI）。";
 
 // ============================================================================
-// 4) EP 報價系統 — 7 步驟精靈資料
+// 4) 遊學報價系統 — 7 步驟精靈資料
 // ============================================================================
 
 export const QUOTE_STEPS = [
@@ -800,7 +800,7 @@ export const QUOTE_STEPS = [
   "確認報價",
 ] as const;
 
-export interface EPCampus {
+export interface QuoteCampus {
   id: string;
   city: string;
   country: string;
@@ -809,7 +809,7 @@ export interface EPCampus {
   exchangeRate: number; // 1 外幣 = N 台幣
 }
 
-export const EP_CAMPUSES: EPCampus[] = [
+export const QUOTE_CAMPUSES: QuoteCampus[] = [
   { id: "vancouver", city: "Vancouver", country: "加拿大", flag: "🇨🇦", currency: "CAD", exchangeRate: 23.5 },
   { id: "toronto", city: "Toronto", country: "加拿大", flag: "🇨🇦", currency: "CAD", exchangeRate: 23.5 },
   { id: "london", city: "London", country: "英國", flag: "🇬🇧", currency: "GBP", exchangeRate: 40.2 },
@@ -818,41 +818,41 @@ export const EP_CAMPUSES: EPCampus[] = [
   { id: "dublin", city: "Dublin", country: "愛爾蘭", flag: "🇮🇪", currency: "EUR", exchangeRate: 35.4 },
 ];
 
-export interface EPCourse {
+export interface QuoteCourse {
   name: string;
   pricePerWeek: number; // 外幣 / 週
   note: string;
 }
 
-export const EP_COURSES: EPCourse[] = [
+export const QUOTE_COURSES: QuoteCourse[] = [
   { name: "General English (一般英語)", pricePerWeek: 380, note: "每週 20 堂，最常見入門課程" },
   { name: "Intensive English (密集班)", pricePerWeek: 460, note: "每週 30 堂，進度較快" },
   { name: "IELTS 考試衝刺班", pricePerWeek: 520, note: "針對升學門檻設計" },
   { name: "升學銜接課程 （Pathway）", pricePerWeek: 560, note: "可銜接合作大學" },
 ];
 
-export interface EPAccommodation {
+export interface QuoteAccommodation {
   id: string;
   name: string;
   pricePerWeek: number; // 外幣 / 週，0 = 不需住宿
   note: string;
 }
 
-export const EP_ACCOMMODATIONS: EPAccommodation[] = [
+export const QUOTE_ACCOMMODATIONS: QuoteAccommodation[] = [
   { id: "none", name: "自行安排 / 不需住宿", pricePerWeek: 0, note: "" },
   { id: "homestay", name: "寄宿家庭 （含早晚餐）", pricePerWeek: 320, note: "沉浸式語言環境" },
   { id: "residence", name: "學生宿舍 （單人房）", pricePerWeek: 410, note: "近校區、獨立空間" },
   { id: "apartment", name: "共享公寓", pricePerWeek: 360, note: "彈性高、可自炊" },
 ];
 
-export interface EPAddOn {
+export interface QuoteAddOn {
   id: string;
   name: string;
   price: number; // 外幣，一次性
   note: string;
 }
 
-export const EP_ADDONS: EPAddOn[] = [
+export const QUOTE_ADDONS: QuoteAddOn[] = [
   { id: "reg", name: "註冊費", price: 150, note: "報名一次性收取" },
   { id: "material", name: "教材費", price: 90, note: "依課程提供" },
   { id: "airport", name: "機場接送", price: 120, note: "單程，含司機" },
@@ -931,15 +931,15 @@ export const AI_THREADS: ChatThread[] = [
   },
   {
     id: "th-3",
-    title: "EP 溫哥華遊學報價",
+    title: "Lumina 溫哥華遊學報價",
     updatedAt: "2025-06-13",
     messages: [
       { id: "m1", role: "ai", text: "您好！我是 Nexus AI 助手 ✨", time: "11:20" },
-      { id: "m2", role: "user", text: "EP 溫哥華 12 週一般英語 + 寄宿家庭大約多少？", time: "11:21" },
+      { id: "m2", role: "user", text: "Lumina 溫哥華 12 週一般英語 + 寄宿家庭大約多少？", time: "11:21" },
       {
         id: "m3",
         role: "ai",
-        text: "粗估 12 週 General English 搭配寄宿家庭：\n\n• 課程：CAD 4,560\n• 住宿：CAD 3,840\n• 規費：約 CAD 240\n\n外幣合計約 CAD 8,640，依當日匯率換算台幣。實際金額請以「EP 報價系統」即時試算為準。",
+        text: "粗估 12 週 General English 搭配寄宿家庭：\n\n• 課程：CAD 4,560\n• 住宿：CAD 3,840\n• 規費：約 CAD 240\n\n外幣合計約 CAD 8,640，依當日匯率換算台幣。實際金額請以「遊學報價系統」即時試算為準。",
         time: "11:21",
       },
     ],
@@ -1097,7 +1097,7 @@ export interface UsageStat {
 export const USAGE_STATS: UsageStat[] = [
   { key: "active", label: "本月活躍顧問", value: "32", delta: "+5", positive: true, hint: "較上月" },
   { key: "ai", label: "AI 落點分析次數", value: "418", delta: "+23%", positive: true, hint: "較上月" },
-  { key: "quote", label: "EP 報價產生數", value: "276", delta: "+12%", positive: true, hint: "較上月" },
+  { key: "quote", label: "遊學報價產生數", value: "276", delta: "+12%", positive: true, hint: "較上月" },
   { key: "search", label: "院校庫查詢數", value: "5,120", delta: "-3%", positive: false, hint: "較上月" },
 ];
 
@@ -1110,7 +1110,7 @@ export interface UsageRow {
 
 export const USAGE_ROWS: UsageRow[] = [
   { id: "u-1", feature: "AI 落點分析", count: 418, trend: "↑ 23%" },
-  { id: "u-2", feature: "EP 報價系統", count: 276, trend: "↑ 12%" },
+  { id: "u-2", feature: "遊學報價系統", count: 276, trend: "↑ 12%" },
   { id: "u-3", feature: "院校資料庫搜尋", count: 5120, trend: "↓ 3%" },
   { id: "u-4", feature: "歷屆榜單查詢", count: 1340, trend: "↑ 8%" },
   { id: "u-5", feature: "AI 助理對話", count: 2860, trend: "↑ 31%" },
@@ -1184,13 +1184,13 @@ export const ANNOUNCEMENTS: Announcement[] = [
   {
     id: "an-2",
     category: "合作廠商",
-    title: "EP 語言學校 2026 秋季學費調整公告",
+    title: "Lumina 語言學校 2026 秋季學費調整公告",
     date: "2026-06-14",
     pinned: true,
     verified: true,
     summary: "溫哥華與倫敦校區一般英語週費小幅調整，寄宿家庭費用維持不變，報價系統已同步。",
     content:
-      "合作語言學校 EP 已公布 2026 秋季新價：\n\n• 溫哥華校 General English 週費調整為 CAD 395\n• 倫敦校 General English 週費調整為 £ 320\n• 寄宿家庭與註冊費維持原價\n• 早鳥優惠（開課前 60 天報名 8% off）延續至 2026 年底\n\n「EP 報價系統」內的定價已同步更新，舊報價單請於 7 天內重新產生以免價差。",
+      "合作語言學校 Lumina 已公布 2026 秋季新價：\n\n• 溫哥華校 General English 週費調整為 CAD 395\n• 倫敦校 General English 週費調整為 £ 320\n• 寄宿家庭與註冊費維持原價\n• 早鳥優惠（開課前 60 天報名 8% off）延續至 2026 年底\n\n「遊學報價系統」內的定價已同步更新，舊報價單請於 7 天內重新產生以免價差。",
   },
   {
     id: "an-3",
@@ -1309,7 +1309,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
     verified: true,
     summary: "本週六凌晨將進行例行系統維護，期間 AI 問答與報價系統可能短暫無法使用。",
     content:
-      "維護資訊：\n\n• 時間：本週六 02:00 - 04:00\n• 影響範圍：AI 問答、EP 報價系統、向量化索引重建\n• 期間院校資料庫與榜單仍可瀏覽\n\n維護完成後將於內部頻道公告。造成不便敬請見諒。",
+      "維護資訊：\n\n• 時間：本週六 02:00 - 04:00\n• 影響範圍：AI 問答、遊學報價系統、向量化索引重建\n• 期間院校資料庫與榜單仍可瀏覽\n\n維護完成後將於內部頻道公告。造成不便敬請見諒。",
   },
 ];
 
@@ -1478,7 +1478,7 @@ export const WIKI_ARTICLES: WikiArticle[] = [
     updatedAt: "2026-06-04",
     summary: "說明合作語言學校的報價產生、開立與後續結算的標準流程，避免價差與漏單。",
     content:
-      "流程：\n\n一、以「EP 報價系統」產生報價單，確認校區、課程、週數與住宿\n二、報價單經主管確認後提供學生\n三、學生報名後於 CRM 建立案件並更新階段\n四、依合作條件結算，留存報名與繳費憑證\n\n價格異動時請重新產生報價單，舊單作廢，避免價差爭議。",
+      "流程：\n\n一、以「遊學報價系統」產生報價單，確認校區、課程、週數與住宿\n二、報價單經主管確認後提供學生\n三、學生報名後於 CRM 建立案件並更新階段\n四、依合作條件結算，留存報名與繳費憑證\n\n價格異動時請重新產生報價單，舊單作廢，避免價差爭議。",
   },
   {
     id: "w-12",
