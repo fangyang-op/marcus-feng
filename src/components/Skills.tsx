@@ -23,7 +23,7 @@ function SkillColumn({
 }) {
   const { t } = useLocale();
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-card">
+    <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-card-hover">
       <div className="flex items-center gap-3">
         <div
           className={`flex h-10 w-10 items-center justify-center rounded-xl ${accent}`}

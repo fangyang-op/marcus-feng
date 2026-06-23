@@ -5,6 +5,7 @@ import { MetricsBar } from "@/components/MetricsBar";
 import { Projects } from "@/components/Projects";
 import { Knowledge } from "@/components/Knowledge";
 import { Skills } from "@/components/Skills";
+import { DecisionLogic } from "@/components/DecisionLogic";
 import { Timeline } from "@/components/Timeline";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/ui/Reveal";
@@ -29,6 +30,9 @@ export default function HomePage() {
         </Reveal>
         <Reveal>
           <Skills />
+        </Reveal>
+        <Reveal>
+          <DecisionLogic />
         </Reveal>
         <Reveal>
           <Timeline />
