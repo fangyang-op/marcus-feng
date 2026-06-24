@@ -321,6 +321,69 @@ function MobileSpine() {
   );
 }
 
+/** 手機:獨立六邊形(帶標籤、固定 viewBox、無 hover),放在 spine 上方 */
+function MobileHex() {
+  const { t } = useLocale();
+  const reduce = useReduce();
+  const [ref, inView] = useInView<HTMLDivElement>(0.3);
+  const on = inView || reduce;
+  const motion = !reduce;
+  const centerLines = t(DL.center).split("\n");
+  return (
+    <div ref={ref} className="mx-auto w-full max-w-[350px]">
+      <svg viewBox="70 16 460 388" className="font-sans w-full" role="img" aria-label="跨產業養成的六種決策邏輯六邊形">
+        {GRID_RINGS.map((k) => (
+          <polygon key={`r${k}`} points={ring(k)} fill="none" stroke="#e2e8f0" strokeWidth={1}
+            style={{ opacity: on ? 1 : 0, transition: motion ? "opacity .5s ease" : "none" }} />
+        ))}
+        {PTS.map((p, i) => {
+          const next = PTS[(i + 1) % 6];
+          const minX = Math.min(CENTER.x, p.x, next.x);
+          const minY = Math.min(CENTER.y, p.y, next.y);
+          const delay = (0.08 + STEP * i).toFixed(2);
+          return (
+            <polygon key={`w${i}`} points={`${CENTER.x},${CENTER.y} ${p.x},${p.y} ${next.x},${next.y}`} fill="rgba(37,71,235,0.13)"
+              style={{
+                opacity: on ? 1 : 0, transformBox: "fill-box",
+                transformOrigin: `${(CENTER.x - minX).toFixed(1)}px ${(CENTER.y - minY).toFixed(1)}px`,
+                transform: on ? "scale(1)" : "scale(0)",
+                transition: motion ? `transform .5s cubic-bezier(0.34,1.35,0.64,1) ${delay}s, opacity .25s ease ${delay}s` : "none",
+              }} />
+          );
+        })}
+        {PTS.map((p, i) => (
+          <line key={`s${i}`} x1={CENTER.x} y1={CENTER.y} x2={p.x} y2={p.y} stroke="#94a3b8" strokeWidth={1} strokeDasharray="3 5"
+            style={{ opacity: on ? 1 : 0, transition: motion ? `opacity .4s ease ${(0.08 + i * STEP).toFixed(2)}s` : "none" }} />
+        ))}
+        <polygon points={HEX_POINTS} fill="none" stroke="#2547eb" strokeWidth={1.5} strokeDasharray={PERIM}
+          style={{ strokeDashoffset: on ? 0 : PERIM, transition: motion ? "stroke-dashoffset 1.5s ease .1s" : "none" }} />
+        <circle cx={CENTER.x} cy={CENTER.y} r={46} fill="#0f172a"
+          style={{ opacity: on ? 1 : 0, transition: motion ? "opacity .5s ease .35s" : "none" }} />
+        <text x={CENTER.x} y={centerLines.length > 1 ? 206 : 215} textAnchor="middle" fill="#ffffff" fontSize={15} fontWeight={500}
+          style={{ opacity: on ? 1 : 0, transition: motion ? "opacity .5s ease .45s" : "none" }}>
+          {centerLines.map((ln, i) => (
+            <tspan key={i} x={CENTER.x} dy={i === 0 ? 0 : 18}>{ln}</tspan>
+          ))}
+        </text>
+        {PTS.map((p, i) => (
+          <g key={`n${i}`}>
+            <circle cx={p.x} cy={p.y} r={6.5} fill="#2547eb" stroke="#ffffff" strokeWidth={2}
+              style={{
+                opacity: on ? 1 : 0, transformBox: "fill-box", transformOrigin: "center",
+                transform: on ? "scale(1)" : "scale(0.2)",
+                transition: motion ? `transform .4s ease ${(0.16 + i * STEP).toFixed(2)}s, opacity .4s ease ${(0.16 + i * STEP).toFixed(2)}s` : "none",
+              }} />
+            <text x={LABELS[i].x} y={LABELS[i].y} textAnchor={LABELS[i].anchor} fontSize={14.5} fontWeight={700} fill="#334155"
+              style={{ opacity: on ? 1 : 0, transition: motion ? `opacity .4s ease ${(i * STEP).toFixed(2)}s` : "none" }}>
+              {t(DL.modes[i].name)}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 /** 決策邏輯區塊(放在「能力 ↔ 經歷」之間) */
 export function DecisionLogic() {
   const { t } = useLocale();
@@ -331,7 +394,10 @@ export function DecisionLogic() {
         <HexDiagram />
       </div>
       <div className="mt-12 lg:hidden">
-        <MobileSpine />
+        <MobileHex />
+        <div className="mt-10">
+          <MobileSpine />
+        </div>
       </div>
     </Section>
   );
