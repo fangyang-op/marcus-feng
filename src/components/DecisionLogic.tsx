@@ -387,9 +387,20 @@ function MobileHex() {
 /** 決策邏輯區塊(放在「能力 ↔ 經歷」之間) */
 export function DecisionLogic() {
   const { t } = useLocale();
+  // 標題在窄螢幕於逗號處斷行(兩段各自不換行),避免斷在詞中間;寬螢幕仍一行。
+  const titleStr = t(DL.title);
+  const cut = titleStr.match(/^(.*?[，,]\s?)(.*)$/);
+  const title = cut ? (
+    <>
+      <span className="whitespace-nowrap">{cut[1]}</span>
+      <span className="whitespace-nowrap">{cut[2]}</span>
+    </>
+  ) : (
+    titleStr
+  );
   return (
     <Section id="decision-logic" className="py-16 sm:py-20">
-      <SectionHeading eyebrow={DL.eyebrow} title={t(DL.title)} description={t(DL.lead)} />
+      <SectionHeading eyebrow={DL.eyebrow} title={title} description={t(DL.lead)} />
       <div className="mt-16 hidden lg:block">
         <HexDiagram />
       </div>
